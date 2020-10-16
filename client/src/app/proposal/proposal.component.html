@@ -1,0 +1,10 @@
+<form [formGroup]="proposalForm">
+    <div class="form-group">
+        <div *ngFor="let prop of proposal; index as i">
+            <label>Proposal {{i+1}}</label>
+            <input type="text" class="form-control -lg" formControlName="{{ i }}">
+        </div>        
+    </div>
+    <button class="btn btn-success" [disabled]="proposalForm.invalid" (click)="onSubmit()">Send proposals</button>
+    <p>{{ message }}</p>
+</form>

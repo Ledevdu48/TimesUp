@@ -1,0 +1,23 @@
+<div class="row">
+  <h1>Game creation</h1>
+</div>
+
+<div class="row">
+  <form [formGroup]="parametersForm">
+    <div class="form-group">
+      <label for="numberProp">Number of proposals per person:</label>
+      <input type="number" id="numberProp" class="form-control -lg" formControlName="numberProp" (blur)="onSend()"
+        min=1>
+    </div>
+    <div class="form-group">
+      <label for="timers">Timers for each step (in seconds):</label>
+      <input type="number" id="timerStep1" class="form-control -lg" formControlName="timerStep1" (blur)="onSend()"
+        min=1>
+      <input type="number" id="timerStep2" class="form-control -lg" formControlName="timerStep2" (blur)="onSend()"
+        min=1>
+      <input type="number" id="timerStep3" class="form-control -lg" formControlName="timerStep3" (blur)="onSend()"
+        min=1>
+    </div>
+    <button class="btn btn-success" (click)="onLaunch()" [disabled]="launchBool || parametersForm.invalid">Launch the game</button>
+  </form>
+</div>

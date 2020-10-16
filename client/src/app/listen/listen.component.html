@@ -1,0 +1,22 @@
+<div class="row">
+    <h1>{{ step }}</h1>
+</div>
+<div class="row">
+    <h1>It's time for team {{chosenTeam+1}}</h1>
+</div>
+<div class="row">
+    <h2>It's the turn of {{chosenPlayer[1]}}</h2>
+</div>
+<div [hidden]="!boolPlay">
+    <div class="row">
+        <h3>Last proposal: {{ display }}</h3>
+    </div>
+    <div class="row">
+        <p>Time left: {{ timeLeft }} s</p>
+    </div>
+</div>
+<div class="row" *ngIf='lastsFound.length != 0' [hidden]="boolPlay">
+    <p *ngIf='lastsFound.length > 1'>Last turn, these proposals were found:</p>
+    <p *ngIf='lastsFound.length == 1'>Last turn, this proposal was found:</p>
+    <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+</div>

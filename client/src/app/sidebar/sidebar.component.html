@@ -1,0 +1,12 @@
+<h1>Room: {{ roomCode }}</h1>
+<h2>Players: </h2>
+<li *ngFor="let player of players">
+    {{ player }}
+</li>
+<h1>Team 1:</h1>
+<li *ngFor="let teammate1 of teams[0]">{{ teammate1[1] }}</li>
+<p *ngIf="teams[0].length!=0">SCORE: {{score[0]}}</p>
+<h1>Team 2:</h1>
+<li *ngFor="let teammate2 of teams[1]">{{ teammate2[1] }}</li>
+<p *ngIf="teams[1].length!=0">SCORE: {{score[1]}}</p>
+<button *ngIf='!isPlayer && !isListener' (click)="onRandomize()">Randomize teams</button>

@@ -1,0 +1,333 @@
+var express = require('express')();
+var http = require('http').createServer(express);
+var io = require('socket.io')(http);
+
+http.listen(3000, () => {
+    console.log('Listen to port:3000')
+})
+
+var rooms = [];
+
+io.on('connection', socket => {
+    console.log('user ' + socket.id + ' is connected')
+
+    socket.on('joinRoom', data => {
+        if (getRoomByCode(data.name) === undefined) {
+            const game1 = new Game(
+                [],
+                [[], []],
+                'creation',
+                [0, 0],
+                [],
+                { numberProp: 0, timer: {} },
+                []
+            )
+            const roomObject = {
+                id: 1,
+                code: '',
+                game: game1
+            };
+            roomObject.code = data.name;
+            if (rooms.length != 0) {
+                roomObject.id = rooms[(rooms.length - 1)].id + 1;
+            }
+            roomObject.game.players.push([socket.id, data.pseudo]);
+            rooms.push(roomObject);
+            socket.join(roomObject.code)
+            io.emit('yourRoom', roomObject.code)
+            io.in(roomObject.code).emit('yourPlayers', roomObject.game.players);
+        } else {
+            const roomObject = getRoomByCode(data.name);
+            roomObject.game.players.push([socket.id, data.pseudo]);
+            socket.join(roomObject.code)
+            io.emit('yourRoom', roomObject.code)
+            io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
+        }
+    })
+
+    socket.on('getRoomCode', () => {
+        const sockrooms = socket.rooms;
+        for (let key in sockrooms) {
+            if (key != socket.id) {
+                const room = sockrooms[key];
+                const roomObject = getRoomByCode(room);
+                io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+            }
+        }
+    })
+
+    socket.on('randomizeTeam', roomCode => {
+        const roomObject = getRoomByCode(roomCode);
+        roomObject.game.team = [[], []];
+        roomObject.game.randomizeTeam();
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+    })
+
+    socket.on('parametersToUsers', (data, roomCode) => {
+        io.in(roomCode).emit('newParameters', data)
+    })
+
+    socket.on('parametersToGame', (data, roomCode) => {
+        const roomObject = getRoomByCode(roomCode);
+        roomObject.game.parameters.numberProp = data.numberProp;
+        roomObject.game.parameters.timer['Step 1'] = data.timerStep1;
+        roomObject.game.parameters.timer['Step 2'] = data.timerStep2;
+        roomObject.game.parameters.timer['Step 3'] = data.timerStep3;
+        io.in(roomCode).emit('yourRoom', roomCode)
+        io.in(roomCode).emit('goToProposal')
+    })
+
+    socket.on('chargingProposal', roomCode => {
+        const roomObject = getRoomByCode(roomCode);
+        io.in(roomCode).emit('yourRoom', roomCode);
+        io.in(roomCode).emit('numberProp', roomObject.game.parameters.numberProp)
+    })
+
+    socket.on('yourProposals', (proposals, roomCode) => {
+        const roomObject = getRoomByCode(roomCode);
+        for (let proposal of proposals) {
+            roomObject.game.listOfWords.push(proposal[1]);
+        }
+        if (roomObject.game.listOfWords.length == roomObject.game.parameters.numberProp * roomObject.game.players.length) {
+            io.in(roomCode).emit('goToListen')
+            const [chosenTeam, chosenPlayer, timer] = roomObject.game.initStage('Step 1');
+            io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer)
+            io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+            io.in(chosenPlayer[0]).emit('goToPlay')
+        } else {
+            io.in(socket.id).emit('waitingOthers')
+        }
+    })
+    
+    socket.on('chargingListener', roomCode => {
+        const roomObject = getRoomByCode(roomCode);
+        io.in(roomCode).emit('yourRoom', roomCode);
+    })
+
+    socket.on('chargingPlayer', roomCode => {
+        const roomObject = getRoomByCode(roomCode);
+        io.in(roomCode).emit('yourRoom', roomCode);
+    })
+
+    socket.on('launchTimer', (roomCode, timer) => {
+        let timeLeft = timer;
+        let interval = setInterval(() => {
+            if(timeLeft>0) {
+              timeLeft--;
+              io.in(roomCode).emit('sendTimer', timeLeft)
+            } else {
+              clearInterval(interval)
+            }
+          }, 1000)
+    })
+
+    socket.on('start', roomCode => {
+        const roomObject = getRoomByCode(roomCode);
+        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, true)
+    })
+
+    socket.on('end', roomCode => {
+        const roomObject = getRoomByCode(roomCode);
+        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+    })
+
+    socket.on('askProposal', (roomCode, currentProposal) => {
+        const roomObject = getRoomByCode(roomCode);
+        const game = roomObject.game;
+        const proposal = game.nextWord(currentProposal[0]);
+        io.in(roomCode).emit('skipProposal')
+        io.in(socket.id).emit('sendProposal', proposal)
+    })
+
+    socket.on('validateProposal', (roomCode, currentProposal) => {
+        const roomObject = getRoomByCode(roomCode);
+        const game = roomObject.game;
+        game.actualiseRemainingWords(currentProposal[0])
+        const proposal = game.nextWord(currentProposal[0]);
+        io.in(roomCode).emit('goodProposal')
+        io.in(socket.id).emit('sendProposal', proposal)
+    })
+
+    socket.on('resultsRound', (roomCode, lastTeam, unvalidWords, validWords, timer) => {
+        const roomObject = getRoomByCode(roomCode);
+        const game = roomObject.game;
+        const [chosenTeam, chosenPlayer] = game.initNextPlayer(lastTeam, validWords, unvalidWords);
+        if (game.remainingWords.length ===0){
+            if (game.stageGame === 'Step 1') {
+                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
+                io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
+                io.in(chosenPlayer[0]).emit('goToPlay');
+            }
+        } else {
+            io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
+            io.in(chosenPlayer[0]).emit('goToPlay');
+        }        
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+    })
+
+    socket.on('disconnecting', () => {
+        const sockrooms = socket.rooms;
+        for (let key in sockrooms) {
+            if (key != socket.id) {
+                const room = sockrooms[key];
+                const id = playerId(socket.id, room);
+                const roomObject = getRoomByCode(room);
+                roomObject.game.players.splice(id, 1);
+                if (roomObject.game.players.length == 0) {
+                    roomObject.game = new Game(
+                        [],
+                        [[], []],
+                        'creation',
+                        [0, 0],
+                        [],
+                        { numberProp: 0, timer: {} },
+                        []
+                    )
+                } else {
+                    io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+                }
+            }
+        }
+    })
+
+    socket.on('disconnect', () => {
+        console.log('user ' + socket.id + ' is deconnected')
+    })
+})
+
+class Game {
+    constructor(
+        players,
+        team,
+        stageGame,
+        score,
+        listOfWords,
+        parameters,
+        remainingWords
+    ) {
+        this.players = players;
+        this.team = team;
+        this.stageGame = stageGame;
+        this.score = score;
+        this.listOfWords = listOfWords;
+        this.parameters = parameters;
+        this.remainingWords = remainingWords
+    }
+
+    randomizeTeam() {
+        let remainingPlayers = this.players;
+        let n = remainingPlayers.length;
+        let chosenTeam = 0
+        while (n != 0) {
+            let chosenPlayer = getRandomInt(0, n);
+            this.team[chosenTeam].push(remainingPlayers[chosenPlayer])
+            remainingPlayers = suppr(remainingPlayers, chosenPlayer)
+            n = remainingPlayers.length
+            if (chosenTeam == 0) {
+                chosenTeam = 1
+            } else {
+                chosenTeam = 0
+            }
+        }
+    }
+
+    chooseTeam() {
+        return getRandomInt(0, 2)
+    }
+
+    nextTeam(lastTeam) {
+        if (lastTeam == 0) {
+            return 1
+        }
+        else {
+            return 0
+        }
+    }
+
+    nextWord(idLastWord) {
+        const n = this.remainingWords.length
+        if (n == 0){
+            return[-1, ''];
+        }
+        if (n == 1) {
+            return [0, this.remainingWords[0]]
+        }
+        else {
+            let idWord = getRandomInt(0, n);
+            while (idWord == idLastWord) {
+                idWord = getRandomInt(0, n);
+            }
+            const word = this.remainingWords[idWord];
+            return [idWord, word]
+        }
+    }
+
+    rotateTeam(chosenTeam) {
+        const player = this.team[chosenTeam][0];
+        this.team[chosenTeam].splice(0, 1);
+        this.team[chosenTeam].push(player);
+    }
+
+    initStage(nameStage) {
+        this.stageGame = nameStage;
+        if (this.stageGame === 'Step 1' || this.stageGame === 'Step 2' || this.stageGame === 'Step 3') {
+            for (let word of this.listOfWords) {
+                this.remainingWords.push(word);
+            }
+            const chosenTeam = this.chooseTeam();
+            const chosenPlayer = this.team[chosenTeam][0];
+            const timer = this.parameters.timer[this.stageGame];
+            this.rotateTeam(chosenTeam);
+            return [chosenTeam, chosenPlayer, timer]
+        }
+    }
+
+    actualiseRemainingWords(idFoundWord) {
+        this.remainingWords.splice(idFoundWord,1);
+    }
+
+    initNextPlayer(lastTeam, foundWords, unvalidWords) {
+        this.score[lastTeam] += foundWords.length;
+        for (let word of unvalidWords) {
+            this.remainingWords.push(word)
+        }
+        this.rotateTeam(lastTeam);
+        const chosenTeam = this.nextTeam(lastTeam);
+        const chosenPlayer = this.team[chosenTeam][0];
+        return [chosenTeam, chosenPlayer]
+    }
+}
+
+function getRoomByCode(code) {
+    const room = rooms.find(
+        (s) => {
+            return s.code === code;
+        }
+    )
+    return room;
+}
+
+function playerId(sockId, roomName) {
+    const room = getRoomByCode(roomName);
+    for (playId in room.players) {
+        if (room.players[playId][0] === sockId) {
+            return playId
+        }
+    }
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function suppr(l, i) {
+    const list = [];
+    for (indice in l) {
+        if (indice != i) {
+            list.push(l[indice]);
+        }
+    }
+    return list
+}
