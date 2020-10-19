@@ -175,8 +175,7 @@ io.on('connection', socket => {
                 roomObject.game.players.splice(id, 1);
                 if (roomObject.game.players.length == 0) {
                     const idRoom = getIdRoomByCode(room);
-                    rooms.splice(idRoom, 1);
-                    console.log(rooms)
+                    rooms.splice(idRoom, 1)
                 } else {
                     io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
                 }

@@ -7,6 +7,11 @@
 <div class="row">
     <h2>It's your turn !</h2>
 </div>
+<div class="row" *ngIf='displayLastFound' [hidden]="boolPlay">
+    <p *ngIf='lastsFound.length > 1'>Last turn, these proposals were found:</p>
+    <p *ngIf='lastsFound.length == 1'>Last turn, this proposal was found:</p>
+    <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+</div>
 <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [disabled]="boolPlay">Start round</button>
 <div *ngIf="boolPlay">
     <div class="row">

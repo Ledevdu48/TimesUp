@@ -19,6 +19,7 @@ export class ProposalComponent implements OnInit {
   proposal: any[];
   proposalForm: FormGroup;
   message: string;
+  displayForm: boolean = false;
   
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private chargingService: ChargingService) { }
@@ -62,6 +63,7 @@ export class ProposalComponent implements OnInit {
       group[i] = ['', Validators.required];
     }
     this.proposalForm = this.formBuilder.group(group);
+    this.displayForm = true;
   }
 
   onSubmit() {

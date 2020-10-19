@@ -29,6 +29,9 @@ export class ListenComponent implements OnInit {
   timeLeft: number;
   boolPlaySubscription: Subscription;
   boolPlay: boolean;
+  displayLastFound: boolean;
+  displayChosenTeam: boolean;
+  displayChosenPlayer: boolean;
 
   constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) {}
 
@@ -66,6 +69,7 @@ export class ListenComponent implements OnInit {
     this.chosenPlayerSubscription = this.chargingService.chosenPlayerSubject.subscribe(
       (chosenPlayer: string[]) => {
         this.chosenPlayer = chosenPlayer;
+        this.displayChosenPlayer = !(typeof this.chosenPlayer === "undefined");
       }
     );
     this.chargingService.emitChosenPlayerSubject();
@@ -73,6 +77,7 @@ export class ListenComponent implements OnInit {
     this.chosenTeamSubscription = this.chargingService.chosenTeamSubject.subscribe(
       (chosenTeam: number) => {
         this.chosenTeam = chosenTeam;
+        this.displayChosenTeam = !(typeof this.chosenTeam === "undefined");
       }
     );
     this.chargingService.emitChosenTeamSubject();
@@ -87,6 +92,7 @@ export class ListenComponent implements OnInit {
     this.lastsFoundSubscription = this.chargingService.lastsFoundSubject.subscribe(
       (lastsFound: any[]) => {
         this.lastsFound = lastsFound;
+        this.displayLastFound = !(typeof this.lastsFound === "undefined");
       }
     )
     this.chargingService.emitLastsFoundSubject();

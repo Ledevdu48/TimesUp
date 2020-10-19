@@ -34,6 +34,7 @@ export class PlayComponent implements OnInit {
   step: string;
   lastsFoundSubscription: Subscription;
   lastsFound: any[];
+  displayLastFound: boolean;
   
   constructor(private authService: AuthService, private chargingService: ChargingService, private formBuilder: FormBuilder) { }
 
@@ -41,6 +42,7 @@ export class PlayComponent implements OnInit {
     this.lastsFoundSubscription = this.chargingService.lastsFoundSubject.subscribe(
       (lastsFound: any[]) => {
         this.lastsFound = lastsFound;
+        this.displayLastFound = !(typeof this.lastsFound === "undefined");
       }
     )
     this.chargingService.emitLastsFoundSubject()
