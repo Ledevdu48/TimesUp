@@ -1,10 +1,10 @@
-<app-auth [socket]="socket" *ngIf="isNone"></app-auth>
-<div  *ngIf="isAuth" class = "sidebar col-sm-2">
+<app-auth class="login" [socket]="socket" *ngIf="isNone"></app-auth>
+<div *ngIf="isAuth" class="sidebar col-sm-2">
     <app-sidebar [socket]="socket"></app-sidebar>
 </div>
-<div *ngIf="isAuth" class = "content container col-sm-3">
-    <app-creation  [socket]="socket" *ngIf="isCreator"></app-creation>
-    <app-proposal  [socket]="socket" *ngIf="isProposal"></app-proposal>
+<div *ngIf="isAuth" class="content container col-sm-3">
+    <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
+    <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
     <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
     <app-play [socket]="socket" *ngIf="isPlayer"></app-play>
 </div>
