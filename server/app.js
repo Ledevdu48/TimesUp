@@ -174,15 +174,9 @@ io.on('connection', socket => {
                 const roomObject = getRoomByCode(room);
                 roomObject.game.players.splice(id, 1);
                 if (roomObject.game.players.length == 0) {
-                    roomObject.game = new Game(
-                        [],
-                        [[], []],
-                        'creation',
-                        [0, 0],
-                        [],
-                        { numberProp: 0, timer: {} },
-                        []
-                    )
+                    const idRoom = getIdRoomByCode(room);
+                    rooms.splice(idRoom, 1);
+                    console.log(rooms)
                 } else {
                     io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
                 }
@@ -296,6 +290,15 @@ class Game {
         const chosenPlayer = this.team[chosenTeam][0];
         return [chosenTeam, chosenPlayer]
     }
+}
+
+function getIdRoomByCode(code) {
+    const id = rooms.findIndex(
+        (s) => {
+            return s.code === code;
+        }
+    )
+    return id;
 }
 
 function getRoomByCode(code) {
