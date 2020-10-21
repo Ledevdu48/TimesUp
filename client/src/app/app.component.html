@@ -1,10 +1,21 @@
-<app-auth class="login" [socket]="socket" *ngIf="isNone"></app-auth>
-<div *ngIf="isAuth" class="sidebar col-sm-2">
-    <app-sidebar [socket]="socket"></app-sidebar>
+<div class="container-fluid" *ngIf="isNone">
+    <div class="row fullrow justify-content-center align-items-center">
+        <div class="col-4">
+            <app-auth [socket]="socket"></app-auth>
+        </div>
+    </div>
 </div>
-<div *ngIf="isAuth" class="content container col-sm-3">
-    <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
-    <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
-    <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
-    <app-play [socket]="socket" *ngIf="isPlayer"></app-play>
+<div class="container-fluid" *ngIf="isAuth">
+    <div class="row">
+        <div class="sidebar bg-primary col-lg-2 col-md-3 col-sm-4">
+            <app-sidebar [socket]="socket"></app-sidebar>
+        </div>
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-5 col-sm-4">
+            <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
+            <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
+            <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
+            <app-play [socket]="socket" *ngIf="isPlayer"></app-play>
+        </div>
+    </div>
 </div>

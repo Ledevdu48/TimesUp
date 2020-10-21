@@ -9,7 +9,6 @@ http.listen(3000, () => {
 var rooms = [];
 
 io.on('connection', socket => {
-    console.log('user ' + socket.id + ' is connected')
 
     socket.on('joinRoom', data => {
         if (getRoomByCode(data.name) === undefined) {
@@ -181,10 +180,6 @@ io.on('connection', socket => {
                 }
             }
         }
-    })
-
-    socket.on('disconnect', () => {
-        console.log('user ' + socket.id + ' is deconnected')
     })
 })
 
