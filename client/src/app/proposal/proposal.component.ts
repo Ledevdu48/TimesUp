@@ -73,4 +73,8 @@ export class ProposalComponent implements OnInit {
     this.socket.emit('yourProposals', this.proposal, this.roomCode)
   }
 
+  ngOnDestroy() {
+    this.statusSubscription.unsubscribe();
+  }
+
 }

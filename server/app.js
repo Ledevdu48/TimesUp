@@ -1,10 +1,9 @@
-var express = require('express')();
-var http = require('http').createServer(express);
-var io = require('socket.io')(http);
-
-http.listen(3000, () => {
-    console.log('Listen to port:3000')
-})
+var express = require('express');
+var app = module.exports = express();
+var http = require('http');
+var server = http.createServer(app);
+var io = require('socket.io')(server)
+server.listen(3000);
 
 var rooms = [];
 
@@ -154,6 +153,11 @@ io.on('connection', socket => {
         if (game.remainingWords.length ===0){
             if (game.stageGame === 'Step 1') {
                 const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
+                io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
+                io.in(chosenPlayer[0]).emit('goToPlay');
+            }
+            if (game.stageGame === 'Step 2') {
+                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
             }

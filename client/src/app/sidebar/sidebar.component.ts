@@ -65,4 +65,12 @@ export class SidebarComponent implements OnInit {
       this.socket.emit('randomizeTeam', this.roomCode);
       this.chargingService.emitTeamsSubject();
     }
+
+    ngOnDestroy() {
+      this.statusSubscription.unsubscribe();
+      this.playersSubscription.unsubscribe();
+      this.roomCodeSubscription.unsubscribe();
+      this.teamsSubscription.unsubscribe();
+      this.scoreSubscription.unsubscribe();
+    }
 }

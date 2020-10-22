@@ -145,8 +145,13 @@
               "devServerTarget": "projet-timesup:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "projet-timesup"
 }

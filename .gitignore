@@ -1,5 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/angular
-# Edit at https://www.toptal.com/developers/gitignore?templates=angular
+
+# Created by https://www.toptal.com/developers/gitignore/api/firebase,angular
+# Edit at https://www.toptal.com/developers/gitignore?templates=firebase,angular
 
 ### Angular ###
 ## Angular ##
@@ -32,4 +33,14 @@ e2e/*.map
 # System Files
 .DS_Store/
 
-# End of https://www.toptal.com/developers/gitignore/api/angular
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
+
+# End of https://www.toptal.com/developers/gitignore/api/firebase,angular
+client/firebase.json

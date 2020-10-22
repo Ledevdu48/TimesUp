@@ -122,4 +122,15 @@ export class ListenComponent implements OnInit {
     
   }
 
+  ngOnDestroy() {
+    this.statusSubscription.unsubscribe();
+    this.chosenPlayerSubscription.unsubscribe();
+    this.chosenTeamSubscription.unsubscribe();
+    this.timerSubscription.unsubscribe();
+    this.timeLeftSubscription.unsubscribe();
+    this.boolPlaySubscription.unsubscribe();
+    this.stepSubscription.unsubscribe();
+    this.lastsFoundSubscription.unsubscribe();
+  }
+
 }

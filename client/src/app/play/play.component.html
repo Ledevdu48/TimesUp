@@ -2,7 +2,7 @@
     <h1>{{ step }}</h1>
 </div>
 <div class="row">
-    <h1>It's time for team {{chosenTeam+1}}</h1>
+    <h1>It's time for <span class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span></h1>
 </div>
 <div class="row">
     <h2>It's your turn !</h2>
@@ -10,30 +10,52 @@
 <div class="row" *ngIf='displayLastFound' [hidden]="boolPlay">
     <p *ngIf='lastsFound.length > 1'>Last turn, these proposals were found:</p>
     <p *ngIf='lastsFound.length == 1'>Last turn, this proposal was found:</p>
-    <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+    <ul>
+        <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+    </ul>
 </div>
-<button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [disabled]="boolPlay">Start round</button>
-<div *ngIf="boolPlay">
-    <div class="row">
-        <p>Time left: {{ timeLeft }} s</p>
-    </div>
-    <div class="row">
-        <h3>Current proposal: {{currentProposal[1]}}</h3>
-    </div>
-    <div class="row">
-        <button class="btn btn-warning" (click)="onSkip()">Skip proposal</button>
-        <button class="btn btn-success" (click)="onValidate()">Validate</button>
-    </div>
+<div class="row">
+    <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [disabled]="boolPlay">Start round</button>
 </div>
-<div class = "row" *ngIf="endRound">
-    <form [formGroup]="validationForm">
-        <div *ngFor="let proposal of validateProposals">
-            <label>{{ proposal }}</label>
-            <select name="{{ proposal }}" type = "checkbox" formControlName = "{{ proposal }}">
-                <option value="valid">Valid</option>
-                <option value="unvalid">Unvalid</option>
-            </select>
+<div class="jumbotron" >
+    <div *ngIf="boolPlay">
+        <div class="row">
+            <p>Time left: {{ timeLeft }} s</p>
         </div>
-        <button class="btn btn-success" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate results</button>     
-    </form>
+        <div class="row">
+            <h3>Current proposal: {{currentProposal[1]}}</h3>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <button class="btn btn-warning" (click)="onSkip()">Skip proposal</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-success" (click)="onValidate()">Validate</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="endRound">
+        <form [formGroup]="validationForm">
+            <div class = "row" *ngFor="let proposal of validateProposals">
+                <div class="col">
+                    <label>{{ proposal }}</label>
+                </div>
+                <div class="col-auto form-check form-check-inline">
+                    <input class="form-check-input" type="radio" formControlName="{{ proposal }}" value="valid">
+                    <label class="form-check-label">Valid</label>
+                </div>
+                <div class="col-auto form-check form-check-inline">
+                    <input class="form-check-input" type="radio" formControlName="{{ proposal }}" value="unvalid">
+                    <label class="form-check-label">Unvalid</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-success" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate
+                        results</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+

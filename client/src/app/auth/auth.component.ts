@@ -44,4 +44,8 @@ export class AuthComponent implements OnInit {
     this.socket.emit('joinRoom', data)
     this.authService.changeCreator();
   }
+
+  ngOnDestroy() {
+    this.statusSubscription.unsubscribe();
+  }
 }

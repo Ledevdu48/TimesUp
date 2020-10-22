@@ -7,11 +7,14 @@
 </div>
 <div class="container-fluid" *ngIf="isAuth">
     <div class="row">
+        <h1>Times Up Online</h1>
+    </div>
+    <div class="row">
         <div class="sidebar bg-primary col-lg-2 col-md-3 col-sm-4">
             <app-sidebar [socket]="socket"></app-sidebar>
         </div>
         <div class="col-md-1 col-sm-1"></div>
-        <div class="col-md-5 col-sm-4">
+        <div class="col-md-8 col-sm-4">
             <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
             <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
             <app-listen [socket]="socket" *ngIf="isListener"></app-listen>

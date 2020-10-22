@@ -100,5 +100,12 @@ export class CreationComponent implements OnInit {
       timerStep3: timerStep3
     }
     this.socket.emit('parametersToGame', data, this.roomCode)
+  } 
+   
+  ngOnDestroy() {
+    this.statusSubscription.unsubscribe();
+    this.playersSubscription.unsubscribe();
+    this.roomCodeSubscription.unsubscribe();
+    this.teamsSubscription.unsubscribe();
   }
 }
