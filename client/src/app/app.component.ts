@@ -42,7 +42,7 @@ export class AppComponent implements OnInit{
       }
     );
     this.authService.emitConnectedSubject();
-    this.socket = io.connect('http://localhost:3000');
+    this.socket = io.connect('http://51.15.12.72:3000');
   }
 
   ngOnDestroy() {
