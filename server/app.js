@@ -1,3 +1,4 @@
+const { time } = require('console');
 var express = require('express');
 var app = module.exports = express();
 var http = require('http');
@@ -117,6 +118,9 @@ io.on('connection', socket => {
               clearInterval(interval)
             }
           }, 1000)
+        socket.on ('end', () => {
+            clearInterval(interval)
+        })
     })
 
     socket.on('start', roomCode => {
@@ -156,7 +160,7 @@ io.on('connection', socket => {
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
             }
-            if (game.stageGame === 'Step 2') {
+            else {
                 const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
