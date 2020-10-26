@@ -1,6 +1,10 @@
-const { time } = require('console');
 var express = require('express');
+var path = require('path')
 var app = module.exports = express();
+app.use(express.static(path.join(__dirname, '../client/dist/projet-timesup')));
+app.get('*', (req, res) => {
+    return res.sendFile(path.join(__dirname, '../client/dist/projet-timesup/index.html'))
+})
 var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io')(server)
