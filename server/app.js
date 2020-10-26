@@ -1,6 +1,8 @@
 var express = require('express');
-var path = require('path')
+var path = require('path');
+var bodyParser = require('body-parser');
 var app = module.exports = express();
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../client/dist/projet-timesup')));
 app.get('*', (req, res) => {
     return res.sendFile(path.join(__dirname, '../client/dist/projet-timesup/index.html'))
