@@ -7,18 +7,25 @@
 <div class="row" *ngIf="displayChosenPlayer">
     <h2>It's the turn of {{chosenPlayer[1]}}</h2>
 </div>
-<div [hidden]="!boolPlay">
-    <div class="row">
-        <h3>Last proposal: {{ display }}</h3>
+<div class="row card mb-3" *ngIf="boolPlay">
+    <div class="card-header">Round</div>
+    <div class="card-body bg-info">
+        <p class="timer">Time left: {{ timeLeft }} s</p>
     </div>
-    <div class="row">
-        <p>Time left: {{ timeLeft }} s</p>
+    <div *ngIf="display === 'Skipped'" class="card-body bg-warning">
+        <p>{{ display }}</p>
+    </div>
+    <div *ngIf="display === 'Found'" class="card-body bg-success">
+        <p>{{ display }}</p>
     </div>
 </div>
-<div class="row" *ngIf='displayLastFound' [hidden]="boolPlay">
-    <p *ngIf='lastsFound.length > 1'>Last turn, these proposals were found:</p>
-    <p *ngIf='lastsFound.length == 1'>Last turn, this proposal was found:</p>
-    <ul>
-        <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
-    </ul>
+<div class="row card mb-3" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
+    <div class="card-header">Last round</div>
+    <div class="card-body">
+        <p *ngIf='lastsFound.length > 1'>Last round, these proposals were found:</p>
+        <p *ngIf='lastsFound.length == 1'>Last round, this proposal was found:</p>
+        <ul>
+            <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+        </ul>
+    </div>
 </div>

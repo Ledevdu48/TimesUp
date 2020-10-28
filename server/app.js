@@ -56,7 +56,7 @@ io.on('connection', socket => {
             if (key != socket.id) {
                 const room = sockrooms[key];
                 const roomObject = getRoomByCode(room);
-                io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+                io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
             }
         }
     })
@@ -65,7 +65,7 @@ io.on('connection', socket => {
         const roomObject = getRoomByCode(roomCode);
         roomObject.game.team = [[], []];
         roomObject.game.randomizeTeam();
-        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
     })
 
     socket.on('parametersToUsers', (data, roomCode) => {
@@ -97,7 +97,7 @@ io.on('connection', socket => {
             io.in(roomCode).emit('goToListen')
             const [chosenTeam, chosenPlayer, timer] = roomObject.game.initStage('Step 1');
             io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer)
-            io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+            io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
             io.in(chosenPlayer[0]).emit('goToPlay')
         } else {
             io.in(socket.id).emit('waitingOthers')
@@ -131,19 +131,21 @@ io.on('connection', socket => {
 
     socket.on('start', roomCode => {
         const roomObject = getRoomByCode(roomCode);
-        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, true)
+        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, true, false)
     })
 
     socket.on('end', roomCode => {
         const roomObject = getRoomByCode(roomCode);
-        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, true)
     })
 
-    socket.on('askProposal', (roomCode, currentProposal) => {
+    socket.on('askProposal', (roomCode, currentProposal, firstBool) => {
         const roomObject = getRoomByCode(roomCode);
         const game = roomObject.game;
         const proposal = game.nextWord(currentProposal[0]);
-        io.in(roomCode).emit('skipProposal')
+        if (!firstBool) {
+            io.in(roomCode).emit('skipProposal')
+        }        
         io.in(socket.id).emit('sendProposal', proposal)
     })
 
@@ -175,7 +177,7 @@ io.on('connection', socket => {
             io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
             io.in(chosenPlayer[0]).emit('goToPlay');
         }        
-        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
     })
 
     socket.on('disconnecting', () => {
@@ -190,7 +192,7 @@ io.on('connection', socket => {
                     const idRoom = getIdRoomByCode(room);
                     rooms.splice(idRoom, 1)
                 } else {
-                    io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false)
+                    io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
                 }
             }
         }

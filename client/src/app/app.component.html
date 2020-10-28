@@ -1,19 +1,32 @@
+<div class="upbar">
+    <h1>Times Up Online</h1>
+</div>
 <div class="container-fluid" *ngIf="isNone">
-    <div class="row fullrow justify-content-center align-items-center">
-        <div class="col-4">
+    <div class="row padding_top_bot justify-content-center">
+        <div class="col-3 login">
             <app-auth [socket]="socket"></app-auth>
         </div>
+    </div>
+    <div class="jumbotron">
+        <h2>Welcome</h2>
+        <p>Welcome to Times Up Online, the live game where you and your friends try to guess your custom proposals during various stages!</p>
+        <h2>To Play</h2>
+        <p>
+            Once you have set up the parameters of the game and the teams, you will be asked to create your proposals for the rest of the game. <br>
+            In the first step, you can use any word (except the ones in the proposal) to make your team guess the proposal. <br>
+            In the second step, you must use only one word. <br>
+            In the third step, you will have to draw something to make your team guess the proposal (no words written). 
+        </p>
+        <h2>Chat</h2>
+        <p>You must use another program to chat with your friends during the game</p>
     </div>
 </div>
 <div class="container-fluid" *ngIf="isAuth">
     <div class="row">
-        <h1>Times Up Online</h1>
-    </div>
-    <div class="row">
         <div class="sidebar bg-primary col-auto">
             <app-sidebar [socket]="socket"></app-sidebar>
         </div>
-        <div class="col-auto">
+        <div class="col-sm-9 padding_top_left">
             <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
             <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
             <app-listen [socket]="socket" *ngIf="isListener"></app-listen>

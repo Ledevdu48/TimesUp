@@ -129,14 +129,14 @@ export class PlayComponent implements OnInit {
         this.endRound = true;
       }
     }, 1000*this.timer)
-    this.socket.emit('askProposal', this.roomCode, this.currentProposal)
+    this.socket.emit('askProposal', this.roomCode, this.currentProposal, true)
     this.socket.on('sendProposal', proposal => {
       this.currentProposal = proposal;
     })
   }
 
   onSkip() {
-    this.socket.emit('askProposal', this.roomCode, this.currentProposal)
+    this.socket.emit('askProposal', this.roomCode, this.currentProposal, false)
     this.socket.on('sendProposal', proposal => {
       this.currentProposal = proposal;
     })

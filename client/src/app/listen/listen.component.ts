@@ -29,6 +29,8 @@ export class ListenComponent implements OnInit {
   timeLeft: number;
   boolPlaySubscription: Subscription;
   boolPlay: boolean;
+  endRoundSubscription: Subscription;
+  endRound: boolean;
   displayLastFound: boolean;
   displayChosenTeam: boolean;
   displayChosenPlayer: boolean;
@@ -36,6 +38,13 @@ export class ListenComponent implements OnInit {
   constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) {}
 
   ngOnInit() {
+
+    this.endRoundSubscription = this.chargingService.endRoundSubject.subscribe(
+      (endRound: boolean) => {
+        this.endRound = endRound;
+      }
+    )
+    this.chargingService.emitEndRoundSubject();
 
     this.boolPlaySubscription = this.chargingService.boolPlaySubject.subscribe(
       (boolPlay: boolean) => {
@@ -105,10 +114,10 @@ export class ListenComponent implements OnInit {
     })
 
     this.socket.on('skipProposal', () => {
-      this.display = 'Skipped';
-      setTimeout(() => {
-        this.display = '';
-      }, 1000);
+        this.display = 'Skipped';
+        setTimeout(() => {
+          this.display = '';
+        }, 1000);
     })
 
     this.socket.on('yourRoom', code => {
@@ -131,6 +140,7 @@ export class ListenComponent implements OnInit {
     this.boolPlaySubscription.unsubscribe();
     this.stepSubscription.unsubscribe();
     this.lastsFoundSubscription.unsubscribe();
+    this.endRoundSubscription.unsubscribe();
   }
 
 }

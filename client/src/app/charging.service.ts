@@ -28,6 +28,8 @@ export class ChargingService {
   timeLeft: number;
   boolPlaySubject = new Subject <boolean>();
   boolPlay: boolean;
+  endRoundSubject = new Subject <boolean>();
+  endRound: boolean;
 
   constructor() {
     this.lastsFound = [];
@@ -79,6 +81,10 @@ export class ChargingService {
     this.scoreSubject.next(this.score);
   }
 
+  emitEndRoundSubject(){
+    this.endRoundSubject.next(this.endRound);
+  }
+
   getPlayer(socket) {
     socket.on('nextPlayer', (chosenTeam, chosenPlayer, timer, lastsFound) => {
       this.chosenTeam = chosenTeam;
@@ -101,7 +107,7 @@ export class ChargingService {
 
   getInfos(socket) {
     socket.emit('getRoomCode');
-    socket.on('sendInfos', (room, players, teams, score, step, bool) => {
+    socket.on('sendInfos', (room, players, teams, score, step, bool, bool2) => {
       this.roomCode = room;
       this.emitRoomCodeSubject();
       this.players = [];
@@ -117,6 +123,8 @@ export class ChargingService {
       this.emitStepSubject();
       this.boolPlay = bool;
       this.emitBoolPlaySubject();
+      this.endRound = bool2;
+      this.emitEndRoundSubject();
     })
   }
 }

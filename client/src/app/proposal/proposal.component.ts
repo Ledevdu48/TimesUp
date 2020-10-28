@@ -20,6 +20,7 @@ export class ProposalComponent implements OnInit {
   proposalForm: FormGroup;
   message: string;
   displayForm: boolean = false;
+  waiting: boolean = false;
   
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private chargingService: ChargingService) { }
@@ -47,6 +48,7 @@ export class ProposalComponent implements OnInit {
     })
 
     this.socket.on('waitingOthers', () => {
+      this.waiting = true;
       this.message = 'Proposals sent, waiting other players ...'
     })
 

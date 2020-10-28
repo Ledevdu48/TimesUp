@@ -5,51 +5,53 @@
     <h1>It's time for <span class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span></h1>
 </div>
 <div class="row">
-    <h2>It's your turn !</h2>
-</div>
-<div class="row" *ngIf='displayLastFound' [hidden]="boolPlay">
-    <p *ngIf='lastsFound.length > 1'>Last turn, these proposals were found:</p>
-    <p *ngIf='lastsFound.length == 1'>Last turn, this proposal was found:</p>
-    <ul>
-        <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
-    </ul>
+    <h2>It's your turn!</h2>
 </div>
 <div class="row">
-    <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [disabled]="boolPlay">Start round</button>
+    <p>You have {{ timer }}s to make your team guess!</p>
 </div>
-<div class="jumbotron" >
-    <div *ngIf="boolPlay">
-        <div class="row">
-            <p>Time left: {{ timeLeft }} s</p>
-        </div>
-        <div class="row">
-            <h3>Current proposal: {{currentProposal[1]}}</h3>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col">
-                <button class="btn btn-warning" (click)="onSkip()">Skip proposal</button>
-            </div>
-            <div class="col">
-                <button class="btn btn-success" (click)="onValidate()">Validate</button>
-            </div>
-        </div>
+<div class="row card mb-3" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
+    <div class="card-header">Last round</div>
+    <div class="card-body">
+        <p *ngIf='lastsFound.length > 1'>Last round, these proposals were found:</p>
+        <p *ngIf='lastsFound.length == 1'>Last round, this proposal was found:</p>
+        <ul>
+            <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+        </ul>
     </div>
-    <div *ngIf="endRound">
+</div>
+<div class="row">
+    <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [hidden]="boolPlay">Start round</button>
+</div>
+<div class="row card mb-3" *ngIf="boolPlay">
+    <div class="card-header">Round</div>
+    <div class="card-body bg-info">
+        <p class="timer">Time left: {{ timeLeft }} s</p>
+    </div>
+    <div class="card-body">
+        <h3 class="card-subtitle">Current proposal: {{currentProposal[1]}}</h3>
+        <button class="btn btn-warning" (click)="onSkip()">Skip proposal</button>
+        <button class="btn btn-success" (click)="onValidate()">Validate</button>
+    </div>
+</div>
+<div class ="row card mb-3" *ngIf="endRound">
+    <div class="card-header">Validation</div>
+    <div class="card-body">
         <form [formGroup]="validationForm">
-            <div class = "row" *ngFor="let proposal of validateProposals">
+            <div class="row" *ngFor="let proposal of validateProposals">
                 <div class="col">
-                    <label>{{ proposal }}</label>
+                    <label class="radio_label">{{ proposal }}</label>
                 </div>
                 <div class="col-auto form-check form-check-inline">
-                    <input class="form-check-input" type="radio" formControlName="{{ proposal }}" value="valid">
-                    <label class="form-check-label">Valid</label>
+                    <input class="radio" type="radio" formControlName="{{ proposal }}" value="valid">
+                    <label class="radio_label">Valid</label>
                 </div>
                 <div class="col-auto form-check form-check-inline">
-                    <input class="form-check-input" type="radio" formControlName="{{ proposal }}" value="unvalid">
-                    <label class="form-check-label">Unvalid</label>
+                    <input class="radio" type="radio" formControlName="{{ proposal }}" value="unvalid">
+                    <label class="radio_label">Unvalid</label>
                 </div>
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col">
                     <button class="btn btn-success" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate
                         results</button>
@@ -58,4 +60,3 @@
         </form>
     </div>
 </div>
-

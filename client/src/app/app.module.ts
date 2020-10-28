@@ -12,7 +12,6 @@ import { ListenComponent } from './listen/listen.component';
 import { AuthService } from './auth.service';
 import { ChargingService } from './charging.service'
 import { ProposalComponent } from './proposal/proposal.component';
-import { UpbarComponent } from './upbar/upbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     PlayComponent,
     ListenComponent,
     ProposalComponent,
-    UpbarComponent,
     SidebarComponent
   ],
   imports: [
