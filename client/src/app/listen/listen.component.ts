@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ApplicationRef } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ChargingService } from '../charging.service';
 import { Subscription } from 'rxjs';
+import { CONTEXT_NAME } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-listen',
@@ -129,6 +130,21 @@ export class ListenComponent implements OnInit {
       this.socket.emit('chargingPlayer', this.roomCode);
     })
     
+    const canvas = <HTMLCanvasElement>document.getElementById("canvas")
+    if (canvas != null) {
+      console.log('hello')
+      canvas.height = 800;
+      canvas.width = 1000;
+
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      this.socket.on('actualizeCanvas', canv => {
+        ctx.drawImage(canv, 0, 0);
+      })
+    }
+
+
   }
 
   ngOnDestroy() {

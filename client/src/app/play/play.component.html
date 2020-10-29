@@ -23,6 +23,9 @@
 <div class="row">
     <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [hidden]="boolPlay">Start round</button>
 </div>
+<div class="row">
+    <canvas id="canvas" (mousemove)="onChange()"></canvas>
+</div>
 <div class="row card mb-3" *ngIf="boolPlay">
     <div class="card-header">Round</div>
     <div class="card-body bg-info">

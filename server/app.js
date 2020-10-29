@@ -158,6 +158,10 @@ io.on('connection', socket => {
         io.in(socket.id).emit('sendProposal', proposal)
     })
 
+    socket.on('sendCanvas', (canvas, roomCode) => {
+        io.in(roomCode).emit('actualizeCanvas', canvas)
+    })
+
     socket.on('resultsRound', (roomCode, lastTeam, unvalidWords, validWords, timer) => {
         const roomObject = getRoomByCode(roomCode);
         const game = roomObject.game;

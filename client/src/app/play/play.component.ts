@@ -109,6 +109,46 @@ export class PlayComponent implements OnInit {
     this.socket.on('yourRoom', code => {
       this.roomCode = code;
     })
+
+    let painting = false;
+    const canvas = <HTMLCanvasElement>document.getElementById("canvas")
+    if (canvas != null) {
+      canvas.height = 800;
+      canvas.width = 1000;
+
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      function startPosition(e) {
+        painting = true;
+        draw(e);
+      }
+
+      function endPosition() {
+        painting = false;
+        ctx.beginPath();
+      }
+
+      function draw(e) {
+        if (!painting) return
+
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "green";
+        ctx.lineCap = "round";
+
+        ctx.lineTo(e.clientX, e.clientY)
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX, e.clientY)
+      }
+
+      canvas.addEventListener('mousedown', startPosition)
+      canvas.addEventListener('mouseup', endPosition)
+      canvas.addEventListener('mousemove', draw)
+    }
+
+
   }
 
   initForm(needValidation) {
@@ -168,6 +208,11 @@ export class PlayComponent implements OnInit {
     }
     this.socket.emit('resultsRound', this.roomCode, this.chosenTeam, this.unvalidProposals, foundProposals, this.timer);
     this.authService.changeListener();
+  }
+
+  onChange(){
+    const canvas = <HTMLCanvasElement>document.getElementById("canvas")
+    this.socket.emit('sendCanvas', canvas, this.roomCode)
   }
 
   ngOnDestroy() {
