@@ -2,7 +2,7 @@
   <h1>Game creation</h1>
 </div>
 <div class="row">
-  <form [formGroup]="parametersForm">
+  <form class="col-sm-12" [formGroup]="parametersForm">
     <div class="form-group">
       <label for="numberProp">Number of proposals per person:</label>
       <input type="number" id="numberProp" class="form-control -lg" formControlName="numberProp" (keyup)="onSend()"
@@ -17,6 +17,18 @@
       <input type="number" id="timerStep3" class="form-control -lg" formControlName="timerStep3" (keyup)="onSend()"
         min=1 placeholder="Step 3">
     </div>
-    <button class="btn btn-success" (click)="onLaunch()" [disabled]="launchBool || parametersForm.invalid">Launch the game</button>
+    <button class="btn btn-success" (click)="onLaunch()" [disabled]="createTeams || alone || parametersForm.invalid">Launch the game</button>
   </form>
+</div>
+<div class="row mt-sm-1 justify-content-end" *ngIf="createTeams || alone || parametersForm.invalid">
+  <div class="col-sm-5 alert alert-danger">
+    <p>
+      <strong>Oh snap!</strong>
+    </p>
+    <ul>
+      <li *ngIf="parametersForm.invalid">Complete the parameters form.</li>
+      <li *ngIf="alone">You can't play if you're alone ... :(</li>
+      <li *ngIf="createTeams"> Create the teams.</li>  
+    </ul>
+  </div>
 </div>

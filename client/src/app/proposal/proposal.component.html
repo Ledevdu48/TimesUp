@@ -1,4 +1,5 @@
 <h1>Proposal creation</h1>
+<p *ngIf="displayForm && !waiting">Enter your proposals (famous person, fictional character, situation, places, expression, private jokes with your friends, ...) </p>
 <form *ngIf="displayForm && !waiting" [formGroup]="proposalForm">
     <div class="form-group">
         <div *ngFor="let prop of proposal; index as i">

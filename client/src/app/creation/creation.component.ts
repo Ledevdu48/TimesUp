@@ -20,7 +20,8 @@ export class CreationComponent implements OnInit {
   roomCode: string;
   teams: any[];
   teamsSubscription: Subscription;
-  launchBool: boolean;
+  createTeams: boolean;
+  alone: boolean;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private chargingService: ChargingService) { }
 
@@ -28,12 +29,13 @@ export class CreationComponent implements OnInit {
     this.playersSubscription = this.chargingService.playersSubject.subscribe(
       (players: any[]) => {
         this.players = players;
+        this.alone = this.players.length < 2;
       })
     this.chargingService.emitPlayersSubject()
     this.teamsSubscription = this.chargingService.teamsSubject.subscribe(
       (teams: any[]) => {
         this.teams = teams;
-        this.launchBool = this.players.length != this.teams[0].length+this.teams[1].length;
+        this.createTeams = this.players.length != this.teams[0].length+this.teams[1].length;
       }
     )
     this.chargingService.emitTeamsSubject()
