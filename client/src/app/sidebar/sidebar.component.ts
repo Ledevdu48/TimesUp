@@ -21,9 +21,12 @@ export class SidebarComponent implements OnInit {
   score: number[];
   status: string;
   statusSubscription: Subscription;
+  stepSubscription: Subscription;
+  step: string;
   isListener: boolean;
   isPlayer: boolean;
   isProposal: boolean;
+
 
   constructor(private chargingService: ChargingService, private authService: AuthService) { }
 
@@ -61,7 +64,14 @@ export class SidebarComponent implements OnInit {
       }
     )
     this.chargingService.emitScoreSubject()
+    this.stepSubscription = this.chargingService.stepSubject.subscribe(
+      (step: string) => {
+        this.step = step;
+      }
+    )
+    this.chargingService.emitStepSubject();
     }
+    
 
     onRandomize() {
       this.socket.emit('randomizeTeam', this.roomCode);

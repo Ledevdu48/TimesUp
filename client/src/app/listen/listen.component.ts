@@ -156,8 +156,8 @@ export class ListenComponent implements OnInit {
   initCanvas() {
     this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
     if (this.canvas != null) {
-      this.canvas.height = 600;
-      this.canvas.width = 1000;
+      this.canvas.height = 550;
+      this.canvas.width = 900;
 
       this.ctx = this.canvas.getContext('2d');
       this.ctx.fillStyle = "white";

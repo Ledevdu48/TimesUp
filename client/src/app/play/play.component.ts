@@ -57,6 +57,7 @@ export class PlayComponent implements OnInit {
     ['purple', false],
     ['pink', false],
     ['brown', false],
+    ['green', false]
   ]
   
   constructor(private authService: AuthService, private chargingService: ChargingService, private formBuilder: FormBuilder) { }
@@ -143,7 +144,7 @@ export class PlayComponent implements OnInit {
   initCanvas() {
     this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
     if (this.canvas != null) {
-      this.canvas.height = 500;
+      this.canvas.height = 550;
       this.canvas.width = 900;
 
       this.ctx = this.canvas.getContext('2d');
@@ -298,7 +299,7 @@ export class PlayComponent implements OnInit {
       'col box p-2': true
     };
     newClass[coul[0]] = true;
-    newClass['border'] = coul[1];
+    newClass['bord'] = coul[1];
     return newClass
   }
 
