@@ -131,6 +131,9 @@ io.on('connection', socket => {
 
     socket.on('start', roomCode => {
         const roomObject = getRoomByCode(roomCode);
+        if (roomObject.game.stageGame === "Step 3") {
+            io.in(roomCode).emit('initCanvas')
+        }
         io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, true, false)
     })
 
@@ -158,8 +161,20 @@ io.on('connection', socket => {
         io.in(socket.id).emit('sendProposal', proposal)
     })
 
-    socket.on('sendCanvas', (canvas, roomCode) => {
-        io.in(roomCode).emit('actualizeCanvas', canvas)
+    socket.on('draw', (data, roomCode) => {
+        io.in(roomCode).emit('drawEmit', data)
+    })
+
+    socket.on('startPosition', (data, roomCode) => {
+        io.in(roomCode).emit('startPositionEmit', data)
+    })
+
+    socket.on('endPosition', (data, roomCode) => {
+        io.in(roomCode).emit('endPositionEmit', data)
+    })
+
+    socket.on('fill', (color, roomCode) => {
+        io.in(roomCode).emit('fillEmit', color);
     })
 
     socket.on('resultsRound', (roomCode, lastTeam, unvalidWords, validWords, timer) => {

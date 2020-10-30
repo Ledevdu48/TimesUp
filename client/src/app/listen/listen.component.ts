@@ -35,8 +35,10 @@ export class ListenComponent implements OnInit {
   displayLastFound: boolean;
   displayChosenTeam: boolean;
   displayChosenPlayer: boolean;
+  canvas: HTMLCanvasElement;
+  ctx: any;
 
-  constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) {}
+  constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) { }
 
   ngOnInit() {
 
@@ -115,10 +117,10 @@ export class ListenComponent implements OnInit {
     })
 
     this.socket.on('skipProposal', () => {
-        this.display = 'Skipped';
-        setTimeout(() => {
-          this.display = '';
-        }, 1000);
+      this.display = 'Skipped';
+      setTimeout(() => {
+        this.display = '';
+      }, 1000);
     })
 
     this.socket.on('yourRoom', code => {
@@ -129,22 +131,67 @@ export class ListenComponent implements OnInit {
       this.authService.changePlayer();
       this.socket.emit('chargingPlayer', this.roomCode);
     })
-    
-    const canvas = <HTMLCanvasElement>document.getElementById("canvas")
-    if (canvas != null) {
-      console.log('hello')
-      canvas.height = 800;
-      canvas.width = 1000;
 
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      this.socket.on('actualizeCanvas', canv => {
-        ctx.drawImage(canv, 0, 0);
-      })
+    this.socket.on('initCanvas', () => {
+      setTimeout(() => this.initCanvas(), 10)
+    })
+
+    this.socket.on('drawEmit', data => {
+      this.draw(data, this.ctx)
+    })
+    this.socket.on('startPositionEmit', data => {
+      this.startPosition(data, this.ctx)
+    })
+    this.socket.on('endPositionEmit', data => {
+      this.endPosition(this.ctx)
+    })
+    this.socket.on('fillEmit', color => {
+      this.fill(this.ctx, this.canvas, color)
+    })
+
+
+
+  }
+
+  initCanvas() {
+    this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
+    if (this.canvas != null) {
+      this.canvas.height = 600;
+      this.canvas.width = 1000;
+
+      this.ctx = this.canvas.getContext('2d');
+      this.ctx.fillStyle = "white";
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     }
+  }
 
+  draw(data, ctx) {
+    if (!data.painting) return
 
+    ctx.lineWidth = data.size;
+    ctx.strokeStyle = data.color;
+    ctx.lineCap = "round";
+
+    const x = data.x;
+    const y = data.y;
+
+    ctx.lineTo(x, y)
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y)
+  }
+
+  startPosition(data, ctx) {
+    this.draw(data, ctx);
+  }
+
+  endPosition(ctx) {
+    ctx.beginPath();
+  }
+
+  fill(ctx, canvas, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   ngOnDestroy() {

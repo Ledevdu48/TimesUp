@@ -1,45 +1,70 @@
-<div class="row">
-    <h1>{{ step }}</h1>
+<div class="mb-3" [hidden]="boolPlay && step === 'Step 3'">
+    <div class="row">
+        <h1>{{ step }}</h1>
+    </div>
+    <div class="row">
+        <h1>It's time for <span class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span></h1>
+    </div>
+    <div class="row">
+        <h2>It's your turn!</h2>
+    </div>
+    <div class="row">
+        <p>You have {{ timer }}s to make your team guess!</p>
+    </div>
+    <div class="row card mb-3" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
+        <div class="card-header">Last round</div>
+        <div class="card-body">
+            <p *ngIf='lastsFound.length > 1'>Last round, these proposals were found:</p>
+            <p *ngIf='lastsFound.length == 1'>Last round, this proposal was found:</p>
+            <ul>
+                <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+            </ul>
+        </div>
+    </div>
+    <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [hidden]="boolPlay" >Start round</button>
 </div>
-<div class="row">
-    <h1>It's time for <span class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span></h1>
-</div>
-<div class="row">
-    <h2>It's your turn!</h2>
-</div>
-<div class="row">
-    <p>You have {{ timer }}s to make your team guess!</p>
-</div>
-<div class="row card mb-3" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
-    <div class="card-header">Last round</div>
-    <div class="card-body">
-        <p *ngIf='lastsFound.length > 1'>Last round, these proposals were found:</p>
-        <p *ngIf='lastsFound.length == 1'>Last round, this proposal was found:</p>
-        <ul>
-            <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
-        </ul>
+<div *ngIf="boolPlay">
+    <div class="row card mb-3">
+        <div class="card-header p-1">Round</div>
+        <div class="card-body bg-info p-1 mb-0">
+            <p class="timer">Time left: {{ timeLeft }} s</p>
+        </div>
+        <div class="card-body p-2">
+            <h3 class="card-subtitle">Current proposal: {{currentProposal[1]}}</h3>
+        </div>
+        <div class="card-body p-2">
+            <button class="btn btn-warning mr-sm-1" (click)="onSkip()">Skip proposal</button>
+            <button class="btn btn-success" (click)="onValidate()">Validate</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="step === 'Step 3'">
+        <div class="col">
+            <div class="row justify-content-center mb-1">
+                <div class="col">
+                    <canvas id="canvas" (mousemove)="draw($event)" (mousedown)="startPosition($event)"
+                        (mouseup)="endPosition($event)"></canvas>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div [ngClass]="createClass(0)" (click)="changeColor('white')"></div>
+                <div [ngClass]="createClass(1)" (click)="changeColor('black')"></div>
+                <div [ngClass]="createClass(2)" (click)="changeColor('red')"></div>
+                <div [ngClass]="createClass(3)" (click)="changeColor('yellow')"></div>
+                <div [ngClass]="createClass(4)" (click)="changeColor('blue')"></div>
+                <div [ngClass]="createClass(5)" (click)="changeColor('purple')"></div>
+                <div [ngClass]="createClass(6)" (click)="changeColor('pink')"></div>
+                <div [ngClass]="createClass(7)" (click)="changeColor('brown')"></div>
+                <div class="col box" (click)="fill()"></div>
+                <div class="col box black" (click)="changeSize(3)"></div>
+                <div class="col box white" (click)="changeSize(10)"></div>
+                <div class="col box black" (click)="changeSize(20)"></div>
+                <div class="col box white" (click)="changeSize(40)"></div>
+                <div class="col box black" (click)="fillWhite()"></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="row">
-    <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [hidden]="boolPlay">Start round</button>
-</div>
-<div class="row">
-    <canvas id="canvas" (mousemove)="onChange()"></canvas>
-</div>
-<div class="row card mb-3" *ngIf="boolPlay">
-    <div class="card-header">Round</div>
-    <div class="card-body bg-info">
-        <p class="timer">Time left: {{ timeLeft }} s</p>
-    </div>
-    <div class="card-body">
-        <h3 class="card-subtitle">Current proposal: {{currentProposal[1]}}</h3>
-    </div>
-    <div class="card-body">
-        <button class="btn btn-warning mr-sm-1" (click)="onSkip()">Skip proposal</button>
-        <button class="btn btn-success" (click)="onValidate()">Validate</button>
-    </div>
-</div>
-<div class ="row card mb-3" *ngIf="endRound">
+<div class="card" *ngIf="endRound">
     <div class="card-header">Validation</div>
     <div class="card-body">
         <form [formGroup]="validationForm">
