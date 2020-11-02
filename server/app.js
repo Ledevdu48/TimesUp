@@ -201,7 +201,7 @@ io.on('connection', socket => {
         io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
     })
 
-    this.socket.on('restart', (roomCode) => {
+    socket.on('restart', (roomCode) => {
         const roomObject = getRoomByCode(roomCode);
         const game = roomObject.game;
         game = new Game(
