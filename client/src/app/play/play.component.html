@@ -1,6 +1,9 @@
 <div class="mb-3" [hidden]="boolPlay && step === 'Step 3'">
     <div class="row">
-        <h1>It's time for <span class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span></h1>
+        <h1>It's time for 
+            <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
+            <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
+        </h1>
     </div>
     <div class="row">
         <h2>It's your turn!</h2>
@@ -18,20 +21,26 @@
             </ul>
         </div>
     </div>
-    <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [hidden]="boolPlay" >Start round</button>
+    <div class="row justify-content-center">
+        <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [hidden]="boolPlay">Start round</button>
+    </div>
 </div>
 <div *ngIf="boolPlay">
     <div class="row card mb-3">
         <div class="card-header p-1">Round</div>
-        <div class="card-body bg-info p-1 mb-0">
-            <p class="timer">Time left: {{ timeLeft }} s</p>
+        <div class="card-body bg-info">
+            <div class="row justify-content-center">
+                <p class="timer">Time left: {{ timeLeft }} s</p>
+            </div>
         </div>
         <div class="card-body p-2">
             <h3 class="card-subtitle">Current proposal: {{currentProposal[1]}}</h3>
         </div>
         <div class="card-body p-2">
-            <button class="btn btn-warning mr-sm-1" (click)="onSkip()">Skip proposal</button>
-            <button class="btn btn-success" (click)="onValidate()">Validate</button>
+            <div class="row justify-content-center">
+                <button class="btn btn-warning mr-sm-1" (click)="onSkip()">Skip proposal</button>
+                <button class="btn btn-success" (click)="onValidate()">Validate</button>
+            </div>
         </div>
     </div>
     <div *ngIf="step === 'Step 3'">
@@ -56,10 +65,8 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col">
-                    <button class="btn btn-success" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate
-                        results</button>
-                </div>
+                <button class="btn btn-success" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate
+                    results</button>
             </div>
         </form>
     </div>

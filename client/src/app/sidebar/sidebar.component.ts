@@ -17,6 +17,9 @@ export class SidebarComponent implements OnInit {
   players: string[];
   teamsSubscription: Subscription;
   teams: any[];
+  nameTeamSubscription: Subscription;
+  nameTeam: string[];
+  defaultName: boolean[];
   scoreSubscription: Subscription;
   score: number[];
   status: string;
@@ -26,6 +29,7 @@ export class SidebarComponent implements OnInit {
   isListener: boolean;
   isPlayer: boolean;
   isProposal: boolean;
+  isEnd: boolean;
 
 
   constructor(private chargingService: ChargingService, private authService: AuthService) { }
@@ -37,6 +41,7 @@ export class SidebarComponent implements OnInit {
         this.isListener = this.status === 'listener';
         this.isPlayer = this.status === 'player';
         this.isProposal = this.status === 'proposal';
+        this.isEnd = this.status === 'end';
       }
     );
     this.authService.emitStatusSubject();
@@ -58,6 +63,13 @@ export class SidebarComponent implements OnInit {
       }
     )
     this.chargingService.emitTeamsSubject()
+    this.nameTeamSubscription = this.chargingService.nameTeamSubject.subscribe(
+      (nameTeam: string[]) => {
+        this.nameTeam = nameTeam;
+        this.defaultName = [nameTeam[0] === '', nameTeam[1] === ''];
+      }
+    )
+    this.chargingService.emitNameTeamSubject();
     this.scoreSubscription = this.chargingService.scoreSubject.subscribe(
       (score: number[]) => {
         this.score = score;

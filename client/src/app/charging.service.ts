@@ -12,6 +12,8 @@ export class ChargingService {
   players: string[];
   teamsSubject = new Subject<any[]>();
   teams: any[];
+  nameTeamSubject = new Subject<string[]>();
+  nameTeam: string[];
   scoreSubject = new Subject<number[]>();
   score: number[];
   chosenTeamSubject = new Subject<number>();
@@ -35,6 +37,7 @@ export class ChargingService {
     this.lastsFound = [];
     this.teams = [[],[]];
     this.players = [];
+    this.nameTeam = ['', ''];
   }
 
   emitBoolPlaySubject() {
@@ -76,6 +79,10 @@ export class ChargingService {
   emitTeamsSubject() {
     this.teamsSubject.next(this.teams);
   }
+
+  emitNameTeamSubject() {
+    this.nameTeamSubject.next(this.nameTeam);
+  }
   
   emitScoreSubject(){
     this.scoreSubject.next(this.score);
@@ -107,7 +114,7 @@ export class ChargingService {
 
   getInfos(socket) {
     socket.emit('getRoomCode');
-    socket.on('sendInfos', (room, players, teams, score, step, bool, bool2) => {
+    socket.on('sendInfos', (room, players, teams, nameTeam, score, step, bool, bool2) => {
       this.roomCode = room;
       this.emitRoomCodeSubject();
       this.players = [];
@@ -117,6 +124,8 @@ export class ChargingService {
       this.emitPlayersSubject();
       this.teams = teams;
       this.emitTeamsSubject();
+      this.nameTeam = nameTeam;
+      this.emitNameTeamSubject();
       this.score = score;
       this.emitScoreSubject();
       this.step = step;

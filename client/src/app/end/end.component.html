@@ -1,13 +1,35 @@
-<div class = "row">
-    <div class="col">
-        <h2 class="team1">Team 1:</h2>
-        <li *ngFor="let teammate1 of teams[0]" class="team1">{{ teammate1[1] }}</li>
-        <p *ngIf="teams[0].length!=0" class="team1">SCORE: {{score[0]}}</p>
+<div class="row card">
+    <div class="card-header">Results</div>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col">
+                <h2 *ngIf="defaultName[0]" class="team1">Team 1:</h2>
+                <h2 *ngIf="!defaultName[0]" class="team1">{{nameTeam[0]}}</h2>
+                <li *ngFor="let teammate1 of teams[0]" class="team1">{{ teammate1[1] }}</li>
+                <p *ngIf="teams[0].length!=0" class="team1">SCORE: {{score[0]}}</p>
+            </div>
+            <div class="col">
+                <h2 *ngIf="defaultName[1]" class="team2">Team 2:</h2>
+                <h2 *ngIf="!defaultName[1]" class="team2">{{nameTeam[1]}}</h2>
+                <li *ngFor="let teammate2 of teams[1]" class="team2">{{ teammate2[1] }}</li>
+                <p *ngIf="teams[1].length!=0" class="team2">SCORE: {{score[1]}}</p>
+            </div>
+        </div>
     </div>
-    <div class="col">
-        <h2 class="team2">Team 2:</h2>
-        <li *ngFor="let teammate2 of teams[1]" class="team2">{{ teammate2[1] }}</li>
-        <p *ngIf="teams[1].length!=0" class="team2">SCORE: {{score[1]}}</p>
+    <div class="card-body bg-dark">
+        <div class="row justify-content-center">
+            <p class="results" *ngIf="score[0]>score[1]">
+                <span *ngIf="defaultName[0]">Team 1 wins!</span>
+                <span *ngIf="!defaultName[0]">{{nameTeam[0]}} wins!</span>
+            </p>
+            <p class="results" *ngIf="score[1]>score[0]">
+                <span *ngIf="defaultName[1]">Team 2 wins!</span>
+                <span *ngIf="!defaultName[1]">{{nameTeam[1]}} wins!</span>
+            </p>
+            <p class="results" *ngIf="score[1] == score[0]">Draw</p>
+        </div>
     </div>
 </div>
-<button class="btn btn-light" (click)="onRestart()">Restart</button>
+<div class="row justify-content-center mt-2">
+    <button class="btn btn-light" (click)="onRestart()">Restart</button>
+</div>

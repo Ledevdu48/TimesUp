@@ -1,5 +1,8 @@
 <div class="row" *ngIf="displayChosenTeam">
-    <h1>It's time for <span class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span></h1>
+    <h1>It's time for 
+        <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
+        <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
+    </h1>
 </div>
 <div class="row" *ngIf="displayChosenPlayer">
     <h2>It's the turn of {{chosenPlayer[1]}}</h2>
@@ -7,7 +10,9 @@
 <div class="row card mb-3" *ngIf="boolPlay">
     <div class="card-header p-1">Round</div>
     <div class="card-body bg-info p-1">
-        <p class="timer">Time left: {{ timeLeft }} s</p>
+        <div class="row justify-content-center">
+            <p class="timer">Time left: {{ timeLeft }} s</p>
+        </div>        
     </div>
     <div *ngIf="display === 'Skipped'" class="card-body bg-warning p-1">
         <p>{{ display }}</p>

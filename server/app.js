@@ -21,6 +21,7 @@ io.on('connection', socket => {
             const game1 = new Game(
                 [],
                 [[], []],
+                ['', ''],
                 'creation',
                 [0, 0],
                 [],
@@ -56,7 +57,7 @@ io.on('connection', socket => {
             if (key != socket.id) {
                 const room = sockrooms[key];
                 const roomObject = getRoomByCode(room);
-                io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
+                io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
             }
         }
     })
@@ -65,7 +66,7 @@ io.on('connection', socket => {
         const roomObject = getRoomByCode(roomCode);
         roomObject.game.team = [[], []];
         roomObject.game.randomizeTeam();
-        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
     })
 
     socket.on('parametersToUsers', (data, roomCode) => {
@@ -78,6 +79,8 @@ io.on('connection', socket => {
         roomObject.game.parameters.timer['Step 1'] = data.timerStep1;
         roomObject.game.parameters.timer['Step 2'] = data.timerStep2;
         roomObject.game.parameters.timer['Step 3'] = data.timerStep3;
+        roomObject.game.nameTeam[0] = data.nameTeam1;
+        roomObject.game.nameTeam[1] = data.nameTeam2;
         io.in(roomCode).emit('yourRoom', roomCode)
         io.in(roomCode).emit('goToProposal')
     })
@@ -97,7 +100,7 @@ io.on('connection', socket => {
             io.in(roomCode).emit('goToListen')
             const [chosenTeam, chosenPlayer, timer] = roomObject.game.initStage('Step 1');
             io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer)
-            io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
+            io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
             io.in(chosenPlayer[0]).emit('goToPlay')
         } else {
             io.in(socket.id).emit('waitingOthers')
@@ -134,12 +137,12 @@ io.on('connection', socket => {
         if (roomObject.game.stageGame === "Step 3") {
             io.in(roomCode).emit('initCanvas')
         }
-        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, true, false)
+        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, true, false)
     })
 
     socket.on('end', roomCode => {
         const roomObject = getRoomByCode(roomCode);
-        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, true)
+        io.in(roomCode).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, true)
     })
 
     socket.on('askProposal', (roomCode, currentProposal, firstBool) => {
@@ -182,31 +185,33 @@ io.on('connection', socket => {
         const game = roomObject.game;
         const [chosenTeam, chosenPlayer] = game.initNextPlayer(lastTeam, validWords, unvalidWords);
         if (game.remainingWords.length ===0){
-            if (game.stageGame === 'Step 2') {
-                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
-                io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
-                io.in(chosenPlayer[0]).emit('goToPlay');
-            }
             if (game.stageGame === 'Step 1') {
                 const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
-            } else {
+            }
+            else if (game.stageGame === 'Step 2') {
+                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
+                io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
+                io.in(chosenPlayer[0]).emit('goToPlay');
+            } 
+            else {
                 io.in(roomCode).emit('endGame')
             }
         } else {
             io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
             io.in(chosenPlayer[0]).emit('goToPlay');
         }        
-        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
     })
 
     socket.on('restart', (roomCode) => {
         const roomObject = getRoomByCode(roomCode);
-        const game = roomObject.game;
-        game = new Game(
-            [],
+        const players = roomObject.game.players
+        roomObject.game = new Game(
+            players,
             [[], []],
+            ['', ''],
             'creation',
             [0, 0],
             [],
@@ -214,7 +219,7 @@ io.on('connection', socket => {
             []
         )
         io.in(roomObject.code).emit('goToCreation')
-        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
     })
 
     socket.on('disconnecting', () => {
@@ -229,7 +234,7 @@ io.on('connection', socket => {
                     const idRoom = getIdRoomByCode(room);
                     rooms.splice(idRoom, 1)
                 } else {
-                    io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
+                    io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
                 }
             }
         }
@@ -240,6 +245,7 @@ class Game {
     constructor(
         players,
         team,
+        nameTeam,
         stageGame,
         score,
         listOfWords,
@@ -248,6 +254,7 @@ class Game {
     ) {
         this.players = players;
         this.team = team;
+        this.nameTeam = nameTeam;
         this.stageGame = stageGame;
         this.score = score;
         this.listOfWords = listOfWords;

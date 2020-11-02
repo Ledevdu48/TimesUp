@@ -65,7 +65,9 @@ export class CreationComponent implements OnInit {
       numberProp: ['', Validators.required],
       timerStep1: ['', Validators.required],
       timerStep2: ['', Validators.required],
-      timerStep3: ['', Validators.required]
+      timerStep3: ['', Validators.required],
+      nameTeam1: [''],
+      nameTeam2: ['']
     })
 
     this.socket.on('newParameters', data => {
@@ -73,6 +75,8 @@ export class CreationComponent implements OnInit {
       this.parametersForm.controls['timerStep1'].setValue(data.timerStep1);
       this.parametersForm.controls['timerStep2'].setValue(data.timerStep2);
       this.parametersForm.controls['timerStep3'].setValue(data.timerStep3);
+      this.parametersForm.controls['nameTeam1'].setValue(data.nameTeam1);
+      this.parametersForm.controls['nameTeam2'].setValue(data.nameTeam2);
     })
   };
 
@@ -81,11 +85,15 @@ export class CreationComponent implements OnInit {
     const timerStep1 = this.parametersForm.value['timerStep1'];
     const timerStep2 = this.parametersForm.value['timerStep2'];
     const timerStep3 = this.parametersForm.value['timerStep3'];
+    const nameTeam1 = this.parametersForm.value['nameTeam1'];
+    const nameTeam2 = this.parametersForm.value['nameTeam2'];
     const data = {
       numberProp: numberProp,
       timerStep1: timerStep1,
       timerStep2: timerStep2,
-      timerStep3: timerStep3
+      timerStep3: timerStep3,
+      nameTeam1: nameTeam1,
+      nameTeam2: nameTeam2
     }
     this.socket.emit('parametersToUsers', data, this.roomCode)
   }
@@ -95,11 +103,15 @@ export class CreationComponent implements OnInit {
     const timerStep1 = this.parametersForm.value['timerStep1'];
     const timerStep2 = this.parametersForm.value['timerStep2'];
     const timerStep3 = this.parametersForm.value['timerStep3'];
+    const nameTeam1 = this.parametersForm.value['nameTeam1'];
+    const nameTeam2 = this.parametersForm.value['nameTeam2'];
     const data = {
       numberProp: numberProp,
       timerStep1: timerStep1,
       timerStep2: timerStep2,
-      timerStep3: timerStep3
+      timerStep3: timerStep3,
+      nameTeam1: nameTeam1,
+      nameTeam2: nameTeam2
     }
     this.socket.emit('parametersToGame', data, this.roomCode)
   } 

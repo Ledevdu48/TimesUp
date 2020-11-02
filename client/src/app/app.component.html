@@ -35,10 +35,7 @@
             <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
             <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
             <app-play [socket]="socket" *ngIf="isPlayer"></app-play>
+            <app-end [socket]="socket" *ngIf="isEnd"></app-end>
         </div>
     </div>
-</div>
-
-<div class="container-fluid" *ngIf="isEnd">
-    <app-end [socket]="socket"></app-end>
 </div>

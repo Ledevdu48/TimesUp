@@ -17,7 +17,14 @@
       <input type="number" id="timerStep3" class="form-control -lg" formControlName="timerStep3" (keyup)="onSend()"
         min=1 placeholder="Step 3">
     </div>
-    <button class="btn btn-success" (click)="onLaunch()" [disabled]="createTeams || alone || parametersForm.invalid">Launch the game</button>
+    <div class="form-group">
+      <label for="nameTeams">(Optional) Team names</label>
+      <input type="text" id="nameTeam1" class="form-control -lg" formControlName="nameTeam1" (keyup)="onSend()" placeholder="Team 1">
+      <input type="text" id="nameTeam2" class="form-control -lg" formControlName="nameTeam2" (keyup)="onSend()" placeholder="Team 2">
+    </div>
+    <div class="row justify-content-center">
+      <button class="btn btn-success" (click)="onLaunch()" [disabled]="createTeams || alone || parametersForm.invalid">Launch the game</button>
+    </div>
   </form>
 </div>
 <div class="row mt-sm-1 justify-content-end" *ngIf="createTeams || alone || parametersForm.invalid">

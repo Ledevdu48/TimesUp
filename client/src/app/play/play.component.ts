@@ -20,6 +20,9 @@ export class PlayComponent implements OnInit {
   chosenPlayer: string[];
   chosenTeamSubscription: Subscription;
   chosenTeam: number;
+  nameTeamSubscription: Subscription;
+  nameTeam: string[];
+  defaultName: boolean[];
   timerSubscription: Subscription;
   timer: number;
   timeLeftSubscription: Subscription;
@@ -90,6 +93,14 @@ export class PlayComponent implements OnInit {
       }
     );
     this.chargingService.emitChosenTeamSubject();
+
+    this.nameTeamSubscription = this.chargingService.nameTeamSubject.subscribe(
+      (nameTeam: string[]) => {
+        this.nameTeam = nameTeam;
+        this.defaultName = [nameTeam[0] === '', nameTeam[1] === ''];
+      }
+    )
+    this.chargingService.emitNameTeamSubject();
 
     this.timerSubscription = this.chargingService.timerSubject.subscribe(
       (timer: number) => {

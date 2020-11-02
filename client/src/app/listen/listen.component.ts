@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ApplicationRef } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ChargingService } from '../charging.service';
 import { Subscription } from 'rxjs';
-import { CONTEXT_NAME } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-listen',
@@ -19,6 +18,9 @@ export class ListenComponent implements OnInit {
   chosenPlayer: string[];
   chosenTeamSubscription: Subscription;
   chosenTeam: number;
+  nameTeamSubscription: Subscription;
+  nameTeam: string[];
+  defaultName: boolean[];
   timerSubscription: Subscription;
   timer: number;
   stepSubscription: Subscription;
@@ -41,6 +43,14 @@ export class ListenComponent implements OnInit {
   constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) { }
 
   ngOnInit() {
+
+    this.nameTeamSubscription = this.chargingService.nameTeamSubject.subscribe(
+      (nameTeam: string[]) => {
+        this.nameTeam = nameTeam;
+        this.defaultName = [nameTeam[0] === '', nameTeam[1] === ''];
+      }
+    )
+    this.chargingService.emitNameTeamSubject();
 
     this.endRoundSubscription = this.chargingService.endRoundSubject.subscribe(
       (endRound: boolean) => {
@@ -132,7 +142,7 @@ export class ListenComponent implements OnInit {
       this.socket.emit('chargingPlayer', this.roomCode);
     })
 
-    this.socket.on('end', () => {
+    this.socket.on('endGame', () => {
       this.authService.changeEnd();
     })
 

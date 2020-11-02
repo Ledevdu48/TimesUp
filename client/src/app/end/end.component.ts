@@ -15,6 +15,9 @@ export class EndComponent implements OnInit {
   roomCode: string;
   teamsSubscription: Subscription;
   teams: any[];
+  nameTeamSubscription: Subscription;
+  nameTeam: string[];
+  defaultName: boolean[];
   scoreSubscription: Subscription;
   score: number[];
 
@@ -39,8 +42,15 @@ export class EndComponent implements OnInit {
       }
     )
     this.chargingService.emitScoreSubject()
+    this.nameTeamSubscription = this.chargingService.nameTeamSubject.subscribe(
+      (nameTeam: string[]) => {
+        this.nameTeam = nameTeam;
+        this.defaultName = [nameTeam[0] === '', nameTeam[1] === ''];
+      }
+    )
+    this.chargingService.emitNameTeamSubject();
 
-    this.socket('goToCreation', () => {
+    this.socket.on('goToCreation', () => {
       this.authService.changeCreator();
     })
   }
