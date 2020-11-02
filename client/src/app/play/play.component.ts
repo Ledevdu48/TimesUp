@@ -107,9 +107,12 @@ export class PlayComponent implements OnInit {
       this.timer = timer;
     })
 
-
     this.socket.on('yourRoom', code => {
       this.roomCode = code;
+    })
+
+    this.socket.on('end', () => {
+      this.authService.changeEnd();
     })
     
   }

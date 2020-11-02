@@ -15,6 +15,7 @@ export class AppComponent implements OnInit{
   isProposal: boolean;
   isListener: boolean;
   isPlayer: boolean;
+  isEnd: boolean;
   isAuth: boolean;
   socket: any;
   status: string;
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit{
         this.isProposal = this.status === 'proposal';
         this.isListener = this.status === 'listener';
         this.isPlayer = this.status === 'player';
+        this.isEnd = this.status === 'end';
       }
     );
     this.authService.emitStatusSubject();

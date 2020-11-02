@@ -187,15 +187,33 @@ io.on('connection', socket => {
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
             }
-            else {
+            if (game.stageGame === 'Step 2') {
                 const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
+            } else {
+                io.in(roomCode).emit('endGame')
             }
         } else {
             io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
             io.in(chosenPlayer[0]).emit('goToPlay');
         }        
+        io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
+    })
+
+    this.socket.on('restart', (roomCode) => {
+        const roomObject = getRoomByCode(roomCode);
+        const game = roomObject.game;
+        game = new Game(
+            [],
+            [[], []],
+            'creation',
+            [0, 0],
+            [],
+            { numberProp: 0, timer: {} },
+            []
+        )
+        io.in(roomObject.code).emit('goToCreation')
         io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.score, roomObject.game.stageGame, false, false)
     })
 

@@ -47,4 +47,9 @@ export class AuthService {
     this.status = 'listener';
     this.emitStatusSubject();
   }
+
+  changeEnd() {
+    this.status = 'end';
+    this.emitStatusSubject();
+  }
 }

@@ -132,6 +132,10 @@ export class ListenComponent implements OnInit {
       this.socket.emit('chargingPlayer', this.roomCode);
     })
 
+    this.socket.on('end', () => {
+      this.authService.changeEnd();
+    })
+
     this.socket.on('initCanvas', () => {
       setTimeout(() => this.initCanvas(), 10)
     })

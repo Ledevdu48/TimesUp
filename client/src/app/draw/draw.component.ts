@@ -32,6 +32,12 @@ export class DrawComponent implements OnInit {
     ['brown', false],
     ['green', false]
   ]
+  sizes: any = [
+    [3, true],
+    [10, false],
+    [20, false],
+    [40, false]
+  ]
 
   constructor() { }
 
@@ -133,15 +139,31 @@ export class DrawComponent implements OnInit {
 
   changeSize(number){
     this.size = number;
+    for (let size of this.sizes) {
+      if(size[0] === number) {
+        size[1] = true;
+      } else {
+        size[1] = false;
+      }
+    }
   }
 
-  createClass(id){
+  createClassCoul(id){
     let coul = this.colors[id];
     let newClass = {
-      'col box p-2': true
+      'box p-2': true
     };
     newClass[coul[0]] = true;
     newClass['bord'] = coul[1];
+    return newClass
+  }
+
+  createClassSize(id){
+    let size = this.sizes[id];
+    let newClass = {
+      'box p-1 m-0 white': true
+    };
+    newClass['bord'] = size[1];
     return newClass
   }
 

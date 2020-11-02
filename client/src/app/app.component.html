@@ -38,3 +38,7 @@
         </div>
     </div>
 </div>
+
+<div class="container-fluid" *ngIf="isEnd">
+    <app-end [socket]="socket"></app-end>
+</div>

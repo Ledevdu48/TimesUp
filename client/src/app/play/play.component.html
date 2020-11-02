@@ -34,7 +34,7 @@
             <button class="btn btn-success" (click)="onValidate()">Validate</button>
         </div>
     </div>
-    <div class="row" *ngIf="step === 'Step 3'">
+    <div *ngIf="step === 'Step 3'">
         <app-draw [socket]="socket" [roomCode]="roomCode"></app-draw>
     </div>
 </div>

@@ -14,6 +14,7 @@ import { ChargingService } from './charging.service'
 import { ProposalComponent } from './proposal/proposal.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DrawComponent } from './draw/draw.component';
+import { EndComponent } from './end/end.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DrawComponent } from './draw/draw.component';
     ListenComponent,
     ProposalComponent,
     SidebarComponent,
-    DrawComponent
+    DrawComponent,
+    EndComponent
   ],
   imports: [
     BrowserModule,
