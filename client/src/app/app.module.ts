@@ -13,6 +13,7 @@ import { AuthService } from './auth.service';
 import { ChargingService } from './charging.service'
 import { ProposalComponent } from './proposal/proposal.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { DrawComponent } from './draw/draw.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     PlayComponent,
     ListenComponent,
     ProposalComponent,
-    SidebarComponent
+    SidebarComponent,
+    DrawComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,37 @@
+<div class="col">
+    <div class="row justify-content-center mb-1">
+        <div class="col">
+            <canvas id="canvas" (mousemove)="draw($event)" (mousedown)="startPosition($event)"
+                (mouseup)="endPosition($event)"></canvas>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div [ngClass]="createClass(0)" (click)="changeColor('white')"></div>
+        <div [ngClass]="createClass(1)" (click)="changeColor('black')"></div>
+        <div [ngClass]="createClass(2)" (click)="changeColor('red')"></div>
+        <div [ngClass]="createClass(3)" (click)="changeColor('yellow')"></div>
+        <div [ngClass]="createClass(4)" (click)="changeColor('blue')"></div>
+        <div [ngClass]="createClass(5)" (click)="changeColor('purple')"></div>
+        <div [ngClass]="createClass(6)" (click)="changeColor('pink')"></div>
+        <div [ngClass]="createClass(7)" (click)="changeColor('brown')"></div>
+        <div [ngClass]="createClass(8)" (click)="changeColor('green')"></div>
+        <div class="col" (click)="fill()">
+            <img src="../../assets/remplissage.png">
+        </div>
+        <div class="col" (click)="changeSize(3)">
+            <img src="../../assets/3px.png">
+        </div>
+        <div class="col" (click)="changeSize(10)">
+            <img src="../../assets/10px.png">
+        </div>
+        <div class="col" (click)="changeSize(20)">
+            <img src="../../assets/20px.png">
+        </div>
+        <div class="col" (click)="changeSize(40)">
+            <img src="../../assets/40px.png">
+        </div>
+        <div class="col" (click)="fillWhite()">
+            <img src="../../assets/poubelle.png">
+        </div>
+    </div>
+</div> 

@@ -137,20 +137,25 @@ export class ListenComponent implements OnInit {
     })
 
     this.socket.on('drawEmit', data => {
-      this.draw(data, this.ctx)
+      if (this.status === "listener") {
+        this.draw(data, this.ctx)
+      }      
     })
     this.socket.on('startPositionEmit', data => {
-      this.startPosition(data, this.ctx)
+      if (this.status === "listener") {
+        this.startPosition(data, this.ctx)
+      }  
     })
     this.socket.on('endPositionEmit', data => {
-      this.endPosition(this.ctx)
+      if (this.status === "listener") {
+        this.endPosition(this.ctx)
+      }       
     })
     this.socket.on('fillEmit', color => {
-      this.fill(this.ctx, this.canvas, color)
+      if (this.status === "listener") {
+        this.fill(this.ctx, this.canvas, color)
+      }       
     })
-
-
-
   }
 
   initCanvas() {
