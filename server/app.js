@@ -182,13 +182,13 @@ io.on('connection', socket => {
         const game = roomObject.game;
         const [chosenTeam, chosenPlayer] = game.initNextPlayer(lastTeam, validWords, unvalidWords);
         if (game.remainingWords.length ===0){
-            if (game.stageGame === 'Step 1') {
-                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
+            if (game.stageGame === 'Step 2') {
+                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
             }
-            if (game.stageGame === 'Step 2') {
-                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
+            if (game.stageGame === 'Step 1') {
+                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
                 io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                 io.in(chosenPlayer[0]).emit('goToPlay');
             } else {
