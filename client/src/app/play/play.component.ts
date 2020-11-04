@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { ViewChild, Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ChargingService } from '../charging.service';
 import { Subscription } from 'rxjs'
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { AngularFireModule } from '@angular/fire';
+import { DrawComponent } from '../draw/draw.component';
 
 @Component({
   selector: 'app-play',
@@ -11,6 +11,8 @@ import { AngularFireModule } from '@angular/fire';
   styleUrls: ['./play.component.scss']
 })
 export class PlayComponent implements OnInit {
+
+  @ViewChild(DrawComponent) draw;
 
   status: string;
   statusSubscription: Subscription;
@@ -164,6 +166,9 @@ export class PlayComponent implements OnInit {
     this.socket.on('sendProposal', proposal => {
       this.currentProposal = proposal;
     })
+    if (this.step === 'Step 3'){
+      this.draw.fillWhite()
+    }
   }
 
   onValidate(){
@@ -178,6 +183,9 @@ export class PlayComponent implements OnInit {
         this.currentProposal = proposal;
       }      
     })
+    if (this.step === 'Step 3'){
+      this.draw.fillWhite()
+    }
   }
 
   onSubmit() {
