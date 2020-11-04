@@ -4,8 +4,15 @@
         <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
     </h1>
 </div>
-<div class="row" *ngIf="displayChosenPlayer">
+<div class="row" *ngIf="displayChosenPlayer" [hidden]="boolPlay && step === 'Step 3'">
     <h2>It's the turn of {{chosenPlayer[1]}}</h2>
+</div>
+<div class="row" [hidden]="boolPlay && step === 'Step 3'">
+    <p>You have {{ timer }}s to guess!
+        <span *ngIf='step === "Step 1"'>{{rules[0]}}</span>
+        <span *ngIf='step === "Step 2"'>{{rules[1]}}</span>
+        <span *ngIf='step === "Step 3"'>{{rules[2]}}</span>
+    </p>
 </div>
 <div class="row card mb-3" *ngIf="boolPlay">
     <div class="card-header p-1">Round</div>
@@ -14,11 +21,20 @@
             <p class="timer">Time left: {{ timeLeft }} s</p>
         </div>        
     </div>
+    <div *ngIf="display === ''" class="card-body bg-secondary p-1">
+        <div class="row justify-content-center">
+            <p>Continue to guess!</p>
+        </div>
+    </div>
     <div *ngIf="display === 'Skipped'" class="card-body bg-warning p-1">
-        <p>{{ display }}</p>
+        <div class="row justify-content-center">
+            <p>{{ display }}</p>
+        </div>
     </div>
     <div *ngIf="display === 'Found'" class="card-body bg-success p-1">
-        <p>{{ display }}</p>
+        <div class="row justify-content-center">
+            <p>{{ display }}</p>
+        </div>
     </div>
 </div>
 <div class="row justify-content-center" *ngIf="boolPlay && step === 'Step 3'">

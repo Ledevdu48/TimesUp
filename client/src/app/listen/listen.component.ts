@@ -27,7 +27,7 @@ export class ListenComponent implements OnInit {
   step: string;
   lastsFoundSubscription: Subscription;
   lastsFound: any[] = [];
-  display: string;
+  display: string = '';
   timeLeftSubscription: Subscription;
   timeLeft: number;
   boolPlaySubscription: Subscription;
@@ -39,6 +39,11 @@ export class ListenComponent implements OnInit {
   displayChosenPlayer: boolean;
   canvas: HTMLCanvasElement;
   ctx: any;
+  rules: string[] = [
+    '',
+    ' Your team has only one guess',
+    ''
+  ];
 
   constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) { }
 
