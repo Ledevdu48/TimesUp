@@ -10,6 +10,9 @@
     </div>
     <div class="row">
         <p>You have {{ timer }}s to make your team guess!</p>
+        <p *ngIf='step === "Step 1"'>{{rules[0]}}</p>
+        <p *ngIf='step === "Step 2"'>{{rules[1]}}</p>
+        <p *ngIf='step === "Step 3"'>{{rules[2]}}</p>
     </div>
     <div class="row card mb-3" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
         <div class="card-header">Last round</div>
@@ -38,7 +41,7 @@
         </div>
         <div class="card-body p-2">
             <div class="row justify-content-center">
-                <button class="btn btn-warning mr-sm-1" (click)="onSkip()">Skip proposal</button>
+                <button class="btn btn-warning mr-sm-1" (click)="onSkip()" [disabled]='step === "Step 3"'>Skip proposal</button>
                 <button class="btn btn-success" (click)="onValidate()">Validate</button>
             </div>
         </div>

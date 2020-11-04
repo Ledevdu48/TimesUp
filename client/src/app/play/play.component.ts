@@ -39,6 +39,11 @@ export class PlayComponent implements OnInit {
   lastsFoundSubscription: Subscription;
   lastsFound: any[];
   displayLastFound: boolean;
+  rules: string[] = [
+    'You can use any words (except the ones in the proposal). You can\'t skip proposal.',
+    'You can use only one word (except the ones in the proposal). You can skip proposal. Only one guess for your team.',
+    'You have to draw to make your team guess. You can skip proposal.'
+  ];
 
   
   constructor(private authService: AuthService, private chargingService: ChargingService, private formBuilder: FormBuilder) { }
