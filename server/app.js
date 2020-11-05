@@ -14,7 +14,20 @@ server.listen(3000);
 
 var rooms = [];
 
+var admin = ['Ledevdu48', '8060marseille'];
+
 io.on('connection', socket => {
+
+    socket.on('joinAdmin', data => {
+        if (data.pseudo === admin[0] && data.password === admin [1]) {
+            socket.join('$admin');
+            io.in('$admin').emit('goToAdminPanel')
+        }
+    })
+
+    socket.on('askRooms', () => {
+        io.in('$admin').emit('rooms', rooms)
+    })
 
     socket.on('joinRoom', data => {
         if (getRoomByCode(data.name) === undefined) {
