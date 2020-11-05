@@ -238,7 +238,7 @@ io.on('connection', socket => {
     socket.on('disconnecting', () => {
         const sockrooms = socket.rooms;
         for (let key in sockrooms) {
-            if (key != socket.id) {
+            if (key != socket.id && key!= '$admin') {
                 const room = sockrooms[key];
                 const id = playerId(socket.id, room);
                 const roomObject = getRoomByCode(room);
