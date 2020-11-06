@@ -36,6 +36,7 @@
             <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
             <app-play [socket]="socket" *ngIf="isPlayer"></app-play>
             <app-end [socket]="socket" *ngIf="isEnd"></app-end>
+            <app-result [socket]="socket" *ngIf="isResult"></app-result>
         </div>
     </div>
 </div>

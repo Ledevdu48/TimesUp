@@ -52,6 +52,7 @@ export class PlayComponent implements OnInit {
   constructor(private authService: AuthService, private chargingService: ChargingService, private formBuilder: FormBuilder) { }
 
   ngOnInit(){
+    this.chargingService.getInfos(this.socket)
     this.lastsFoundSubscription = this.chargingService.lastsFoundSubject.subscribe(
       (lastsFound: any[]) => {
         this.lastsFound = lastsFound;

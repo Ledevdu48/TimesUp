@@ -48,7 +48,8 @@ export class ListenComponent implements OnInit {
   constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) { }
 
   ngOnInit() {
-
+    this.chargingService.getInfos(this.socket)
+    
     this.nameTeamSubscription = this.chargingService.nameTeamSubject.subscribe(
       (nameTeam: string[]) => {
         this.nameTeam = nameTeam;

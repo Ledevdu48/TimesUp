@@ -24,6 +24,7 @@ export class EndComponent implements OnInit {
   constructor(private chargingService: ChargingService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.chargingService.getInfos(this.socket)
     this.roomCodeSubscription = this.chargingService.roomCodeSubject.subscribe(
       (roomCode: string) => {
         this.roomCode = roomCode;

@@ -210,6 +210,7 @@ io.on('connection', socket => {
                 io.in(roomObject.code).emit('goToResult')
                 io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
                 setTimeout(() => {
+                    io.in(roomCode).emit('goToListen')
                     const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
                     io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                     io.in(chosenPlayer[0]).emit('goToPlay');
@@ -220,6 +221,7 @@ io.on('connection', socket => {
                 io.in(roomObject.code).emit('goToResult')
                 io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
                 setTimeout(() => {
+                    io.in(roomCode).emit('goToListen')
                     const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
                     io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                     io.in(chosenPlayer[0]).emit('goToPlay');

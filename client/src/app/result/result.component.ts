@@ -57,6 +57,10 @@ export class ResultComponent implements OnInit {
       }
     )
     this.chargingService.emitStepSubject();
+
+    this.socket.on('goToListen', () => {
+      this.authService.changeListener();
+    })
   }
 
   ngOnDestroy() {
