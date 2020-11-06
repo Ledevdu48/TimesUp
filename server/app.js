@@ -206,14 +206,22 @@ io.on('connection', socket => {
         const [chosenTeam, chosenPlayer] = game.initNextPlayer(lastTeam, validWords, unvalidWords);
         if (game.remainingWords.length ===0){
             if (game.stageGame === 'Step 1') {
-                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
-                io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
-                io.in(chosenPlayer[0]).emit('goToPlay');
+                game.stageGame = 'Result 1';
+                io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
+                setTimeout(() => {
+                    const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
+                    io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
+                    io.in(chosenPlayer[0]).emit('goToPlay');
+                }, 1000*8)
             }
             else if (game.stageGame === 'Step 2') {
-                const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
-                io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
-                io.in(chosenPlayer[0]).emit('goToPlay');
+                game.stageGame = 'Result 2';
+                io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
+                setTimeout(() => {
+                    const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
+                    io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
+                    io.in(chosenPlayer[0]).emit('goToPlay');
+                }, 1000*8)
             } 
             else {
                 io.in(roomCode).emit('endGame')
