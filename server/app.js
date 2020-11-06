@@ -89,7 +89,7 @@ io.on('connection', socket => {
     })
 
     socket.on('parametersToUsers', (data, roomCode) => {
-        io.in(roomCode).emit('newParameters', data)
+        socket.in(roomCode).emit('newParameters', data)
     })
 
     socket.on('parametersToGame', (data, roomCode) => {
