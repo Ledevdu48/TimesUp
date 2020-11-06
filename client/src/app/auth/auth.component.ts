@@ -25,6 +25,10 @@ export class AuthComponent implements OnInit {
     );
     this.authService.emitStatusSubject();
     this.initForm();
+
+    this.socket.on('joinGame', () => {
+      this.authService.changeCreator();
+    })
   }
 
   initForm() {
@@ -42,7 +46,6 @@ export class AuthComponent implements OnInit {
       name: name
     }
     this.socket.emit('joinRoom', data)
-    this.authService.changeCreator();
   }
 
   ngOnDestroy() {

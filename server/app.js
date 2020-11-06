@@ -53,14 +53,20 @@ io.on('connection', socket => {
             roomObject.game.players.push([socket.id, data.pseudo]);
             rooms.push(roomObject);
             socket.join(roomObject.code)
+            io.emit('joinGame')
             io.emit('yourRoom', roomObject.code)
             io.in(roomObject.code).emit('yourPlayers', roomObject.game.players);
         } else {
             const roomObject = getRoomByCode(data.name);
-            roomObject.game.players.push([socket.id, data.pseudo]);
-            socket.join(roomObject.code)
-            io.emit('yourRoom', roomObject.code)
-            io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
+            if (roomObject.game.stageGame === 'creation') {                
+                roomObject.game.players.push([socket.id, data.pseudo]);
+                socket.join(roomObject.code)
+                io.emit('joinGame')
+                io.emit('yourRoom', roomObject.code)
+                io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
+            } else {
+                io.emit('gameAlreadyCreated')
+            }
         }
     })
 
