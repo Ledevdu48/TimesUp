@@ -61,7 +61,7 @@ io.on('connection', socket => {
             if (roomObject.game.stageGame === 'creation') {                
                 roomObject.game.players.push([socket.id, data.pseudo]);
                 socket.join(roomObject.code)
-                io.emit('joinGame')
+                socket.emit('joinGame')
                 io.emit('yourRoom', roomObject.code)
                 io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
             } else {
