@@ -46,6 +46,7 @@ export class PlayComponent implements OnInit {
     ' You can use only one word (except the ones in the proposal). You can skip proposal. Only one guess for your team.',
     ' You have to draw to make your team guess. You can skip proposal.'
   ];
+  all: boolean = false;
 
   
   constructor(private authService: AuthService, private chargingService: ChargingService, private formBuilder: FormBuilder) { }
@@ -186,6 +187,14 @@ export class PlayComponent implements OnInit {
     if (this.step === 'Step 3'){
       this.draw.fillWhite()
     }
+  }
+  
+  onCheckAll() {
+    let set = {};
+    for (let prop of this.validateProposals) {      
+      set[prop] = "valid";
+    }
+    this.validationForm.setValue(set)
   }
 
   onSubmit() {

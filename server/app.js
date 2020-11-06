@@ -65,7 +65,7 @@ io.on('connection', socket => {
                 io.emit('yourRoom', roomObject.code)
                 io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
             } else {
-                io.emit('gameAlreadyCreated')
+                socket.emit('gameAlreadyCreated')
             }
         }
     })

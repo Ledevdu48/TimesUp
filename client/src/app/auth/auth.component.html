@@ -14,3 +14,9 @@
     <button class="btn btn-primary btn-lg" (click)="onSignIn()" [disabled]="userForm.invalid" type="button">Join room</button>
   </div>  
 </form>
+<div class="row mt-2 justify-content-end" *ngIf="alreadyCreated">
+  <div class="alert alert-dismissible alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    Room name already used
+  </div>
+</div>

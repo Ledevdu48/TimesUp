@@ -14,6 +14,7 @@ export class AuthComponent implements OnInit {
   statusSubscription: Subscription;
   @Input() socket: any;
   userForm: FormGroup;
+  alreadyCreated: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
 
@@ -28,6 +29,10 @@ export class AuthComponent implements OnInit {
 
     this.socket.on('joinGame', () => {
       this.authService.changeCreator();
+    })
+
+    this.socket.on('gameAlreadyCreated', () => {
+      this.alreadyCreated = true;
     })
   }
 
