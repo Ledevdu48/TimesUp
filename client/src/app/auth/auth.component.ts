@@ -39,7 +39,7 @@ export class AuthComponent implements OnInit {
   initForm() {
     this.userForm = this.formBuilder.group({
       pseudo: ['', Validators.required],
-      roomCode: ['', Validators.required]
+      roomCode: ['', [Validators.required, Validators.pattern('[a-z0-9]*')]]
     })
   };
   
