@@ -96,5 +96,7 @@ export class SidebarComponent implements OnInit {
       this.roomCodeSubscription.unsubscribe();
       this.teamsSubscription.unsubscribe();
       this.scoreSubscription.unsubscribe();
+      this.stepSubscription.unsubscribe();
+      this.nameTeamSubscription.unsubscribe();
     }
 }

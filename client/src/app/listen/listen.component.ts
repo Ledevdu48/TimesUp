@@ -151,6 +151,10 @@ export class ListenComponent implements OnInit {
       this.authService.changeEnd();
     })
 
+    this.socket.on('goToResult', () => {
+      this.authService.changeResult();
+    })
+
     this.socket.on('initCanvas', () => {
       setTimeout(() => this.initCanvas(), 10)
     })

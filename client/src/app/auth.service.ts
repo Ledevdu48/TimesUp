@@ -48,6 +48,11 @@ export class AuthService {
     this.emitStatusSubject();
   }
 
+  changeResult() {
+    this.status = 'result';
+    this.emitStatusSubject();
+  }
+
   changeEnd() {
     this.status = 'end';
     this.emitStatusSubject();

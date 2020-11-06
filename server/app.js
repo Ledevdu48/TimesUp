@@ -207,6 +207,7 @@ io.on('connection', socket => {
         if (game.remainingWords.length ===0){
             if (game.stageGame === 'Step 1') {
                 game.stageGame = 'Result 1';
+                io.in(roomObject.code).emit('goToResult')
                 io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
                 setTimeout(() => {
                     const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
@@ -216,6 +217,7 @@ io.on('connection', socket => {
             }
             else if (game.stageGame === 'Step 2') {
                 game.stageGame = 'Result 2';
+                io.in(roomObject.code).emit('goToResult')
                 io.in(roomObject.code).emit('sendInfos', roomCode, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
                 setTimeout(() => {
                     const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');

@@ -133,6 +133,10 @@ export class PlayComponent implements OnInit {
     this.socket.on('end', () => {
       this.authService.changeEnd();
     })
+
+    this.socket.on('goToResult', () => {
+      this.authService.changeResult();
+    })
     
   }
 

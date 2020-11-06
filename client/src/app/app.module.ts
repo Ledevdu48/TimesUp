@@ -15,6 +15,7 @@ import { ProposalComponent } from './proposal/proposal.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DrawComponent } from './draw/draw.component';
 import { EndComponent } from './end/end.component';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { EndComponent } from './end/end.component';
     ProposalComponent,
     SidebarComponent,
     DrawComponent,
-    EndComponent
+    EndComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
