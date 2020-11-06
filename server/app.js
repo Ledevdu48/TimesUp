@@ -54,6 +54,7 @@ io.on('connection', socket => {
             rooms.push(roomObject);
             socket.join(roomObject.code)
             io.emit('joinGame')
+            roomObject.game.stageGame = 'proposal';
             io.emit('yourRoom', roomObject.code)
             io.in(roomObject.code).emit('yourPlayers', roomObject.game.players);
         } else {
@@ -62,6 +63,7 @@ io.on('connection', socket => {
                 roomObject.game.players.push([socket.id, data.pseudo]);
                 socket.join(roomObject.code)
                 io.emit('joinGame')
+                roomObject.game.stageGame = 'proposal';
                 io.emit('yourRoom', roomObject.code)
                 io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
             } else {
