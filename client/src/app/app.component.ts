@@ -46,7 +46,7 @@ export class AppComponent implements OnInit{
       }
     );
     this.authService.emitConnectedSubject();
-    this.socket = io.connect('http://89.33.6.104:3000'); // 89.33.6.104
+    this.socket = io.connect('http://89.33.6.104:80'); // 89.33.6.104
   }
 
   ngOnDestroy() {
