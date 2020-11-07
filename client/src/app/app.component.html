@@ -1,5 +1,5 @@
 <div class="upbar">
-    <h1 class="title">Times Up Online</h1>
+    <h1 class="title">Times' UP Online</h1>
 </div>
 <div class="container-fluid" *ngIf="isNone" >
     <div class="row padding_top_bot justify-content-center">
@@ -7,23 +7,28 @@
             <app-auth [socket]="socket"></app-auth>
         </div>
     </div>
-    <div class="jumbotron description">
-        <h2>Welcome</h2>
-        <p>Welcome to Times Up Online, the live game where you and your friends try to guess your custom proposals during various stages!</p>
-        <h2>To Start</h2>
-        <p>
-            Enter a pseudo and a room code which you will share with your friend to play.
-        </p>
-        <h2>To Play</h2>
-        <p>
-            Once you have set up the parameters of the game and the teams, you will be asked to create your proposals for the rest of the game. <br>
-            In the first step, you can use any word (except the ones in the proposal) to make your team guess the proposal. <br>
-            In the second step, you must use only one word. <br>
-            In the third step, you will have to draw something to make your team guess the proposal (no words written). 
-        </p>
-        <h2>Chat</h2>
-        <p>You must use another program (like Discord) to chat with your friends during the game.</p>
+    <div class="row justify-content-center">
+        <div class="jumbotron description col-sm-9">
+            <h2 class='title-jumbo'>Welcome</h2>
+            <p>Welcome to Times' UP Online, the live game where you and your friends try to guess your custom proposals during various stages!</p>
+            <h2 class='title-jumbo'>To Start</h2>
+            <p>
+                Enter a pseudo and a room code which you will share with your friend to play.
+            </p>
+            <h2 class='title-jumbo'>To Play</h2>
+            <p>
+                Once you have set up the parameters of the game and the teams, you will be asked to create your proposals for the rest of the game. <br>
+                In the first step, you can use any word (except the ones in the proposal) to make your team guess the proposal. <br>
+                In the second step, you must use only one word. <br>
+                In the third step, you will have to draw something to make your team guess the proposal (no words written). 
+            </p>
+            <h2 class='title-jumbo'>Chat</h2>
+            <p>You must use another program (like Discord) to chat with your friends during the game.</p>
+            <h2 class='title-jumbo'>Contact</h2>
+            <p>If you have any request or suggestion, please contact leoet.martinez@gmail.com.</p>
+        </div>
     </div>
+
 </div>
 <div class="container-fluid" *ngIf="isAuth">
     <div class="row">
