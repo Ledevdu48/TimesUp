@@ -76,8 +76,7 @@ io.on('connection', socket => {
 
     socket.on('chatMessage', (message, roomCode) => {
         const roomObject = getRoomByCode(roomCode);
-        const id = playerId(socket.id, roomCode);
-        const pseudo = roomObject.game.players[id][1];
+        const pseudo = roomObject.game.getPseudo(socket.id)
         io.in(roomCode).emit('sendChatMessage', message, pseudo)
     })
 
@@ -395,6 +394,14 @@ class Game {
             }
         }
         return false
+    }
+    
+    getPseudo(socketId){
+        for (let player of this.players) {
+            if(player[0] === socketId) {
+                return player[1];
+            }
+        }
     }
 }
 
