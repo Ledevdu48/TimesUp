@@ -38,13 +38,16 @@
         <div class="sidebar bg-primary col-auto">
             <app-sidebar [socket]="socket"></app-sidebar>
         </div>
-        <div class="col-sm-9 padding_top_left">
+        <div class="col-sm-7 padding_top_left">
             <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
             <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
             <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
             <app-play [socket]="socket" *ngIf="isPlayer"></app-play>
             <app-end [socket]="socket" *ngIf="isEnd"></app-end>
             <app-result [socket]="socket" *ngIf="isResult"></app-result>
+        </div>
+        <div class="col-sm-3">
+            <app-chat [socket]="socket"></app-chat>
         </div>
     </div>
 </div>

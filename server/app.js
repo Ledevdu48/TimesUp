@@ -74,6 +74,13 @@ io.on('connection', socket => {
         }
     })
 
+    socket.on('chatMessage', (message, roomCode) => {
+        const roomObject = getRoomByCode(roomCode);
+        const id = playerId(socket.id, roomCode);
+        const pseudo = roomObject.game.players[id][1];
+        socket.on(roomCode).emit('sendChatMessage', message, pseudo)
+    })
+
     socket.on('getRoomCode', () => {
         const sockrooms = socket.rooms;
         for (let key in sockrooms) {

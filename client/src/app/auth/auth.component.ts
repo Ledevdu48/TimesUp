@@ -36,7 +36,7 @@ export class AuthComponent implements OnInit {
       this.alreadyCreated = true;
     })
 
-    this.socket.on('pseudAlreadyTaken', () => {
+    this.socket.on('pseudoAlreadyTaken', () => {
       this.pseudoAlreadyTaken = true;
     })
   }
