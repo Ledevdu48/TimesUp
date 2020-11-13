@@ -78,7 +78,7 @@ io.on('connection', socket => {
         const roomObject = getRoomByCode(roomCode);
         const id = playerId(socket.id, roomCode);
         const pseudo = roomObject.game.players[id][1];
-        socket.on(roomCode).emit('sendChatMessage', message, pseudo)
+        io.on(roomCode).emit('sendChatMessage', message, pseudo)
     })
 
     socket.on('getRoomCode', () => {

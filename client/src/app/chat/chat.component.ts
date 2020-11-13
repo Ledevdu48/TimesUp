@@ -39,6 +39,7 @@ export class ChatComponent implements OnInit {
     this.initForm();
 
     this.socket.on('sendChatMessage', (message, pseudo)=>{
+      console.log(this.messages)
       this.messages.push({'pseudo': pseudo, 'text': message})
     })
   }
