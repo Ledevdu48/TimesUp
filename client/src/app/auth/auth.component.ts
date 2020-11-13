@@ -15,6 +15,7 @@ export class AuthComponent implements OnInit {
   @Input() socket: any;
   userForm: FormGroup;
   alreadyCreated: boolean = false;
+  pseudoAlreadyTaken: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
 
@@ -33,6 +34,10 @@ export class AuthComponent implements OnInit {
 
     this.socket.on('gameAlreadyCreated', () => {
       this.alreadyCreated = true;
+    })
+
+    this.socket.on('pseudAlreadyTaken', () => {
+      this.pseudoAlreadyTaken = true;
     })
   }
 

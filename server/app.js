@@ -58,12 +58,16 @@ io.on('connection', socket => {
             io.in(roomObject.code).emit('yourPlayers', roomObject.game.players);
         } else {
             const roomObject = getRoomByCode(data.name);
-            if (roomObject.game.stageGame === 'creation') {                
-                roomObject.game.players.push([socket.id, data.pseudo]);
-                socket.join(roomObject.code)
-                socket.emit('joinGame')
-                io.emit('yourRoom', roomObject.code)
-                io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
+            if (roomObject.game.stageGame === 'creation') {
+                if (roomObject.game.pseudoAlreadyTaken(data.pseudo) === false) {
+                    roomObject.game.players.push([socket.id, data.pseudo]);
+                    socket.join(roomObject.code)
+                    socket.emit('joinGame')
+                    io.emit('yourRoom', roomObject.code)
+                    io.in(roomObject.code).emit('yourPlayers', roomObject.game.players)
+                } else {
+                    socket.emit('pseudoAlreadyTaken')
+                }
             } else {
                 socket.emit('gameAlreadyCreated')
             }
@@ -375,6 +379,15 @@ class Game {
         const chosenTeam = this.nextTeam(lastTeam);
         const chosenPlayer = this.team[chosenTeam][0];
         return [chosenTeam, chosenPlayer]
+    }
+
+    pseudoAlreadyTaken(pseudo) {
+        for (let player of this.players) {
+            if (player[1] === pseudo) {
+                return true
+            }
+        }
+        return false
     }
 }
 
