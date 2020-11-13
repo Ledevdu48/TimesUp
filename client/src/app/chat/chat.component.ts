@@ -50,7 +50,7 @@ export class ChatComponent implements OnInit {
   
   initForm() {
     this.chatForm = this.formBuilder.group({
-      message: ['', Validators.required]
+      message: ['', [Validators.required, Validators.minLength(1)]]
     })
   }
 

@@ -5,7 +5,7 @@
     </ul>
     <form [formGroup]="chatForm">
         <div>
-            <input type="text" formControlName="message"><button type="submit" (click)="onSend()">Send</button>
+            <input type="text" formControlName="message"><button type="submit" (click)="onSend()" [disabled]="chatForm.invalid">Send</button>
         </div>
     </form>
 </div>
