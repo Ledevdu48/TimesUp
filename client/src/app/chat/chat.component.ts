@@ -39,8 +39,11 @@ export class ChatComponent implements OnInit {
     this.initForm();
 
     this.socket.on('sendChatMessage', (message, pseudo)=>{
-      console.log(this.messages)
       this.messages.push({'pseudo': pseudo, 'text': message})
+      setTimeout(()=> {
+        var chat = document.getElementById('messages');
+        chat.scrollTop = chat.scrollHeight;
+      },10)
     })
   }
 
@@ -54,6 +57,7 @@ export class ChatComponent implements OnInit {
   onSend() {
     const message = this.chatForm.value['message'];
     this.socket.emit('chatMessage', message, this.roomCode)
+    this.chatForm.setValue({message: ''})
   }
 
   ngOnDestroy() {
