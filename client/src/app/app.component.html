@@ -1,14 +1,17 @@
-<div class="upbar">
-    <div class="row">
-        <h1 class="title">Times' UP Online</h1>
-        <img src="../assets/icon.png" class="icon">
-    </div>
+<div class="row upbar justify-content-between">
+        <h1 class="title">Times' UP Online<img src="../assets/icon.png" class="icon"></h1>        
+        <a class="contact" href="https://twitter.com/ledevdu48">Contact me</a>        
 </div>
 <div class="container-fluid" *ngIf="isNone" >
     <div class="row padding_top_bot justify-content-center">
         <div class="col-3 login">
             <app-auth [socket]="socket"></app-auth>
         </div>
+    </div>
+    <div class ="row" id='timesup-game-com_300X250'>
+        <script type='text/javascript'>
+            aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
+        </script>
     </div>
     <div class="row justify-content-center">
         <div class="jumbotron description col-sm-9">
@@ -27,15 +30,13 @@
             </p>
             <h2 class='title-jumbo'>Chat</h2>
             <p>You must use another program (like Discord) to chat with your friends during the game.</p>
-            <h2 class='title-jumbo'>Contact</h2>
-            <p>If you have any request or suggestion, please contact leoet.martinez@gmail.com and find me on Twitter @ledevdu48.</p>
         </div>
     </div>
 
 </div>
 <div class="container-fluid" *ngIf="isAuth">
     <div class="row">
-        <div class="sidebar bg-primary col-auto">
+        <div class="sidebar col-auto" [ngStyle]="{'height': innerHeighttxt}">
             <app-sidebar [socket]="socket"></app-sidebar>
         </div>
         <div class="col-sm-7 padding_top_left">
@@ -46,8 +47,13 @@
             <app-end [socket]="socket" *ngIf="isEnd"></app-end>
             <app-result [socket]="socket" *ngIf="isResult"></app-result>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3" [ngStyle]="{'height': innerHeighttxt}">
             <app-chat [socket]="socket"></app-chat>
         </div>
+    </div>
+    <div class="row" id='timesup-game-com_300X600'>
+        <script type='text/javascript'>
+            aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X600'); });
+        </script>
     </div>
 </div>

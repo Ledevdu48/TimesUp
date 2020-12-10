@@ -1,14 +1,14 @@
 <div class="mb-3" [hidden]="boolPlay && step === 'Step 3'">
-    <div class="row">
-        <h1>It's time for 
+    <div class="row margin">
+        <p class="title">It's time for 
             <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
             <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
-        </h1>
+        </p>
     </div>
-    <div class="row">
-        <h2>It's your turn!</h2>
+    <div class="row margin">
+        <p class="title">It's your turn!</p>
     </div>
-    <div class="row">
+    <div class="row margin">
         <p>You have {{ timer }}s to make your team guess!
             <span *ngIf='step === "Step 1"'>{{rules[0]}}</span>
             <span *ngIf='step === "Step 2"'>{{rules[1]}}</span>

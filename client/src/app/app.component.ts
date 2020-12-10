@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import * as io from 'socket.io-client';
 import { AuthService } from './auth.service';
 import { Subscription } from 'rxjs';
@@ -6,8 +6,12 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
+
 export class AppComponent implements OnInit{
 
   isNone: boolean;
@@ -22,6 +26,8 @@ export class AppComponent implements OnInit{
   status: string;
   statusSubscription: Subscription;
   connectedSubscription : Subscription;
+  innerHeight: any;
+  innerHeighttxt: string;
 
   constructor(private authService: AuthService) {}
 
@@ -47,6 +53,13 @@ export class AppComponent implements OnInit{
     );
     this.authService.emitConnectedSubject();
     this.socket = io.connect('http://89.33.6.104:3000'); // 89.33.6.104
+    this.innerHeight = window.innerHeight-85;
+    this.innerHeighttxt = this.innerHeight.toString()+"px";
+  }
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight-85;
+    this.innerHeighttxt = this.innerHeight.toString()+"px";
   }
 
   ngOnDestroy() {

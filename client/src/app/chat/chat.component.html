@@ -1,6 +1,6 @@
 <div class="back">
     <h1>Chat</h1>
-    <ul id="messages">
+    <ul id="messages" [ngStyle]="{'height': innerHeighttxt}">
         <li *ngFor="let message of messages">{{message.pseudo}}: {{message.text}}</li>
     </ul>
     <form [formGroup]="chatForm">

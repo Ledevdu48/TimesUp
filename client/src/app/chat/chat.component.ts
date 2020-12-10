@@ -7,7 +7,10 @@ import { ChargingService } from '../charging.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class ChatComponent implements OnInit {
 
@@ -18,6 +21,8 @@ export class ChatComponent implements OnInit {
   roomCode: string;
   chatForm: FormGroup;
   messages: any = [];
+  innerHeight: any;
+  innerHeighttxt: string;
 
   constructor(private chargingService: ChargingService, private formBuilder: FormBuilder) { }
   
@@ -45,6 +50,9 @@ export class ChatComponent implements OnInit {
         chat.scrollTop = chat.scrollHeight;
       },10)
     })
+
+    this.innerHeight = window.innerHeight-250;
+    this.innerHeighttxt = this.innerHeight.toString()+"px";
   }
 
   
@@ -58,6 +66,11 @@ export class ChatComponent implements OnInit {
     const message = this.chatForm.value['message'];
     this.socket.emit('chatMessage', message, this.roomCode)
     this.chatForm.setValue({message: ''})
+  }
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight-250;
+    this.innerHeighttxt = this.innerHeight.toString()+"px";
   }
 
   ngOnDestroy() {

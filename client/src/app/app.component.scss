@@ -1,6 +1,6 @@
 .sidebar {
-    height: 100vh;
     border-radius: 10px 10px 10px 10px;
+    background-color: #01dee68e;
 }
 
 .padding_top_bot {
@@ -8,7 +8,7 @@
 }
 
 .padding_top_left {
-    padding: 20px 0px 0px 50px;
+    padding: 0px 0px 0px 30px;
 }
 
 .description {
@@ -16,18 +16,20 @@
 }
 
 .login {
-    background-color: rgba(45, 29, 192, 0.801);
+    background-color:#01dee68e;
 }
 
 .upbar {
-    background-color: rgba(7, 0, 73, 0.801);
+    background-color:#f3322b9f;
+    position: relative;
+    left: 10px;
     width: 100%;
     padding: 5px;
     border-radius: 5px;
 }
 
 .title {
-    font-size: 40px;
+    font-size: 30px;
     margin-left: 20px;
 }
 
@@ -36,6 +38,14 @@
 }
 
 .icon {
-    height: 50px;
+    height: 40px;
     margin-left: 10px;
+}
+
+.contact {
+    font-size: 25px;
+    padding: 1px;
+    background-color: rgb(59, 59, 59);
+    color: white;
+    border-radius: 5px;
 }

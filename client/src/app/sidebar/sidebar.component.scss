@@ -1,24 +1,21 @@
 p.team1, li.team1, h2.team1{
-    color: rgba(197, 123, 25, 0.774);
+    color: #FF5412;
     text-shadow:0 0 1px black;
 }
 
 p.team2, li.team2, h2.team2{
-    color: rgb(16, 17, 122);
+    color: #FF66E9;
     text-shadow:0 0 1px black;
 }
 
 p, li {
     font-size: 16px;
-    color: black
 }
 
 h1 {
-    color: red;
     font: small-caps bold 30px 'Times New Roman', Times, serif;
 }
 
 h2 {
-    color: red;
     font: small-caps bold 25px 'Times New Roman', Times, serif;
 }
