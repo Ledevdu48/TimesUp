@@ -52,7 +52,7 @@ export class AppComponent implements OnInit{
       }
     );
     this.authService.emitConnectedSubject();
-    this.socket = io.connect('http://89.33.6.104:3000'); // 89.33.6.104
+    this.socket = io.connect('http://localhost:3000'); // 89.33.6.104
     this.innerHeight = window.innerHeight-85;
     this.innerHeighttxt = this.innerHeight.toString()+"px";
   }

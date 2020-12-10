@@ -51,7 +51,7 @@ export class ChatComponent implements OnInit {
       },10)
     })
 
-    this.innerHeight = window.innerHeight-250;
+    this.innerHeight = window.innerHeight-220;
     this.innerHeighttxt = this.innerHeight.toString()+"px";
   }
 
@@ -69,7 +69,7 @@ export class ChatComponent implements OnInit {
   }
 
   onResize(event) {
-    this.innerHeight = window.innerHeight-250;
+    this.innerHeight = window.innerHeight-220;
     this.innerHeighttxt = this.innerHeight.toString()+"px";
   }
 

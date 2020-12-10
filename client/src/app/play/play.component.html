@@ -32,7 +32,7 @@
 <div *ngIf="boolPlay">
     <div class="row card mb-3">
         <div class="card-header p-1">Round</div>
-        <div class="card-body bg-info">
+        <div class="card-body bg-info p-1">
             <div class="row justify-content-center">
                 <p class="timer">Time left: {{ timeLeft }} s</p>
             </div>
@@ -53,28 +53,28 @@
 </div>
 <div class="card" *ngIf="endRound">
     <div class="card-header">Validation</div>
-    <div class="card-body">
+    <div class="card-body p-1">
         <form [formGroup]="validationForm">
             <table class="table table-hover">
-                <thead>
+                <thead class="p-1">
                     <tr>
-                        <th scope="col">Proposal</th>
-                        <th scope="col">Validation</th>
-                        <th>                
-                            <button class="btn btn-light" (click)="onCheckAll()">Check all</button>
+                        <th class="p-1" scope="col">Proposal</th>
+                        <th class="p-1" scope="col">Validation</th>
+                        <th class="p-1">                
+                            
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let proposal of validateProposals">
-                        <th scope="row">{{ proposal }}</th>
-                        <td>
+                    <tr class="p-1" *ngFor="let proposal of validateProposals">
+                        <th class="p-1" scope="row">{{ proposal }}</th>
+                        <td class="p-1">
                             <div class="form-check form-check-inline">
                                 <input class="radio" type="radio" formControlName="{{ proposal }}" value="valid">
                                 <label class="radio_label">Valid</label>
                             </div>
                         </td>
-                        <td>
+                        <td class="p-1">
                             <div class="form-check form-check-inline">
                                 <input class="radio" type="radio" formControlName="{{ proposal }}" value="unvalid">
                                 <label class="radio_label">Unvalid</label>
@@ -83,7 +83,8 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-0">
+                <button class="btn btn-light mr-1" (click)="onCheckAll()">Check all</button>
                 <button class="btn btn-success" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate
                     results</button>
             </div>

@@ -156,6 +156,8 @@ export class PlayComponent implements OnInit {
     this.socket.emit('launchTimer', this.roomCode, this.timer)
     setTimeout(() => {
       if (this.endRound == false) {
+        this.validateProposals.push(this.currentProposal[1]);
+        this.socket.emit('validateProposal', this.roomCode, this.currentProposal)
         this.initForm(this.validateProposals);
         this.socket.emit('end', this.roomCode)
         this.endRound = true;

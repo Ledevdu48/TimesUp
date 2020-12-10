@@ -1,8 +1,8 @@
 <div class="border-bottom border-dark">
     <h1>Room:</h1>
-    <p>{{ roomCode }}</p>
+    <p class="mb-1">{{ roomCode }}</p>
 </div>
-<div class="border-bottom border-dark">
+<div *ngIf="isCreator" class="border-bottom border-dark">
     <h2>Players: </h2>
     <li *ngFor="let player of players">
         {{ player }}
@@ -12,11 +12,9 @@
     <h2 *ngIf="defaultName[0]" class="team1">Team 1:</h2>
     <h2 *ngIf="!defaultName[0]" class="team1">{{nameTeam[0]}}</h2>
     <li *ngFor="let teammate1 of teams[0]" class="team1">{{ teammate1[1] }}</li>
-    <p *ngIf="teams[0].length!=0" class="team1">SCORE: {{score[0]}}</p>
     <h2 *ngIf="defaultName[1]" class="team2">Team 2:</h2>
     <h2 *ngIf="!defaultName[1]" class="team2">{{nameTeam[1]}}</h2>
     <li *ngFor="let teammate2 of teams[1]" class="team2">{{ teammate2[1] }}</li>
-    <p *ngIf="teams[1].length!=0" class="team2">SCORE: {{score[1]}}</p>
 </div>
 <div class="border-bottom border-dark">
     <button class="btn btn-light mb-1" *ngIf='!isProposal && !isPlayer && !isListener && !isEnd && !isResult' (click)="onRandomize()">Randomize teams</button>

@@ -367,7 +367,6 @@ class Game {
             const chosenTeam = this.chooseTeam();
             const chosenPlayer = this.team[chosenTeam][0];
             const timer = this.parameters.timer[this.stageGame];
-            this.rotateTeam(chosenTeam);
             return [chosenTeam, chosenPlayer, timer]
         }
     }

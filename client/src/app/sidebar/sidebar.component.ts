@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit {
   isProposal: boolean;
   isEnd: boolean;
   isResult: boolean;
+  isCreator: boolean;
 
 
   constructor(private chargingService: ChargingService, private authService: AuthService) { }
@@ -39,6 +40,7 @@ export class SidebarComponent implements OnInit {
     this.statusSubscription = this.authService.statusSubject.subscribe(
       (status: string) => {
         this.status = status;
+        this.isCreator = this.status === 'creator';
         this.isListener = this.status === 'listener';
         this.isPlayer = this.status === 'player';
         this.isProposal = this.status === 'proposal';
