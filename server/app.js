@@ -210,9 +210,10 @@ io.on('connection', socket => {
         io.in(roomCode).emit('fillEmit', color);
     })
 
-    socket.on('resultsRound', (roomCode, lastTeam, unvalidWords, validWords, timer) => {
+    socket.on('resultsRound', (roomCode, lastTeam, unvalidWords, validWords, deleteWords, timer) => {
         const roomObject = getRoomByCode(roomCode);
         const game = roomObject.game;
+        game.deleteWords(deleteWords);
         const [chosenTeam, chosenPlayer] = game.initNextPlayer(lastTeam, validWords, unvalidWords);
         if (game.remainingWords.length ===0){
             if (game.stageGame === 'Step 1') {
@@ -400,6 +401,17 @@ class Game {
             if(player[0] === socketId) {
                 return player[1];
             }
+        }
+    }
+
+    deleteWords(list){
+        for (let word of list){
+            const id = this.listOfWords.findIndex(
+                (s) => {
+                    return s === word;
+                }
+            )
+            this.listOfWords.splice(id, 1);
         }
     }
 }

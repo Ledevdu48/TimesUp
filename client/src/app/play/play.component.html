@@ -59,9 +59,8 @@
                     <tr>
                         <th class="p-1" scope="col">Proposal</th>
                         <th class="p-1" scope="col">Validation</th>
-                        <th class="p-1">                
-                            
-                        </th>
+                        <th class="p-1" scope="col"></th>
+                        <th class="p-1" scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,6 +76,11 @@
                             <div class="form-check form-check-inline">
                                 <input class="radio" type="radio" formControlName="{{ proposal }}" value="unvalid">
                                 <label class="radio_label">Unvalid</label>
+                            </div>
+                        </td>
+                        <td class="p-1">
+                            <div class="form-check form-check-inline">
+                                <input class="checkbox" type="checkbox" formControlName="{{ proposal }}_delete">
                             </div>
                         </td>
                     </tr>

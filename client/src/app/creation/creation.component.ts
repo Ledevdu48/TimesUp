@@ -62,14 +62,14 @@ export class CreationComponent implements OnInit {
 
   initForm() {
     this.parametersForm = this.formBuilder.group({
-      numberProp: ['', Validators.required],
-      timerStep1: ['', Validators.required],
-      timerStep2: ['', Validators.required],
-      timerStep3: ['', Validators.required],
+      numberProp: [2, Validators.required],
+      timerStep1: [30, Validators.required],
+      timerStep2: [30, Validators.required],
+      timerStep3: [30, Validators.required],
       nameTeam1: [''],
       nameTeam2: ['']
     })
-
+    
     this.socket.on('newParameters', data => {
       this.parametersForm.controls['numberProp'].setValue(data.numberProp);
       this.parametersForm.controls['timerStep1'].setValue(data.timerStep1);

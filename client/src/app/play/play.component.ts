@@ -35,6 +35,7 @@ export class PlayComponent implements OnInit {
   currentProposal: any[] = [0, ''];
   validateProposals: any[] = [];
   unvalidProposals: any[] = [];
+  deleteProposals: any[] = [];
   validationForm: FormGroup;
   stepSubscription: Subscription;
   step: string;
@@ -146,7 +147,9 @@ export class PlayComponent implements OnInit {
   initForm(needValidation) {
     let group = {};
     for (let proposal of needValidation) {
+      const controlName = proposal + '_delete';
       group[proposal] = ['', Validators.required];
+      group[controlName] = [''];
     }
     this.validationForm = this.formBuilder.group(group);
   }
@@ -198,8 +201,10 @@ export class PlayComponent implements OnInit {
   
   onCheckAll() {
     let set = {};
-    for (let prop of this.validateProposals) {      
-      set[prop] = "valid";
+    for (let prop of this.validateProposals) {
+      const controlName = prop + '_delete';      
+      set[prop] = "valid";      
+      set[controlName] = this.validationForm.value[controlName];
     }
     this.validationForm.setValue(set)
   }
@@ -207,14 +212,22 @@ export class PlayComponent implements OnInit {
   onSubmit() {
     const foundProposals = []
     for (let proposal of this.validateProposals) {
+      const controlName = proposal + '_delete';
+      console.log(this.validationForm.value[controlName])
       if (this.validationForm.value[proposal] == "unvalid") {
         this.unvalidProposals.push(proposal);
+        if (this.validationForm.value[controlName] == true) {
+          this.deleteProposals.push(proposal);
+        }
       }
       else {
         foundProposals.push(proposal);
+        if (this.validationForm.value[controlName] == true) {
+          this.deleteProposals.push(proposal);
+        }
       }
-    }
-    this.socket.emit('resultsRound', this.roomCode, this.chosenTeam, this.unvalidProposals, foundProposals, this.timer);
+    }    
+    this.socket.emit('resultsRound', this.roomCode, this.chosenTeam, this.unvalidProposals, foundProposals, this.deleteProposals, this.timer);
     this.authService.changeListener();
   }
 
