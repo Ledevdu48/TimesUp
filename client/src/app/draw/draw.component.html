@@ -1,5 +1,5 @@
 <div class="row justify-content-center mb-1">
-    <canvas id="canvas" (mousemove)="draw($event)" (mousedown)="startPosition($event)"
+    <canvas id="draw_canvas" (mousemove)="draw($event)" (mousedown)="startPosition($event)"
         (mouseup)="endPosition($event)"></canvas>
 </div>
 <div class="row justify-content-center">
@@ -12,7 +12,7 @@
     <div [ngClass]="createClassCoul(6)" (click)="changeColor('pink')"></div>
     <div [ngClass]="createClassCoul(7)" (click)="changeColor('brown')"></div>
     <div [ngClass]="createClassCoul(8)" (click)="changeColor('green')"></div>
-    <div class="box white p-1 ml-1" (click)="fill()">
+    <div class="box white p-0 ml-1" (click)="fill()">
         <img src="../../assets/remplissage.png">
     </div>
     <div [ngClass]="createClassSize(0)" (click)="changeSize(3)">
@@ -27,7 +27,7 @@
     <div [ngClass]="createClassSize(3)" (click)="changeSize(40)">
         <img src="../../assets/40px.png">
     </div>
-    <div class="box white p-1 m-0" (click)="fillWhite()">
+    <div class="box white p-0 m-0" (click)="fillWhite()">
         <img src="../../assets/poubelle.png">
     </div>
 </div>

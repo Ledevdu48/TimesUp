@@ -30,17 +30,16 @@
     </div>
 </div>
 <div *ngIf="boolPlay">
-    <div class="row card mb-3">
-        <div class="card-header p-1">Round</div>
+    <div class="row card mb-1">
         <div class="card-body bg-info p-1">
             <div class="row justify-content-center">
                 <p class="timer">Time left: {{ timeLeft }} s</p>
             </div>
         </div>
-        <div class="card-body p-2">
-            <h3 class="card-subtitle">Current proposal: {{currentProposal[1]}}</h3>
+        <div class="card-body p-1">
+            <p class="card-subtitle">Current proposal: {{currentProposal[1]}}</p>
         </div>
-        <div class="card-body p-2">
+        <div class="card-body p-1">
             <div class="row justify-content-center">
                 <button class="btn btn-warning mr-sm-1" (click)="onSkip()" [disabled]='step === "Step 1"'>Skip proposal</button>
                 <button class="btn btn-success" (click)="onValidate()">Validate</button>

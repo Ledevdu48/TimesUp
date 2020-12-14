@@ -50,12 +50,11 @@ export class DrawComponent implements OnInit {
   }
 
   initCanvas() {
-    this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
+    this.canvas = <HTMLCanvasElement>document.getElementById("draw_canvas")
     if (this.canvas != null) {
-      this.canvas.height = 550;
-      this.canvas.width = 900;
-
       this.ctx = this.canvas.getContext('2d');
+      this.canvas.width = 700;
+      this.canvas.height = 450;
       this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     }
@@ -161,7 +160,7 @@ export class DrawComponent implements OnInit {
   createClassSize(id){
     let size = this.sizes[id];
     let newClass = {
-      'box p-1 m-0 white': true
+      'box p-0 m-0 white': true
     };
     newClass['bord'] = size[1];
     return newClass

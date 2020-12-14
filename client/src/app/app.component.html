@@ -8,7 +8,7 @@
             <app-auth [socket]="socket"></app-auth>
         </div>
     </div>
-    <div class ="row" id='timesup-game-com_300X250'>
+    <div id='timesup-game-com_300X250'>
         <script type='text/javascript'>
             aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
         </script>
@@ -35,7 +35,7 @@
 
 </div>
 <div class="container-fluid" *ngIf="isAuth">
-    <div class="row">
+    <div class="row justify-content-between">
         <div class="sidebar col-auto" [ngStyle]="{'height': innerHeighttxt}">
             <app-sidebar [socket]="socket"></app-sidebar>
         </div>
@@ -51,7 +51,7 @@
             <app-chat [socket]="socket"></app-chat>
         </div>
     </div>
-    <div class="row" id='timesup-game-com_300X600'>
+    <div id='timesup-game-com_300X600'>
         <script type='text/javascript'>
             aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X600'); });
         </script>

@@ -224,7 +224,7 @@ io.on('connection', socket => {
                     const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 2');
                     io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                     io.in(chosenPlayer[0]).emit('goToPlay');
-                }, 1000*8)
+                }, 1000*5)
             }
             else if (game.stageGame === 'Step 2') {
                 game.stageGame = 'Result 2';
@@ -235,7 +235,7 @@ io.on('connection', socket => {
                     const [chosenTeam, chosenPlayer, timer] = game.initStage('Step 3');
                     io.in(roomCode).emit('nextPlayer', chosenTeam, chosenPlayer, timer, validWords);
                     io.in(chosenPlayer[0]).emit('goToPlay');
-                }, 1000*8)
+                }, 1000*5)
             } 
             else {
                 io.in(roomCode).emit('endGame')
