@@ -2,17 +2,18 @@
         <h1 class="title">Times' UP Online<img src="../assets/icon.png" class="icon"></h1>        
         <a class="contact" href="https://twitter.com/ledevdu48">Contact me</a>        
 </div>
-<div class="container-fluid" *ngIf="isNone" >
+<div class="container-fluid" *ngIf="isNone">
     <div class="row padding_top_bot justify-content-center">
         <div class="col-3 login">
             <app-auth [socket]="socket"></app-auth>
         </div>
+        <div class="col-2" id='timesup-game-com_300X250'>
+            <script type='text/javascript'>
+                aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
+            </script>
+        </div>
     </div>
-    <div id='timesup-game-com_300X250'>
-        <script type='text/javascript'>
-            aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
-        </script>
-    </div>
+
     <div class="row justify-content-center">
         <div class="jumbotron description col-sm-9">
             <h2 class='title-jumbo'>Welcome</h2>
@@ -39,7 +40,7 @@
         <div class="sidebar col-auto" [ngStyle]="{'height': innerHeighttxt}">
             <app-sidebar [socket]="socket"></app-sidebar>
         </div>
-        <div class="col-sm-7 padding_top_left">
+        <div class="col-sm-5 padding_top_left">
             <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
             <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
             <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
@@ -47,13 +48,8 @@
             <app-end [socket]="socket" *ngIf="isEnd"></app-end>
             <app-result [socket]="socket" *ngIf="isResult"></app-result>
         </div>
-        <div class="col-sm-3" [ngStyle]="{'height': innerHeighttxt}">
+        <div class="col-sm-4" [ngStyle]="{'height': innerHeighttxt}">
             <app-chat [socket]="socket"></app-chat>
         </div>
-    </div>
-    <div id='timesup-game-com_300X600'>
-        <script type='text/javascript'>
-            aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X600'); });
-        </script>
     </div>
 </div>
