@@ -44,10 +44,14 @@ export class ListenComponent implements OnInit {
     ' Your team has only one guess',
     ''
   ];
+  innerHeight: any;
+  innerWidth: any;
 
   constructor(private authService: AuthService, private chargingService: ChargingService, private ref: ApplicationRef) { }
 
   ngOnInit() {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     this.chargingService.getInfos(this.socket)
     
     this.nameTeamSubscription = this.chargingService.nameTeamSubject.subscribe(
@@ -185,9 +189,8 @@ export class ListenComponent implements OnInit {
   initCanvas() {
     this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
     if (this.canvas != null) {
-      this.canvas.height = 450;
-      this.canvas.width = 700;
-
+      this.canvas.width = Math.round(this.innerWidth*0.55);
+      this.canvas.height = Math.round(this.canvas.width/1.6);
       this.ctx = this.canvas.getContext('2d');
       this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
@@ -197,12 +200,12 @@ export class ListenComponent implements OnInit {
   draw(data, ctx) {
     if (!data.painting) return
 
-    ctx.lineWidth = data.size;
+    ctx.lineWidth = Math.round(data.size/data.sizeCanvas[0]*this.canvas.width);
     ctx.strokeStyle = data.color;
     ctx.lineCap = "round";
 
-    const x = data.x;
-    const y = data.y;
+    const x = Math.round(data.x/data.sizeCanvas[0]*this.canvas.width);
+    const y = Math.round(data.y/data.sizeCanvas[1]*this.canvas.height);
 
     ctx.lineTo(x, y)
     ctx.stroke();

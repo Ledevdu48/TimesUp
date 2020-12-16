@@ -5,6 +5,8 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
     "socket.io": "^2.3.0"
   },

@@ -17,7 +17,8 @@ export class DrawComponent implements OnInit {
     y: 0,
     color: '',
     size: 0,
-    painting: false
+    painting: false,
+    sizeCanvas: [0, 0]
   }
   canvas: HTMLCanvasElement;
   ctx: any;
@@ -38,11 +39,14 @@ export class DrawComponent implements OnInit {
     [20, false],
     [40, false]
   ]
+  innerHeight: any;
+  innerWidth: any;
 
   constructor() { }
 
   ngOnInit() {
-
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
   }
 
   ngAfterViewInit() {
@@ -53,8 +57,8 @@ export class DrawComponent implements OnInit {
     this.canvas = <HTMLCanvasElement>document.getElementById("draw_canvas")
     if (this.canvas != null) {
       this.ctx = this.canvas.getContext('2d');
-      this.canvas.width = 700;
-      this.canvas.height = 450;
+      this.canvas.width = Math.round(this.innerWidth*0.55);
+      this.canvas.height = Math.round(this.canvas.width/1.6);
       this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     }
@@ -69,6 +73,7 @@ export class DrawComponent implements OnInit {
     this.data.color = this.color;
     this.data.size = this.size;
     this.data.painting = this.painting;
+    this.data.sizeCanvas = [this.canvas.width, this.canvas.height];
     this.socket.emit('draw', this.data, this.roomCode)
 
     if (!this.painting) return
@@ -93,6 +98,7 @@ export class DrawComponent implements OnInit {
     this.data.color = this.color;
     this.data.size = this.size;
     this.data.painting = this.painting;
+    this.data.sizeCanvas = [this.canvas.width, this.canvas.height];
 
     this.socket.emit('startPosition', this.data, this.roomCode)
     this.draw(event);
@@ -108,6 +114,7 @@ export class DrawComponent implements OnInit {
     this.data.y = y;
     this.data.color = this.color;
     this.data.painting = this.painting;
+    this.data.sizeCanvas = [this.canvas.width, this.canvas.height];
 
     this.socket.emit('endPosition', this.data, this.roomCode)
     this.ctx.beginPath();

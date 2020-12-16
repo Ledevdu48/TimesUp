@@ -23,8 +23,10 @@
       buttonText: "Privacy settings",
       buttonPosition: "bottom-left" //bottom-left, bottom-right, top-left, top-right
     }
-    aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
-    setInterval(()=>{
+    setTimeout(() => {
+      aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
+    }, 2000)
+    setTimeout(()=>{
       aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
     }, 60000)    
   </script>
