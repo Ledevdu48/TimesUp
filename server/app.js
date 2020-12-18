@@ -85,7 +85,7 @@ io.on('connection', socket => {
         for (let key in sockrooms) {
             if (key != socket.id) {
                 const room = sockrooms[key];
-                const roomObject = 'ahah';
+                const roomObject = getRoomByCode(room);
                 io.in(roomObject.code).emit('sendInfos', room, roomObject.game.players, roomObject.game.team, roomObject.game.nameTeam, roomObject.game.score, roomObject.game.stageGame, false, false)
             }
         }
