@@ -146,10 +146,12 @@ export class PlayComponent implements OnInit {
 
   initForm(needValidation) {
     let group = {};
+    var i = 0;
     for (let proposal of needValidation) {
-      const controlName = proposal + '_delete';
-      group[proposal] = ['', Validators.required];
+      const controlName = i.toString() + '_delete';
+      group[i.toString()] = ['', Validators.required];
       group[controlName] = [''];
+      i = i+1;
     }
     this.validationForm = this.formBuilder.group(group);
   }
@@ -201,20 +203,22 @@ export class PlayComponent implements OnInit {
   
   onCheckAll() {
     let set = {};
+    var i = 0;
     for (let prop of this.validateProposals) {
-      const controlName = prop + '_delete';      
-      set[prop] = "valid";      
+      const controlName = i.toString() + '_delete';      
+      set[i.toString()] = "valid";      
       set[controlName] = this.validationForm.value[controlName];
+      i = i+1;
     }
     this.validationForm.setValue(set)
   }
 
   onSubmit() {
     const foundProposals = []
+    var i = 0;
     for (let proposal of this.validateProposals) {
-      const controlName = proposal + '_delete';
-      console.log(this.validationForm.value[controlName])
-      if (this.validationForm.value[proposal] == "unvalid") {
+      const controlName = i.toString() + '_delete';
+      if (this.validationForm.value[i.toString()] == "unvalid") {
         this.unvalidProposals.push(proposal);
         if (this.validationForm.value[controlName] == true) {
           this.deleteProposals.push(proposal);
@@ -226,6 +230,7 @@ export class PlayComponent implements OnInit {
           this.deleteProposals.push(proposal);
         }
       }
+      i = i+1;
     }    
     this.socket.emit('resultsRound', this.roomCode, this.chosenTeam, this.unvalidProposals, foundProposals, this.deleteProposals, this.timer);
     this.authService.changeListener();

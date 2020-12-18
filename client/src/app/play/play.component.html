@@ -64,23 +64,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="p-1" *ngFor="let proposal of validateProposals">
+                    <tr class="p-1" *ngFor="let proposal of validateProposals;let i = index">
                         <th class="p-1" scope="row">{{ proposal }}</th>
                         <td class="p-1">
                             <div class="form-check form-check-inline">
-                                <input class="radio" type="radio" formControlName="{{ proposal }}" value="valid">
+                                <input class="radio" type="radio" formControlName="{{i}}" value="valid">
                                 <label class="radio_label">Valid</label>
                             </div>
                         </td>
                         <td class="p-1">
                             <div class="form-check form-check-inline">
-                                <input class="radio" type="radio" formControlName="{{ proposal }}" value="unvalid">
+                                <input class="radio" type="radio" formControlName="{{i}}" value="unvalid">
                                 <label class="radio_label">Unvalid</label>
                             </div>
                         </td>
                         <td class="p-1">
                             <div class="form-check form-check-inline">
-                                <input class="checkbox" type="checkbox" formControlName="{{ proposal }}_delete">
+                                <input class="checkbox" type="checkbox" formControlName="{{i}}_delete">
                             </div>
                         </td>
                     </tr>

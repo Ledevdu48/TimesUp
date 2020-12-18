@@ -405,12 +405,14 @@ class Game {
     }
 
     deleteWords(list){
+        console.log(list)
         for (let word of list){
             const id = this.listOfWords.findIndex(
                 (s) => {
                     return s === word;
                 }
             )
+            console.log(id)
             this.listOfWords.splice(id, 1);
         }
     }
