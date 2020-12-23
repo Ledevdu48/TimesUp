@@ -1,7 +1,132 @@
-.title {
-    font-size: 30px;
+.back {
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
 }
 
-.margin{
-    margin-bottom: 2px;
+.lg-titleSectionCreation {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 70px;
+    line-height: 80px;
+    text-align: center;
+    color: #000000;
+}
+
+.sm-titleSectionCreation {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 59px;
+    text-align: center;
+    color: #000000;
+}
+
+.lg-subtitleSectionCreation {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px;
+    text-align: center;
+    color: #000000;
+}
+
+.sm-subtitleSectionCreation {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+}
+
+.lg-control1 {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 20px;
+    height: 40px;
+    width: 155px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px;
+    color: #000000;
+    padding: 0px 15px;
+}
+
+.sm-control1 {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 20px;
+    height: 30px;
+    width: 155px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 22px;
+    right: 10%;
+    color: #000000;
+    padding: 0px 15px;
+}
+
+.lg-control2 {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 20px;
+    height: 40px;
+    width: 300px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px;
+    color: #000000;
+    padding: 0px 15px;
+}
+
+.sm-control2 {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 20px;
+    height: 30px;
+    width: 300px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 22px;
+    right: 10%;
+    color: #000000;
+    padding: 0px 15px;
+}
+
+.lg-button {
+    background: #091235;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.sm-button {
+    background: #091235;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 22px;
+    color: #FFFFFF;
+    text-align: center;
 }

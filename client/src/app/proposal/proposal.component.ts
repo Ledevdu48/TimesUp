@@ -21,7 +21,9 @@ export class ProposalComponent implements OnInit {
   message: string;
   displayForm: boolean = false;
   waiting: boolean = false;
-  
+  innerHeight: any;
+  innerWidth: any;
+ 
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private chargingService: ChargingService) { }
 
@@ -49,7 +51,6 @@ export class ProposalComponent implements OnInit {
 
     this.socket.on('waitingOthers', () => {
       this.waiting = true;
-      this.message = 'Proposals sent, waiting other players ...'
     })
 
     this.socket.on('goToListen', () => {
@@ -57,6 +58,27 @@ export class ProposalComponent implements OnInit {
       this.authService.changeListener();
       this.socket.emit('chargingListener', this.roomCode, 'step 1');
     })
+
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
+  }  
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
   }
 
   initForm(n) {

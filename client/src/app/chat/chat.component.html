@@ -1,16 +1,22 @@
 <div class="back">
-    <h1>Chat</h1>
-    <div class="row justify-content-center m-0 mess" id='timesup-game-com_300X250'>
-        <script type='text/javascript'>
-            aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
-        </script>
+    <div class="row justify-content-center">
+        <p [ngClass]="{
+            'lg-titleSectionChat': !onSizeSm(),
+            'sm-titleSectionChat': onSizeSm()
+        }">Chat</p>
     </div>
     <ul id="messages" [ngStyle]="{'height': innerHeighttxt}">
-        <li *ngFor="let message of messages">{{message.pseudo}}: {{message.text}}</li>
+        <li [ngClass]="{
+            'lg-mess': !onSizeSm(),
+            'sm-mess': onSizeSm()
+        }" *ngFor="let message of messages"><span class="strong" [ngClass]="{
+            'team0': message.color[0],
+            'team1': message.color[1]
+        }">{{message.pseudo}}:</span> {{message.text}}</li>
     </ul>
     <form [formGroup]="chatForm">
         <div>
-            <input type="text" formControlName="message"><button type="submit" (click)="onSend()" [disabled]="chatForm.invalid">Send</button>
+            <input type="text" formControlName="message"><button class="button" type="submit" (click)="onSend()" [disabled]="chatForm.invalid">Send</button>
         </div>
     </form>
 </div>

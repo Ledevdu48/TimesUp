@@ -1,25 +1,75 @@
-<div class="border-bottom border-dark">
-    <h1>Room:</h1>
-    <p class="mb-1">{{ roomCode }}</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <p [ngClass]="{
+            'lg-titleRoomSidebar': !onSizeSm(),
+            'sm-titleRoomSidebar': onSizeSm()
+        }">Room</p>
+    </div>
+    <div class="row justify-content-center mt-1">
+        <p [ngClass]="{
+            'lg-subtitleRoomSidebar': !onSizeSm(),
+            'sm-subtitleRoomSidebar': onSizeSm()
+        }">{{ roomCode }}</p>
+    </div>
+    <div *ngIf="isCreator">
+        <div class="row justify-content-center mt-2">
+            <p [ngClass]="{
+                'lg-titleRoomSidebar': !onSizeSm(),
+                'sm-titleRoomSidebar': onSizeSm()
+            }">Players: </p>
+        </div>
+        <div class="row">
+            <ul>
+                <li [ngClass]="{
+                    'lg-subtitleRoomSidebar ml-4': !onSizeSm(),
+                    'sm-subtitleRoomSidebar ml-3': onSizeSm()
+                }" *ngFor="let player of players">
+                    {{ player }}
+                </li>
+            </ul>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <button [ngClass]="{
+                'lg-btnRoomSidebar': !onSizeSm(),
+                'sm-btnRoomSidebar': onSizeSm()
+            }" *ngIf='!isProposal && !isPlayer && !isListener && !isEnd && !isResult' (click)="onRandomize()">Randomize
+                teams</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <p [ngClass]="{
+            'lg-titleRoomSidebar': !onSizeSm(),
+            'sm-titleRoomSidebar': onSizeSm()
+        }" *ngIf="defaultName[0]" class="team1 ml-2">Team 1:</p>
+        <p [ngClass]="{
+            'lg-titleRoomSidebar': !onSizeSm(),
+            'sm-titleRoomSidebar': onSizeSm()
+        }" *ngIf="!defaultName[0]" class="team1 ml-2">{{nameTeam[0]}}</p>
+    </div>
+    <div class="row">
+        <ul>
+            <li [ngClass]="{
+                'lg-subtitleRoomSidebar ml-4': !onSizeSm(),
+                'sm-subtitleRoomSidebar ml-3': onSizeSm()
+            }" *ngFor="let teammate1 of teams[0]">{{ teammate1[1] }}</li>
+        </ul>
+    </div>
+    <div class="row mt-2">
+        <p [ngClass]="{
+            'lg-titleRoomSidebar': !onSizeSm(),
+            'sm-titleRoomSidebar': onSizeSm()
+        }" *ngIf="defaultName[1]" class="team2 ml-2">Team 2:</p>
+        <p [ngClass]="{
+            'lg-titleRoomSidebar': !onSizeSm(),
+            'sm-titleRoomSidebar': onSizeSm()
+        }" *ngIf="!defaultName[1]" class="team2 ml-2">{{nameTeam[1]}}</p>
+    </div>
+    <div class="row">
+        <ul>
+            <li [ngClass]="{
+                'lg-subtitleRoomSidebar ml-4': !onSizeSm(),
+                'sm-subtitleRoomSidebar ml-3': onSizeSm()
+            }" *ngFor="let teammate2 of teams[1]">{{ teammate2[1] }}</li>
+        </ul>
+    </div>
 </div>
-<div *ngIf="isCreator" class="border-bottom border-dark">
-    <h2>Players: </h2>
-    <li *ngFor="let player of players">
-        {{ player }}
-    </li>
-</div>
-<div>
-    <h2 *ngIf="defaultName[0]" class="team1">Team 1:</h2>
-    <h2 *ngIf="!defaultName[0]" class="team1">{{nameTeam[0]}}</h2>
-    <li *ngFor="let teammate1 of teams[0]" class="team1">{{ teammate1[1] }}</li>
-    <h2 *ngIf="defaultName[1]" class="team2">Team 2:</h2>
-    <h2 *ngIf="!defaultName[1]" class="team2">{{nameTeam[1]}}</h2>
-    <li *ngFor="let teammate2 of teams[1]" class="team2">{{ teammate2[1] }}</li>
-</div>
-<div class="border-bottom border-dark">
-    <button class="btn btn-light mb-1" *ngIf='!isProposal && !isPlayer && !isListener && !isEnd && !isResult' (click)="onRandomize()">Randomize teams</button>
-</div>
-<div>
-    <h2>Step: {{step}}</h2>
-</div>
-

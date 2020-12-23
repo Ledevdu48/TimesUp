@@ -1,14 +1,75 @@
-p.team1, li.team1, h2.team1{
-    color: #FF5412;
-    text-shadow:0 0 1px black;
+.back {
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    padding: 4px 8px 4px 8px;
 }
 
-p.team2, li.team2, h2.team2{
-    color: #FF66E9;
-    text-shadow:0 0 1px black;
+.lg-titleSectionResult {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+    line-height: 70px;
+    color: #000000; 
 }
 
-.results {
-    color: red;
-    font: small-caps bold 30px 'Times New Roman', Times, serif;
+.sm-titleSectionResult {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 55px;
+    color: #000000; 
+}
+
+.lg-contentSectionResult {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 28px;
+    color: #000000; 
+}
+
+.sm-contentSectionResult {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000; 
+}
+
+ul {
+    list-style-type: none;
+}
+
+.team1{
+    color: #CC2D90;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+.team2{
+    color: #607B00;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+.lg-button {
+    background: #091235;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.sm-button {
+    background: #091235;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 22px;
+    color: #FFFFFF;
+    text-align: center;
 }

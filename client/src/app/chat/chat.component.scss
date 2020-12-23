@@ -1,12 +1,8 @@
 #messages {
     padding: 5px; 
     width: 100%;
-    background-color: rgb(92, 82, 82);
+    background-color: #ffffff;
     overflow-y: scroll;
-}
-
-.mess {
-    background-color: rgb(92, 82, 82);
 }
 
 form { 
@@ -17,16 +13,70 @@ form {
 form input {
     border: 0;
     width: 80%;
-    background-color: rgb(92, 82, 82);
+    background-color:#ffffff;
 }
 
 input[type=text]{
-    color: white
+    color: black;
 }
 
 .back{
     margin: 10px 0 10px 10px;
-    background-color: #ffe433cc;
 }
 
+.lg-titleSectionChat {
+    margin-left: 10px;
+    margin-bottom: 0px;
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+    line-height: 70px;
+    color: #000000; 
+}
 
+.sm-titleSectionChat {
+    margin-left: 4px;
+    margin-bottom: 0px;
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+    color: #000000; 
+}
+
+.lg-mess {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.sm-mess {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 15px;
+    color: #000000;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.button {
+    background: #88A9C3;
+    color: #000000;
+}
+
+.team0 {
+    color: #CC2D90;
+}
+
+.team1 {
+    color: #607B00;
+}

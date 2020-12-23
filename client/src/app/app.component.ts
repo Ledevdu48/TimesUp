@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import * as io from 'socket.io-client';
 import { AuthService } from './auth.service';
+import { ChargingService } from './charging.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,9 +28,14 @@ export class AppComponent implements OnInit{
   statusSubscription: Subscription;
   connectedSubscription : Subscription;
   innerHeight: any;
+  innerWidth: any;
   innerHeighttxt: string;
+  innerHeighttxt2: string;
+  displayAds: boolean;
+  step: string;
+  stepSubscription: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private chargingService: ChargingService) {}
 
   ngOnInit() {
     this.authService.changeNone();
@@ -52,17 +58,44 @@ export class AppComponent implements OnInit{
       }
     );
     this.authService.emitConnectedSubject();
-    this.socket = io.connect('89.33.6.104:3000'); // 89.33.6.104
-    this.innerHeight = window.innerHeight-85;
+    this.stepSubscription = this.chargingService.stepSubject.subscribe(
+      (step) => {
+        this.step = step;
+        this.displayAds = this.step === 'Step 3' || this.innerWidth<1450 || this.innerHeight<750;
+      }
+    )
+    this.chargingService.emitStepSubject()
+    this.socket = io.connect('localhost:3000'); // 89.33.6.104
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     this.innerHeighttxt = this.innerHeight.toString()+"px";
+    this.innerHeighttxt2 = (this.innerHeight-210).toString()+"px";
+    this.displayAds = this.step === 'Step 3' || this.innerWidth<1450 || this.innerHeight<750;
   }
 
   onResize(event) {
-    this.innerHeight = window.innerHeight-85;
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     this.innerHeighttxt = this.innerHeight.toString()+"px";
+    this.innerHeighttxt2 = (this.innerHeight-210).toString()+"px";
+    this.displayAds = this.step === 'Step 3' || this.innerWidth<1450 || this.innerHeight<750;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
   }
 
   ngOnDestroy() {
+    this.stepSubscription.unsubscribe();
     this.statusSubscription.unsubscribe();
     this.connectedSubscription.unsubscribe();
   }

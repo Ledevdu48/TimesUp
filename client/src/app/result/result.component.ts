@@ -6,7 +6,10 @@ import { ChargingService } from '../charging.service';
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
-  styleUrls: ['./result.component.scss']
+  styleUrls: ['./result.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class ResultComponent implements OnInit {
   @Input() socket: any;
@@ -21,10 +24,14 @@ export class ResultComponent implements OnInit {
   score: number[];
   stepSubscription: Subscription;
   step: string
+  innerHeight: any;
+  innerWidth: any;
 
   constructor(private chargingService: ChargingService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     this.chargingService.getInfos(this.socket)
     this.roomCodeSubscription = this.chargingService.roomCodeSubject.subscribe(
       (roomCode: string) => {
@@ -62,6 +69,24 @@ export class ResultComponent implements OnInit {
       this.authService.changeListener();
     })
   }
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
+  } 
 
   ngOnDestroy() {
     this.roomCodeSubscription.unsubscribe();

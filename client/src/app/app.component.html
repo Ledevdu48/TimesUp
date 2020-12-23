@@ -1,46 +1,23 @@
-<div class="row upbar justify-content-between">
-        <h1 class="title">Times' UP Online<img src="../assets/icon.png" class="icon"></h1>        
-        <a class="contact" href="https://twitter.com/ledevdu48">Contact me</a>        
-</div>
-<div class="container-fluid" *ngIf="isNone">
-    <div class="row padding_top_bot justify-content-center">
-        <div class="col-3 login">
-            <app-auth [socket]="socket"></app-auth>
+<div class="container-fluid">
+    <div class="row" [ngClass]="{'justify-content-between': isAuth}">
+        <div class="col-auto sidebar" [ngStyle]="{'height': innerHeighttxt}">
+            <p class="row" [ngClass]="{
+                'lg-titleSidebar': !onSizeSm(),
+                'sm-titleSidebar': onSizeSm()
+            }">Time's UP</p>
+            <p class="row justify-content-end" [ngClass]="{
+                'lg-subtitleSidebar': !onSizeSm(),
+                'sm-subtitleSidebar': onSizeSm()
+            }">online</p>
+            <div class="row justify-content-center" class="roomSidebar" *ngIf="isAuth">
+                <app-sidebar [socket]="socket"></app-sidebar>
+            </div>
         </div>
-        <div class="col-2" id='timesup-game-com_300X250'>
-            <script type='text/javascript'>
-                aiptag.cmd.display.push(function() { aipDisplayTag.display('timesup-game-com_300X250'); });
-            </script>
-        </div>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="jumbotron description col-sm-9">
-            <h2 class='title-jumbo'>Welcome</h2>
-            <p>Welcome to Times' UP Online, the live game where you and your friends try to guess your custom proposals during various stages!</p>
-            <h2 class='title-jumbo'>To Start</h2>
-            <p>
-                Enter a pseudo and a room code which you will share with your friend to play.
-            </p>
-            <h2 class='title-jumbo'>To Play</h2>
-            <p>
-                Once you have set up the parameters of the game and the teams, you will be asked to create your proposals for the rest of the game. <br>
-                In the first step, you can use any word (except the ones in the proposal) to make your team guess the proposal. <br>
-                In the second step, you must use only one word. <br>
-                In the third step, you will have to draw something to make your team guess the proposal (no words written). 
-            </p>
-            <h2 class='title-jumbo'>Chat</h2>
-            <p>You must use another program (like Discord) to chat with your friends during the game.</p>
-        </div>
-    </div>
-
-</div>
-<div class="container-fluid" *ngIf="isAuth">
-    <div class="row justify-content-between">
-        <div class="sidebar col-auto" [ngStyle]="{'height': innerHeighttxt}">
-            <app-sidebar [socket]="socket"></app-sidebar>
-        </div>
-        <div class="col-sm-5 padding_top_left">
+        <div class="col-sm-4" [ngClass]="{
+            'lg-marginAlign': !onSizeSm(),
+            'sm-marginAlign': onSizeSm(),
+            'marginDraw': step==='Step 3'
+        }">
             <app-creation [socket]="socket" *ngIf="isCreator"></app-creation>
             <app-proposal [socket]="socket" *ngIf="isProposal"></app-proposal>
             <app-listen [socket]="socket" *ngIf="isListener"></app-listen>
@@ -48,8 +25,114 @@
             <app-end [socket]="socket" *ngIf="isEnd"></app-end>
             <app-result [socket]="socket" *ngIf="isResult"></app-result>
         </div>
-        <div class="col-sm-4" [ngStyle]="{'height': innerHeighttxt}">
-            <app-chat [socket]="socket"></app-chat>
+        <div class="col-sm-3" *ngIf="isAuth">
+            <p [ngClass]="{
+                'lg-step lg-marginStep': !onSizeSm(),
+                'sm-step sm-marginStep': onSizeSm()
+            }" *ngIf="displayAds">{{step}}</p>
+            <div class="chat" [ngClass]="{
+                'lg-marginAlign': !onSizeSm() && !displayAds,
+                'sm-marginAlign': onSizeSm() && !displayAds
+            }" [ngStyle]="{'height': innerHeighttxt2}">
+                <app-chat [socket]="socket"></app-chat>
+            </div>
+        </div>
+        <div class="col-auto mr-1" *ngIf="isAuth && !displayAds">
+            <p [ngClass]="{
+                'lg-step lg-marginStep': !onSizeSm(),
+                'sm-step sm-marginStep': onSizeSm()
+            }">{{step}}</p>
+            <div class="pub600" id='timesup-game-com_300X600'>
+                <script type='text/javascript'>
+                    aiptag.cmd.display.push(function () { aipDisplayTag.display('timesup-game-com_300X600'); });
+                </script>
+            </div>
+        </div>
+        <div *ngIf="isNone">
+            <div [ngClass]="{
+                'xl-sectionLogin': onSizeXl(),
+                'lg-sectionLogin': onSizeLg(),
+                'sm-sectionLogin': onSizeSm()
+            }">
+                <app-auth [socket]="socket"></app-auth>
+            </div>
+            <div class="pub250">
+                <div id='timesup-game-com_300X250'>
+                    <script type='text/javascript'>
+                        aiptag.cmd.display.push(function () { aipDisplayTag.display('timesup-game-com_300X250'); });
+                    </script>
+                </div>
+            </div>
+            <div [ngClass]="{
+                'col-auto xl-sectionWelcome': onSizeXl(),
+                'col-auto lg-sectionWelcome': onSizeLg(),
+                'col-auto sm-sectionWelcome': onSizeSm()
+            }">
+                <p [ngClass]="{
+                    'lg-titleSectionWelcome': !onSizeSm(),
+                    'sm-titleSectionWelcome': onSizeSm()
+                }"> Welcome</p>
+                <p [ngClass]="{
+                    'lg-contentSectionWelcome': !onSizeSm(),
+                    'sm-contentSectionWelcome': onSizeSm()
+                }">
+                    Welcome to Times' UP Online, the live game<br>
+                    where you and your friends try to guess your custom<br>
+                    proposals during various stages!
+                </p>
+                <p [ngClass]="{
+                    'lg-subtitleSectionWelcome': !onSizeSm(),
+                    'sm-subtitleSectionWelcome': onSizeSm()
+                }">TO START</p>
+                <p [ngClass]="{
+                    'lg-contentSectionWelcome': !onSizeSm(),
+                    'sm-contentSectionWelcome': onSizeSm()
+                }">
+                    Enter a pseudo and a room code which you will<br>
+                    share with your friend to play.
+                </p>
+                <p [ngClass]="{
+                    'lg-subtitleSectionWelcome': !onSizeSm(),
+                    'sm-subtitleSectionWelcome': onSizeSm()
+                }">TO PLAY</p>
+                <p [ngClass]="{
+                    'lg-contentSectionWelcome': !onSizeSm(),
+                    'sm-contentSectionWelcome': onSizeSm()
+                }">
+                    Once you have set up the parameters of the game<br>
+                    and the teams, you will be asked to create your<br>
+                    proposals for the rest of the game.<br>
+                    In the first step, you can use any word (except<br>
+                    the ones in the proposal) to make your team guess<br>
+                    the proposal. In the second step, you must use<br>
+                    only one word. In the third step, you will have<br>
+                    to draw something to make your team guess the<br>
+                    proposal (no words written).
+                </p>
+                <p [ngClass]="{
+                    'lg-subtitleSectionWelcome': !onSizeSm(),
+                    'sm-subtitleSectionWelcome': onSizeSm()
+                }">TO CHAT</p>
+                <p [ngClass]="{
+                    'lg-contentSectionWelcome': !onSizeSm(),
+                    'sm-contentSectionWelcome': onSizeSm()
+                }">
+                    You must use another program (like Discord) to<br>
+                    chat with your friends during the game.
+                </p>
+            </div>
+        </div>
+        <div class="sectionContact">
+            <div class="row">
+                <p [ngClass]="{
+                    'lg-subtitleSectionContact': !onSizeSm(),
+                    'sm-subtitleSectionContact': onSizeSm()
+                }">Questions, remarks?</p>
+                <a [ngClass]="{
+                    'lg-titleSectionContact': !onSizeSm(),
+                    'sm-titleSectionContact': onSizeSm()
+                }" href="https://twitter.com/ledevdu48" target="_blank">Contact me!</a>
+            </div>
         </div>
     </div>
 </div>

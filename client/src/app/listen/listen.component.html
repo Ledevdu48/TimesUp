@@ -1,51 +1,99 @@
-<div class="row" *ngIf="displayChosenTeam">
-    <p class="title">It's time for 
-        <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
-        <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
-    </p>
-</div>
-<div class="row" *ngIf="displayChosenPlayer" [hidden]="boolPlay && step === 'Step 3'">
-    <p class="title">It's the turn of {{chosenPlayer[1]}}</p>
-</div>
-<div class="row" [hidden]="boolPlay && step === 'Step 3'">
-    <p>You have {{ timer }}s to guess!
-        <span *ngIf='step === "Step 1"'>{{rules[0]}}</span>
-        <span *ngIf='step === "Step 2"'>{{rules[1]}}</span>
-        <span *ngIf='step === "Step 3"'>{{rules[2]}}</span>
-    </p>
-</div>
-<div class="row card mb-3" *ngIf="boolPlay">
-    <div class="card-body bg-info p-1">
-        <div class="row justify-content-center">
-            <p class="timer">Time left: {{ timeLeft }} s</p>
-        </div>        
+<div class="container backResults" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
+    <div class="row justify-content-end">
+        <button type="button" class="close black" (click)="onCloseLastRound()">&times;</button>
     </div>
-    <div *ngIf="display === ''" class="card-body bg-secondary p-1">
-        <div class="row justify-content-center">
-            <p>Continue to guess!</p>
-        </div>
+    <div class="row justify-content-center borderbottom p-2">
+        <p [ngClass]="{
+            'lg-titleSectionRecap': !onSizeSm(),
+            'sm-titleSectionRecap': onSizeSm()
+        }">Last round</p>
     </div>
-    <div *ngIf="display === 'Skipped'" class="card-body bg-warning p-1">
-        <div class="row justify-content-center">
-            <p>{{ display }}</p>
-        </div>
+    <div class="row mt-2 p-1">
+        <p [ngClass]="{
+            'lg-contentSectionRecap': !onSizeSm(),
+            'sm-contentSectionRecap': onSizeSm()
+        }" *ngIf='lastsFound.length > 1'>Proposals found:</p>
+        <p [ngClass]="{
+            'lg-contentSectionRecap': !onSizeSm(),
+            'sm-contentSectionRecap': onSizeSm()
+        }" *ngIf='lastsFound.length == 1'>Proposal found:</p>
     </div>
-    <div *ngIf="display === 'Found'" class="card-body bg-success p-1">
-        <div class="row justify-content-center">
-            <p>{{ display }}</p>
-        </div>
-    </div>
-</div>
-<div class="row justify-content-center" *ngIf="boolPlay && step === 'Step 3'">
-    <canvas id="canvas"></canvas>
-</div>
-<div class="row card mb-3" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
-    <div class="card-header">Last round</div>
-    <div class="card-body">
-        <p *ngIf='lastsFound.length > 1'>Last round, these proposals were found:</p>
-        <p *ngIf='lastsFound.length == 1'>Last round, this proposal was found:</p>
+    <div class="row">
         <ul>
-            <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+            <li [ngClass]="{
+                'lg-contentSectionRecap': !onSizeSm(),
+                'sm-contentSectionRecap': onSizeSm()
+            }" *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
         </ul>
     </div>
 </div>
+<div *ngIf="!endRound">
+    <div class="row" *ngIf="displayChosenTeam">
+        <p [ngClass]="{
+            'lg-titleSectionGame': !onSizeSm(),
+            'sm-titleSectionGame': onSizeSm()
+        }">It's time for 
+            <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
+            <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
+        </p>
+    </div>
+    <div class="row justify-content-center" *ngIf="displayChosenPlayer" [hidden]="boolPlay && step === 'Step 3'">
+        <p [ngClass]="{
+            'lg-subtitleSectionGame': !onSizeSm(),
+            'sm-subtitleSectionGame': onSizeSm()
+        }" >It's the turn of {{chosenPlayer[1]}}</p>
+    </div>
+    <div class="row justify-content-center" [hidden]="boolPlay && step === 'Step 3'">
+        <p [ngClass]="{
+            'lg-subtitleSectionGame': !onSizeSm(),
+            'sm-subtitleSectionGame': onSizeSm()
+        }">You have {{ timer }}s to guess!
+            <span *ngIf='step === "Step 1"'>{{rules[0]}}</span>
+            <span *ngIf='step === "Step 2"'>{{rules[1]}}</span>
+            <span *ngIf='step === "Step 3"'>{{rules[2]}}</span>
+        </p>
+    </div>
+</div>
+<div *ngIf="boolPlay">
+    <div class="row justify-content-center">
+        <p [ngClass]="{
+            'lg-subtitleSectionGame': !onSizeSm(),
+            'sm-subtitleSectionGame': onSizeSm()
+        }">Time left: <span class="team{{chosenTeam+1}}">{{ timeLeft }} s</span></p>
+    </div>
+    <div class="container">
+        <div *ngIf="display === ''" class="row pt-3 pb-3 justify-content-center boxGuess">
+                <p [ngClass]="{
+                    'lg-contentSectionGame': !onSizeSm(),
+                    'sm-contentSectionGame': onSizeSm()
+                }">Continue to guess!</p>
+        </div>
+        <div *ngIf="display === 'Skipped'" class="row pt-3 pb-3 justify-content-center boxSkipped">
+                <p [ngClass]="{
+                    'lg-contentSectionGame': !onSizeSm(),
+                    'sm-contentSectionGame': onSizeSm()
+                }">{{ display }}</p>
+        </div>
+        <div *ngIf="display === 'Found'" class="row pt-3 pb-3 justify-content-center boxFound">
+                <p [ngClass]="{
+                    'lg-contentSectionGame': !onSizeSm(),
+                    'sm-contentSectionGame': onSizeSm()
+                }">{{ display }}</p>
+        </div>
+    </div>
+</div>
+<div *ngIf="endRound">
+    <div class="row">
+        <p [ngClass]="{
+            'lg-titleSectionGame': !onSizeSm(),
+            'sm-titleSectionGame': onSizeSm()
+        }">Time's up for
+            <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
+            <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
+        </p>
+    </div>
+</div>
+<div class="row justify-content-center mt-2" *ngIf="boolPlay && step === 'Step 3'">
+    <canvas id="canvas"></canvas>
+</div>
+

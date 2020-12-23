@@ -1,12 +1,45 @@
-<p class="title">Proposal creation</p>
-<p *ngIf="displayForm && !waiting">Enter your proposals (famous person, fictional character, situation, places, expression, private jokes with your friends, ...) </p>
-<form *ngIf="displayForm && !waiting" [formGroup]="proposalForm">
-    <div class="form-group">
-        <div *ngFor="let prop of proposal; index as i">
-            <label>Proposal {{i+1}}</label>
-            <input type="text" class="form-control -lg" formControlName="{{ i }}" placeholder="Write something which will need to be guessed">
-        </div>        
+<div class="container back p-3">
+    <div class="row justify-content-center">
+        <p [ngClass]="{
+            'lg-titleSectionProposal': !onSizeSm(),
+            'sm-titleSectionProposal': onSizeSm()
+        }">Proposals</p>
     </div>
-    <button class="btn btn-success" [disabled]="proposalForm.invalid" (click)="onSubmit()">Send proposals</button>
-</form>
-<p>{{ message }}</p>
+    <div *ngIf="!waiting">
+        <div class="row">
+            <p [ngClass]="{
+                'lg-subtitleSectionProposal': !onSizeSm(),
+                'sm-subtitleSectionProposal': onSizeSm()
+            }" *ngIf="displayForm && !waiting">Enter your proposals (famous person, fictional character, situation, places,
+                expression, private jokes with your friends, ...) </p>
+        </div>
+        <form *ngIf="displayForm && !waiting" [formGroup]="proposalForm">
+            <div *ngFor="let prop of proposal; index as i">
+                <div class="row">
+                    <label [ngClass]="{
+                            'lg-subtitleSectionProposal': !onSizeSm(),
+                            'sm-subtitleSectionProposal': onSizeSm()
+                        }">Proposal {{i+1}}</label>
+                </div>
+                <div class="row justify-content-center">
+                    <input type="text" [ngClass]="{
+                            'lg-control': !onSizeSm(),
+                            'sm-control': onSizeSm()
+                        }" formControlName="{{ i }}">
+                </div>
+            </div>
+            <div class="row justify-content-center mt-2">
+                <button [ngClass]="{
+                'lg-button': !onSizeSm(),
+                'sm-button': onSizeSm()
+            }" [disabled]="proposalForm.invalid" (click)="onSubmit()">Send proposals</button>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="waiting" >
+        <p [ngClass]="{
+            'lg-subtitleSectionProposal': !onSizeSm(),
+            'sm-subtitleSectionProposal': onSizeSm()
+        }">Proposals sent, waiting others ...</p>
+    </div>
+</div>

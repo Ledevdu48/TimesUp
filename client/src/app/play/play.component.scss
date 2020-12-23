@@ -1,15 +1,161 @@
+.lg-titleSectionGame {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+    line-height: 70px;
+    color: #FFFFFF; 
+}
+
+.sm-titleSectionGame {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+    color: #FFFFFF; 
+}
+
+.lg-subtitleSectionGame {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 35px;
+    line-height: 40px;
+    color: #FFFFFF; 
+}
+
+.sm-subtitleSectionGame {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px; 
+    color: #FFFFFF; 
+}
+
+.lg-rulesSectionGame {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 27px;
+    color: #FFFFFF; 
+}
+
+.sm-rulesSectionGame {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 22px; 
+    color: #FFFFFF; 
+}
+
+.lg-contentSectionGame {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 28px;
+    color: #000000; 
+}
+
+.sm-contentSectionGame {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000; 
+}
+
+.backGame {
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    padding: 15px 15px 15px 15px;
+}
+
+.backResults {
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+}
+
+.borderbottom {
+    border-bottom: 4px solid #FFFFFF;
+}
+
+.lg-titleSectionRecap {
+    margin-bottom: 0;
+    font-family: Ribeye;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 45px;
+    color: #000000; 
+}
+
+.sm-titleSectionRecap {
+    margin-bottom: 0;
+    font-family: Ribeye;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px;
+    color: #000000; 
+}
+
+.lg-contentSectionRecap {
+    margin-bottom: 0;
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 28px;
+    color: #000000; 
+}
+
+.sm-contentSectionRecap {
+    margin-bottom: 0;
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000; 
+}
+
+.button {
+    background: #88A9C3;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    color: #000000;
+    padding: 5px 5px 5px 5px
+}
+
+.black {
+    color: #000000;
+    background-color: #ffffff;
+}
+
+table {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 16px;
+    color: #000000;
+}
+
 span.team1{
-    color: #FF5412;
-    text-shadow:0 0 1px black;
+    color: #CC2D90;
 }
 
 span.team2{
-    color: #FF66E9;
-    text-shadow:0 0 1px black;
-}
-
-.timer {
-    font-size: 15px;
+    color: #607B00;
 }
 
 .radio {
@@ -21,12 +167,46 @@ span.team2{
     font-size: 15px;
 }
 
-.title {
-    font-size: 30px;
-    margin-bottom: 0px;
+.button2 {
+    background:  #091235;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: #ffffff;
+    padding: 5px 5px 5px 5px;
 }
 
-.card-subtitle {
-    font-size: 18px;
+.strong {
+    font-weight: bold;
 }
 
+.buttonSkip{
+    background:  #ffffff;
+    border: 2px solid #d3ab26;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: #000000;
+    padding: 5px 5px 5px 5px;
+}
+
+.buttonValidate{
+    background:  #ffffff;
+    border: 2px solid #15c73f;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: #000000;
+    padding: 5px 5px 5px 5px;
+}

@@ -1,94 +1,146 @@
-<div class="mb-3" [hidden]="boolPlay && step === 'Step 3'">
-    <div class="row margin">
-        <p class="title">It's time for 
+<div class="mb-3" [hidden]="(boolPlay && step === 'Step 3') || endRound">
+    <div class="container backResults" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
+        <div class="row justify-content-end">
+            <button type="button" class="close black" (click)="onCloseLastRound()">&times;</button>
+        </div>
+        <div class="row justify-content-center borderbottom p-2">
+            <p [ngClass]="{
+                'lg-titleSectionRecap': !onSizeSm(),
+                'sm-titleSectionRecap': onSizeSm()
+            }">Last round</p>
+        </div>
+        <div class="row mt-2 p-1">
+            <p [ngClass]="{
+                'lg-contentSectionRecap': !onSizeSm(),
+                'sm-contentSectionRecap': onSizeSm()
+            }" *ngIf='lastsFound.length > 1'>Proposals found:</p>
+            <p [ngClass]="{
+                'lg-contentSectionRecap': !onSizeSm(),
+                'sm-contentSectionRecap': onSizeSm()
+            }" *ngIf='lastsFound.length == 1'>Proposal found:</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li [ngClass]="{
+                    'lg-contentSectionRecap': !onSizeSm(),
+                    'sm-contentSectionRecap': onSizeSm()
+                }" *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p [ngClass]="{
+            'lg-titleSectionGame': !onSizeSm(),
+            'sm-titleSectionGame': onSizeSm()
+        }">It's time for
             <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
             <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
         </p>
     </div>
-    <div class="row margin">
-        <p class="title">It's your turn!</p>
+    <div class="row justify-content-center">
+        <p [ngClass]="{
+            'lg-subtitleSectionGame': !onSizeSm(),
+            'sm-subtitleSectionGame': onSizeSm()
+        }">It's your turn!</p>
     </div>
-    <div class="row margin">
-        <p>You have {{ timer }}s to make your team guess!
+    <div class="row justify-content-center">
+        <p [ngClass]="{
+            'lg-rulesSectionGame': !onSizeSm(),
+            'sm-rulesSectionGame': onSizeSm()
+        }">You have {{ timer }}s to make your team guess!
             <span *ngIf='step === "Step 1"'>{{rules[0]}}</span>
             <span *ngIf='step === "Step 2"'>{{rules[1]}}</span>
             <span *ngIf='step === "Step 3"'>{{rules[2]}}</span>
         </p>
     </div>
-    <div class="row card mb-3" *ngIf='displayLastFound' [hidden]="boolPlay || endRound">
-        <div class="card-header">Last round</div>
-        <div class="card-body">
-            <p *ngIf='lastsFound.length > 1'>Last round, these proposals were found:</p>
-            <p *ngIf='lastsFound.length == 1'>Last round, this proposal was found:</p>
-            <ul>
-                <li *ngFor='let proposal of lastsFound'>{{ proposal }}</li>
-            </ul>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <button *ngIf="!endRound" class="btn btn-success" (click)="onStart()" [hidden]="boolPlay">Start round</button>
+    <div class="row justify-content-center mt-2">
+        <button *ngIf="!endRound" class="button" (click)="onStart()" [hidden]="boolPlay">Start Round</button>
     </div>
 </div>
 <div *ngIf="boolPlay">
-    <div class="row card mb-1">
-        <div class="card-body bg-info p-1">
-            <div class="row justify-content-center">
-                <p class="timer">Time left: {{ timeLeft }} s</p>
-            </div>
-        </div>
-        <div class="card-body p-1">
-            <p class="card-subtitle">Current proposal: {{currentProposal[1]}}</p>
-        </div>
-        <div class="card-body p-1">
-            <div class="row justify-content-center">
-                <button class="btn btn-warning mr-sm-1" (click)="onSkip()" [disabled]='step === "Step 1"'>Skip proposal</button>
-                <button class="btn btn-success" (click)="onValidate()">Validate</button>
-            </div>
-        </div>
+    <div class="row justify-content-center">
+        <p [ngClass]="{
+            'lg-subtitleSectionGame': !onSizeSm(),
+            'sm-subtitleSectionGame': onSizeSm()
+        }">Time left: <span class="team{{chosenTeam+1}}">{{ timeLeft }} s</span></p>
     </div>
-    <div *ngIf="step === 'Step 3'">
-        <app-draw [socket]="socket" [roomCode]="roomCode"></app-draw>
+    <div class="container backGame">
+        <div class="row justify-content-around">
+            <p [ngClass]="{
+                'lg-contentSectionRecap': !onSizeSm(),
+                'sm-contentSectionRecap': onSizeSm()
+            }">Current proposal:</p>
+            <p [ngClass]="{
+                'lg-contentSectionRecap': !onSizeSm(),
+                'sm-contentSectionRecap': onSizeSm()
+            }" class="strong">{{currentProposal[1]}}</p>
+        </div>
+        <div class="row justify-content-around mt-3">
+            <button class="buttonSkip" (click)="onSkip()" [disabled]='step === "Step 1"'>Skip
+                proposal</button>
+            <button class="buttonValidate" (click)="onValidate()">Validate</button>
+        </div>
+        <div class="mt-2" *ngIf="step === 'Step 3'">
+            <app-draw [socket]="socket" [roomCode]="roomCode"></app-draw>
+        </div>
     </div>
 </div>
-<div class="card" *ngIf="endRound">
-    <div class="card-header">Validation</div>
-    <div class="card-body p-1">
+<div *ngIf="endRound">
+    <div class="row">
+        <p [ngClass]="{
+            'lg-titleSectionGame': !onSizeSm(),
+            'sm-titleSectionGame': onSizeSm()
+        }">Time's up for
+            <span *ngIf="defaultName[chosenTeam]" class="team{{chosenTeam+1}}">Team {{chosenTeam+1}}</span>
+            <span *ngIf="!defaultName[chosenTeam]" class="team{{chosenTeam+1}}">{{nameTeam[chosenTeam]}}</span>
+        </p>
+    </div>
+    <div class="row">
+        <p [ngClass]="{
+            'lg-rulesSectionGame': !onSizeSm(),
+            'sm-rulesSectionGame': onSizeSm()
+        }">Validate the proposals your team found. Yon can delete the duplications if there are some.
+        </p>
+    </div>
+    <div class="container backResults">
         <form [formGroup]="validationForm">
-            <table class="table table-hover">
-                <thead class="p-1">
-                    <tr>
-                        <th class="p-1" scope="col">Proposal</th>
-                        <th class="p-1" scope="col">Validation</th>
-                        <th class="p-1" scope="col"></th>
-                        <th class="p-1" scope="col">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="p-1" *ngFor="let proposal of validateProposals;let i = index">
-                        <th class="p-1" scope="row">{{ proposal }}</th>
-                        <td class="p-1">
-                            <div class="form-check form-check-inline">
-                                <input class="radio" type="radio" formControlName="{{i}}" value="valid">
-                                <label class="radio_label">Valid</label>
-                            </div>
-                        </td>
-                        <td class="p-1">
-                            <div class="form-check form-check-inline">
-                                <input class="radio" type="radio" formControlName="{{i}}" value="unvalid">
-                                <label class="radio_label">Unvalid</label>
-                            </div>
-                        </td>
-                        <td class="p-1">
-                            <div class="form-check form-check-inline">
-                                <input class="checkbox" type="checkbox" formControlName="{{i}}_delete">
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="row justify-content-center mt-0">
-                <button class="btn btn-light mr-1" (click)="onCheckAll()">Check all</button>
-                <button class="btn btn-success" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate
+            <div class="row mb-1">
+                <table class="table table-hover">
+                    <thead class="p-1">
+                        <tr>
+                            <th class="p-1" scope="col">Proposal</th>
+                            <th class="p-1" scope="col">Validation</th>
+                            <th class="p-1" scope="col"></th>
+                            <th class="p-1" scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="p-1" *ngFor="let proposal of validateProposals;let i = index">
+                            <th class="p-1" scope="row">{{ proposal }}</th>
+                            <td class="p-1">
+                                <div class="form-check form-check-inline">
+                                    <input class="radio" type="radio" formControlName="{{i}}" value="valid">
+                                    <label class="radio_label">Valid</label>
+                                </div>
+                            </td>
+                            <td class="p-1">
+                                <div class="form-check form-check-inline">
+                                    <input class="radio" type="radio" formControlName="{{i}}" value="unvalid">
+                                    <label class="radio_label">Unvalid</label>
+                                </div>
+                            </td>
+                            <td class="p-1">
+                                <div class="form-check form-check-inline">
+                                    <input class="checkbox" type="checkbox" formControlName="{{i}}_delete">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-around mb-2">
+                <button class="button2" (click)="onCheckAll()">Check all</button>
+                <button class="button2" [disabled]="validationForm.invalid" (click)="onSubmit()">Validate
                     results</button>
             </div>
         </form>

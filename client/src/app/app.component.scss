@@ -1,57 +1,292 @@
 .sidebar {
-    border-radius: 10px 10px 10px 10px;
-    background-color: #01dee68e;
+    background: #14202E; 
 }
 
-.padding_top_bot {
-    padding: 30px 0px 30px 0px;
-}
-
-.padding_top_left {
-    padding: 0px 0px 0px 30px;
-}
-
-.description {
-    padding: 20px 20px 20px 20px;
-}
-
-.login {
-    background-color:#01dee68e;
-    border-radius: 10px;
-}
-
-.upbar {
-    background-color:#f3322b9f;
-    position: relative;
-    left: 10px;
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.title {
-    font-size: 30px;
-    margin-left: 20px;
-}
-
-.title-jumbo {
-    font-size: 30px;
-}
-
-.icon {
-    height: 40px;
+.lg-titleSidebar {
     margin-left: 10px;
+    margin-bottom: 0px;
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 55px;
+    color: #FFFFFF; 
 }
 
-.contact {
+.sm-titleSidebar {
+    margin-left: 4px;
+    margin-bottom: 0px;
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 45px;
+    color: #FFFFFF; 
+}
+
+.lg-subtitleSidebar {
+    margin-right: 10px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 35px;
+    line-height: 40px;
+    color: #FFFFFF; 
+}
+
+.sm-subtitleSidebar {
+    margin-right: 10px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px; 
+    color: #FFFFFF; 
+}
+
+.roomSidebar {
+    background: #091235;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.xl-sectionLogin {
+    position: absolute;
+    top: 180px;
+    left: 140px;
+    width: 450px;
+    height: 250px;
+    display: block;
+    padding: 5px 20px 5px 20px;
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.lg-sectionLogin {
+    position: absolute;
+    top: 180px;
+    left: 140px;
+    width: 450px;
+    height: 250px;
+    display: block;
+    padding: 5px 20px 5px 20px;
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.sm-sectionLogin {
+    position: absolute;
+    top: 120px;
+    left: 40px;
+    width: 450px;
+    height: 200px;
+    display: block;
+    padding: 5px 20px 5px 20px;
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.pub250 {
+    position: absolute;
+    left: 140px;
+    bottom: 35px;
+    height: 266px;
+    width: 316px;
+    padding: 8px;
+    background: #88A9C3;
+}
+
+.pub600 {
+    height: 616px;
+    width: 316px;
+    padding: 8px;
+    background: #88A9C3;
+}
+
+.xl-sectionWelcome {
+    position: absolute;
+    right: 25%;
+    top: 10%;
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.lg-sectionWelcome {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.sm-sectionWelcome {
+    position: absolute;
+    right: 10%;
+    top: 5%;
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.lg-titleSectionWelcome {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 70px;
+    line-height: 80px;
+    text-align: center;
+    color: #000000;
+}
+
+.sm-titleSectionWelcome {
+    font-family: Ribeye;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 59px;
+    text-align: center;
+    color: #000000;
+}
+
+.lg-contentSectionWelcome {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    color: #000000;
+}
+
+.sm-contentSectionWelcome {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 17px;
+    text-align: center;
+    color: #000000;
+}
+
+.lg-subtitleSectionWelcome {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 59px;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #000000;
+}
+
+.sm-subtitleSectionWelcome {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 34px;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #000000;
+}
+
+.sectionContact {
+    position: absolute;
+    bottom: 5px;
+    right: 30px;
+    padding: 5px;
+}
+
+.lg-subtitleSectionContact {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    color: #FFFFFF;
+}
+
+.sm-subtitleSectionContact {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
     font-size: 25px;
-    padding: 1px;
-    background-color: rgb(59, 59, 59);
-    color: white;
-    border-radius: 5px;
+    line-height: 29px;
+    color: #FFFFFF;
+}
+
+.lg-titleSectionContact {
+    padding-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 35px;
+    color: #88A9C3;
+}
+
+.sm-titleSectionContact {
+    padding-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 29px;
+    color: #88A9C3;
+}
+
+.lg-step {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 200;
+    font-size: 50px;
+    line-height: 60px;
+    color: #ffffff;
+}
+
+.sm-step {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 200;
+    font-size: 40px;
+    line-height: 45px;
+    color: #ffffff;
+}
+
+.lg-marginStep {
+    margin: 46px 0px 5px 0px;
+}
+
+.sm-marginStep {
+    margin: 46px 0px 5px 0px;
 }
 
 .chat {
-    width: 200px;
+    background: #88A9C3;
+    border: 2px solid #FFFFFF;
 }
 
+.lg-posAlign {
+    top: 111px;
+}
+
+.sm-posAlign {
+    top: 96px;
+}
+
+.lg-marginAlign {
+    margin-top: 111px;
+}
+
+.sm-marginAlign {
+    margin-top: 96px;
+}
+
+.marginDraw {
+    margin-top: 20px;
+}

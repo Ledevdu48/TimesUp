@@ -77,7 +77,8 @@ io.on('connection', socket => {
     socket.on('chatMessage', (message, roomCode) => {
         const roomObject = getRoomByCode(roomCode);
         const pseudo = roomObject.game.getPseudo(socket.id)
-        io.in(roomCode).emit('sendChatMessage', message, pseudo)
+        const team = roomObject.game.getTeam(socket.id)
+        io.in(roomCode).emit('sendChatMessage', message, pseudo, team)
     })
 
     socket.on('getRoomCode', () => {
@@ -123,6 +124,9 @@ io.on('connection', socket => {
 
     socket.on('yourProposals', (proposals, roomCode) => {
         const roomObject = getRoomByCode(roomCode);
+        const pseudo = roomObject.game.getPseudo(socket.id);
+        const team = roomObject.game.getTeam(socket.id)
+        io.in(roomCode).emit('sendChatMessage', 'has sent proposals', pseudo, team)
         for (let proposal of proposals) {
             roomObject.game.listOfWords.push(proposal[1]);
         }
@@ -164,6 +168,7 @@ io.on('connection', socket => {
 
     socket.on('start', roomCode => {
         const roomObject = getRoomByCode(roomCode);
+        io.in(roomCode).emit('sendChatMessage', 'NEW ROUND', 'GAME')
         if (roomObject.game.stageGame === "Step 3") {
             io.in(roomCode).emit('initCanvas')
         }
@@ -239,6 +244,7 @@ io.on('connection', socket => {
                 }, 1000*5)
             } 
             else {
+                game.stageGame = 'Results'
                 io.in(roomCode).emit('endGame')
             }
         } else {
@@ -404,15 +410,27 @@ class Game {
         }
     }
 
+    getTeam(socketId) {
+        const pseudo = this.getPseudo(socketId)
+        for (let player of this.team[0]) {
+            if (player[0] === socketId) {
+                return 0
+            }
+        }
+        for (let player of this.team[1]) {
+            if (player[0] ===socketId) {
+                return 1
+            }
+        }
+    }
+
     deleteWords(list){
-        console.log(list)
         for (let word of list){
             const id = this.listOfWords.findIndex(
                 (s) => {
                     return s === word;
                 }
             )
-            console.log(id)
             this.listOfWords.splice(id, 1);
         }
     }

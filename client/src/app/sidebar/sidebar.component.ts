@@ -6,7 +6,10 @@ import { AuthService } from '../auth.service'
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class SidebarComponent implements OnInit {
 
@@ -32,6 +35,8 @@ export class SidebarComponent implements OnInit {
   isEnd: boolean;
   isResult: boolean;
   isCreator: boolean;
+  innerHeight: any;
+  innerWidth: any;
 
 
   constructor(private chargingService: ChargingService, private authService: AuthService) { }
@@ -86,8 +91,27 @@ export class SidebarComponent implements OnInit {
       }
     )
     this.chargingService.emitStepSubject();
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     }
     
+    onResize(event) {
+      this.innerHeight = window.innerHeight;
+      this.innerWidth = window.innerWidth;
+    }
+
+    onSizeSm() {
+      return this.innerHeight<900 || this.innerWidth<1000
+    }
+  
+    onSizeLg() {
+      const bool = this.innerHeight>930 && this.innerWidth>1500;
+      return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+    }
+  
+    onSizeXl() {
+      return this.innerWidth>1500 && this.innerHeight>930
+    }    
 
     onRandomize() {
       this.socket.emit('randomizeTeam', this.roomCode);

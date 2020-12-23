@@ -57,8 +57,8 @@ export class DrawComponent implements OnInit {
     this.canvas = <HTMLCanvasElement>document.getElementById("draw_canvas")
     if (this.canvas != null) {
       this.ctx = this.canvas.getContext('2d');
-      this.canvas.width = Math.round(this.innerWidth*0.55);
-      this.canvas.height = Math.round(this.canvas.width/1.6);
+      this.canvas.width = Math.round(this.innerWidth*0.50);
+      this.canvas.height = Math.round(this.canvas.width/1.7);
       this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     }

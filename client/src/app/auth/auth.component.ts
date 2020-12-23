@@ -6,7 +6,10 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class AuthComponent implements OnInit {
 
@@ -16,6 +19,8 @@ export class AuthComponent implements OnInit {
   userForm: FormGroup;
   alreadyCreated: boolean = false;
   pseudoAlreadyTaken: boolean = false;
+  innerHeight: any;
+  innerWidth: any;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
 
@@ -39,6 +44,9 @@ export class AuthComponent implements OnInit {
     this.socket.on('pseudoAlreadyTaken', () => {
       this.pseudoAlreadyTaken = true;
     })
+
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth
   }
 
   initForm() {
@@ -56,6 +64,24 @@ export class AuthComponent implements OnInit {
       name: name
     }
     this.socket.emit('joinRoom', data)
+  }
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
   }
 
   ngOnDestroy() {

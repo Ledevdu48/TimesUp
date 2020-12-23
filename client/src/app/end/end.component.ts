@@ -6,7 +6,10 @@ import { ChargingService } from '../charging.service';
 @Component({
   selector: 'app-end',
   templateUrl: './end.component.html',
-  styleUrls: ['./end.component.scss']
+  styleUrls: ['./end.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class EndComponent implements OnInit {
 
@@ -20,10 +23,14 @@ export class EndComponent implements OnInit {
   defaultName: boolean[];
   scoreSubscription: Subscription;
   score: number[];
+  innerHeight: any;
+  innerWidth: any;
 
   constructor(private chargingService: ChargingService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     this.chargingService.getInfos(this.socket)
     this.roomCodeSubscription = this.chargingService.roomCodeSubject.subscribe(
       (roomCode: string) => {
@@ -55,6 +62,24 @@ export class EndComponent implements OnInit {
       this.authService.changeCreator();
     })
   }
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
+  } 
 
   onRestart() {
     this.socket.emit('restart', this.roomCode)

@@ -6,7 +6,10 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-listen',
   templateUrl: './listen.component.html',
-  styleUrls: ['./listen.component.scss']
+  styleUrls: ['./listen.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class ListenComponent implements OnInit {
 
@@ -41,7 +44,7 @@ export class ListenComponent implements OnInit {
   ctx: any;
   rules: string[] = [
     '',
-    ' Your team has only one guess',
+    ' Your team has only one guess.',
     ''
   ];
   innerHeight: any;
@@ -186,11 +189,15 @@ export class ListenComponent implements OnInit {
     })
   }
 
+  onCloseLastRound() {
+    this.displayLastFound = false;
+  }
+
   initCanvas() {
     this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
     if (this.canvas != null) {
-      this.canvas.width = Math.round(this.innerWidth*0.55);
-      this.canvas.height = Math.round(this.canvas.width/1.6);
+      this.canvas.width = Math.round(this.innerWidth*0.50);
+      this.canvas.height = Math.round(this.canvas.width/1.7);
       this.ctx = this.canvas.getContext('2d');
       this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
@@ -225,6 +232,24 @@ export class ListenComponent implements OnInit {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
+  }  
 
   ngOnDestroy() {
     this.statusSubscription.unsubscribe();

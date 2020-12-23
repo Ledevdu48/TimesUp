@@ -1,4 +1,99 @@
-:host {
-    display: block;
-    padding: 5px 20px 5px 20px;
+.lg-title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 70px;
+    line-height: 82px;
+    text-align: center;
+    color: #000000;
+}
+
+.sm-title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+    text-align: center;
+    color: #000000;
+}
+
+.lg-label {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 35px;
+    text-align: left;
+    color: #000000;
+}
+
+.sm-label {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 25px;
+    text-align: left;
+    color: #000000;
+}
+
+.lg-input {
+    position: absolute;
+    left: 180px;
+    width: 250px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    text-align: center;
+}
+
+.sm-input {
+    position: absolute;
+    left: 180px;
+    width: 250px;
+    height: 30px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    text-align: center;
+}
+
+.lg-button {
+    background: #091235;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 1px 30px 1px 30px;
+}
+
+.sm-button {
+    background: #091235;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 25px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 1px 30px 1px 30px;
 }

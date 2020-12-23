@@ -6,7 +6,10 @@ import { ChargingService } from '../charging.service';
 @Component({
   selector: 'app-creation',
   templateUrl: './creation.component.html',
-  styleUrls: ['./creation.component.scss']
+  styleUrls: ['./creation.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class CreationComponent implements OnInit {
 
@@ -22,6 +25,8 @@ export class CreationComponent implements OnInit {
   teamsSubscription: Subscription;
   createTeams: boolean;
   alone: boolean;
+  innerHeight: any;
+  innerWidth: any;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private chargingService: ChargingService) { }
 
@@ -58,6 +63,9 @@ export class CreationComponent implements OnInit {
     })
 
     this.initForm();
+
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
   }
 
   initForm() {
@@ -115,6 +123,24 @@ export class CreationComponent implements OnInit {
     }
     this.socket.emit('parametersToGame', data, this.roomCode)
   } 
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
+  }  
    
   ngOnDestroy() {
     this.statusSubscription.unsubscribe();

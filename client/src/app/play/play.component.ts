@@ -8,7 +8,10 @@ import { DrawComponent } from '../draw/draw.component';
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
-  styleUrls: ['./play.component.scss']
+  styleUrls: ['./play.component.scss'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class PlayComponent implements OnInit {
 
@@ -48,11 +51,15 @@ export class PlayComponent implements OnInit {
     ' You have to draw to make your team guess. You can skip proposal.'
   ];
   all: boolean = false;
+  innerHeight: any;
+  innerWidth: any;
 
   
   constructor(private authService: AuthService, private chargingService: ChargingService, private formBuilder: FormBuilder) { }
 
   ngOnInit(){
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     this.chargingService.getInfos(this.socket)
     this.lastsFoundSubscription = this.chargingService.lastsFoundSubject.subscribe(
       (lastsFound: any[]) => {
@@ -234,6 +241,28 @@ export class PlayComponent implements OnInit {
     }    
     this.socket.emit('resultsRound', this.roomCode, this.chosenTeam, this.unvalidProposals, foundProposals, this.deleteProposals, this.timer);
     this.authService.changeListener();
+  }
+
+  onCloseLastRound() {
+    this.displayLastFound = false;
+  }
+
+  onResize(event) {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  onSizeSm() {
+    return this.innerHeight<900 || this.innerWidth<1000
+  }
+
+  onSizeLg() {
+    const bool = this.innerHeight>930 && this.innerWidth>1500;
+    return this.innerHeight>900 && this.innerWidth>1000 && !bool;
+  }
+
+  onSizeXl() {
+    return this.innerWidth>1500 && this.innerHeight>930
   }
 
   ngOnDestroy() {

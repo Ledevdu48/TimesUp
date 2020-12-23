@@ -1,21 +1,72 @@
-p.team1, li.team1, h2.team1{
-    color: #FF5412;
-    text-shadow:0 0 1px black;
+.lg-titleRoomSidebar {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 40px;
+    margin-bottom: 0;
+    color: #FFFFFF;
 }
 
-p.team2, li.team2, h2.team2{
-    color: #FF66E9;
-    text-shadow:0 0 1px black;
+.sm-titleRoomSidebar {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    margin-bottom: 0;
+    color: #FFFFFF;
 }
 
-p, li {
-    font-size: 16px;
+.lg-subtitleRoomSidebar {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 30px;
+    margin-bottom: 0;
+    color: #88A9C3;
 }
 
-h1 {
-    font: small-caps bold 25px 'Times New Roman', Times, serif;
+.sm-subtitleRoomSidebar {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 27px;
+    margin-bottom: 0;
+    color: #88A9C3;
 }
 
-h2 {
-    font: small-caps bold 20px 'Times New Roman', Times, serif;
+.lg-btnRoomSidebar {
+    background: #88A9C3;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    color: #000000;
+}
+
+.sm-btnRoomSidebar {
+    background: #88A9C3;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 27px;
+    color: #000000;
+}
+
+.team1 {
+    color: #CC2D90;
+}
+
+.team2 {
+    color: #607B00;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
 }
